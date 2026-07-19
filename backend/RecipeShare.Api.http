@@ -1,0 +1,207 @@
+@baseUrl = https://localhost:7242
+
+### جيب كل الوصفات
+GET {{baseUrl}}/api/recipes
+
+### أضف وصفة جديدة
+POST {{baseUrl}}/api/recipes
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjYiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoib21hbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6Im9tYW1AcmVjaXBlc2hhLmNvbSIsImV4cCI6MTc4NDQ3MDc4MSwiaXNzIjoiUmVjaXBlU2hhcmVBcGkiLCJhdWQiOiJSZWNpcGVTaGFyZUFwaVVzZXJzIn0.t6Q44P0P9lk-c6ZelYP1zW0M9rWy35GvyAntLYeUOrA
+
+8
+{
+  "userId": 1,
+  "title": "مجدرة",
+  "description": "أكلة شامية تقليدية من العدس والرز",
+  "instructions": "1. اسلق العدس. 2. حمّر البصل. 3. اطبخ الرز مع العدس. 4. زين بالبصل المحمر.",
+  "prepTimeMinutes": 45,
+  "difficulty": "Easy",
+  "imageUrl": null
+}
+### إضافة 10 وصفات كاملة البيانات دفعة واحدة
+POST {{baseUrl}}/api/recipes/bulk
+Content-Type: application/json
+
+[
+  {
+    "userId": 3,
+    "title": "شاورما دجاج بيتية",
+    "description": "شاورما دجاج متبلة على الطريقة الشامية التقليدية ومحمرة بالفرن.",
+    "instructions": "1. تتبيل صدور الدجاج بالثوم واللبن والبهارات. 2. تركها بالثلاجة ساعتين. 3. شويها بالفرن ثم تقطيعها بشكل رفيع.",
+    "prepTimeMinutes": 120,
+    "difficulty": "Medium",
+    "imageUrl": null
+  },
+  {
+    "userId": 3,
+    "title": "كبسة لحم سعودية",
+    "description": "أرز بسمتي طويل الحبة مطبوخ مع اللحم والبهارات الخليجية الغنية والمكسرات.",
+    "instructions": "1. سلق اللحم مع البهارات الصحيحة حتى ينضج. 2. إضافة الأرز المغسول إلى مرق اللحم وتغطية الطنجرة. 3. سكب الكبسة وتزيينها باللوز والزبيب.",
+    "prepTimeMinutes": 90,
+    "difficulty": "Medium",
+    "imageUrl": null
+  },
+  {
+    "userId": 3,
+    "title": "مقلوبة باذنجان باللحم",
+    "description": "طبق مقلوبة تقليدي شهي ومشهور بالباذنجان المقلي واللحم والأرز المبهر.",
+    "instructions": "1. قلي شرائح الباذنجان وسلق اللحم. 2. ترتيب الباذنجان واللحم بأسفل الطنجرة ثم وضع الأرز فوقهم. 3. قلب الطنجرة بعد النضج تماماً.",
+    "prepTimeMinutes": 60,
+    "difficulty": "Hard",
+    "imageUrl": null
+  },
+  {
+    "userId": 3,
+    "title": "ملوخية خضراء بالدجاج",
+    "description": "ملوخية ورق مطبوخة بمرق الدجاج مع تقلية الكزبرة والثوم المقرمش.",
+    "instructions": "1. سلق الدجاج وتفصيصه قطعاً متوسطة. 2. طبخ الملوخية بمرق الدجاج على نار هادئة. 3. إضافة تقلية الثوم والكزبرة الطازجة بالزيت فوقها.",
+    "prepTimeMinutes": 50,
+    "difficulty": "Medium",
+    "imageUrl": null
+  },
+  {
+    "userId": 3,
+    "title": "يالنجي ورق عنب بالزيت",
+    "description": "ورق عنب محشي بالأرز والخضار ودبس الرمان ومطبوخ بزيت الزيتون البلدي.",
+    "instructions": "1. خلط الأرز مع الطماطم، البقدونس، النعناع ودبس الرمان. 2. لف ورق العنب بإحكام وترتيبه بالطنجرة. 3. طبخه بماء وزيت زيتون وليمون على نار هادئة جداً.",
+    "prepTimeMinutes": 150,
+    "difficulty": "Hard",
+    "imageUrl": null
+  },
+  {
+    "userId": 3,
+    "title": "كباب حلبي مشوي",
+    "description": "لحم غنم مفروم ناعم ومتبل بالبقدونس والبصل والبهارات الحلبية الشهيرة.",
+    "instructions": "1. خلط اللحم المفروم مع البصل المفروم ناعماً والبقدونس والبهارات. 2. تشكيل اللحم على أسياخ خشبية أو معدنية. 3. شويه على الفحم أو الجريل حتى ينضج.",
+    "prepTimeMinutes": 30,
+    "difficulty": "Easy",
+    "imageUrl": null
+  },
+  {
+    "userId": 3,
+    "title": "سلطة فتوش بدبس الرمان",
+    "description": "أشهر سلطة شامية خضراء منعشة تقدم مع الخبز المحمص والسماق ودبس الرمان.",
+    "instructions": "1. تقطيع الخضار (خيار، طماطم، خس، فجل، بقلة) قطعاً متوسطة. 2. خلط صوص الليمون، زيت الزيتون، دبس الرمان، والسماق. 3. خلط المكونات وإضافة الخبز المقلي.",
+    "prepTimeMinutes": 15,
+    "difficulty": "Easy",
+    "imageUrl": null
+  },
+  {
+    "userId": 3,
+    "title": "مسخن فلسطيني تقليدي",
+    "description": "دجاج محمر مع كمية وفيرة من البصل المكرمل بزيت الزيتون والسماق على خبز الطابون.",
+    "instructions": "1. طبخ كمية كبيرة من البصل المفروم بزيت الزيتون والسماق البلدي. 2. سلق الدجاج وتتبيله ثم تحميره بالفرن. 3. فرد البصل على خبز الطابون ووضع الدجاج فوقه.",
+    "prepTimeMinutes": 75,
+    "difficulty": "Medium",
+    "imageUrl": null
+  },
+  {
+    "userId": 3,
+    "title": "برياني دجاج هندي",
+    "description": "أرز بسمتي هندي مبهر بطبقات من الدجاج المطبوخ بصلصة اللبن والزنجبيل الحارة.",
+    "instructions": "1. طبخ الدجاج مع البصل، اللبن، الجنزبيل وبهارات البرياني الحارة. 2. سلق الأرز نصف سلقة. 3. وضع الأرز والدجاج في طبقات متتالية وتركها تتهدى.",
+    "prepTimeMinutes": 60,
+    "difficulty": "Hard",
+    "imageUrl": null
+  },
+  {
+    "userId": 3,
+    "title": "شيش برك باللبن",
+    "description": "كرات عجين صغيرة محشية باللحم المفروم والبصل، ومطبوخة بصلصة اللبن الرائب الثخينة.",
+    "instructions": "1. تحضير العجين وحشوه باللحم المقلي مع البصل وتشكيله كقبعات صغيرة. 2. خبز حبات الشيش برك بالفرن قليلاً. 3. طبخ اللبن مع النشا ثم إسقاط العجين فيه.",
+    "prepTimeMinutes": 120,
+    "difficulty": "Hard",
+    "imageUrl": null
+  }
+]
+### احذف وصفة تجريبية
+DELETE {{baseUrl}}/api/recipes/15
+
+
+
+### أضف مستخدم تجريبي
+POST {{baseUrl}}/api/users
+Content-Type: application/json
+
+{
+  "username": "mam123",
+  "email": "mam@test.com",
+  "passwordHash": "et123"
+}
+### احذف مستخدم تجريبي
+DELETE {{baseUrl}}/api/users/2
+### alle users
+GET {{baseUrl}}/api/users
+
+
+### neue Kommentare hinzufügen
+POST {{baseUrl}}/api/comments
+Content-Type: application/json
+### lösche einen Kommentar
+DELETE {{baseUrl}}/api/comments/3
+
+
+### neue Favoriten hinzufügen
+POST {{baseUrl}}/api/favorites
+Content-Type: application/json
+### lösche einen favoriten
+DELETE {{baseUrl}}/api/favorits/3
+
+
+### neue followers hinzufügen
+POST {{baseUrl}}/api/followers
+Content-Type: application/json
+### lösche einen follower
+DELETE {{baseUrl}}/api/followers/3
+
+
+### neue ingredients hinzufügen
+POST {{baseUrl}}/api/ingredients
+Content-Type: application/json
+### lösche einen ingredient
+DELETE {{baseUrl}}/api/ingredients/3
+
+
+### neue Ratings hinzufügen
+POST {{baseUrl}}/api/ratings
+Content-Type: application/json
+### lösche einen rating
+DELETE {{baseUrl}}/api/ratings/3
+
+
+### neue RecipeIngredients hinzufügen
+POST {{baseUrl}}/api/RecipeIngredients
+Content-Type: application/json
+### lösche einen RecipeIngredient
+DELETE {{baseUrl}}/api/RecipeIngredients/3
+
+
+### تسجيل حساب جديد
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "mam",
+  "email": "mam@recipesha.com",
+  "password": "MySecurePass123"
+}
+
+### تسجيل دخول
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "omam@recipesha.com",
+  "password": "MySecurePass123"
+}
+
+### متابعة مستخدم
+POST {{baseUrl}}/api/follow
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjYiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoib21hbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6Im9tYW1AcmVjaXBlc2hhLmNvbSIsImV4cCI6MTc4NDQ3MDc4MSwiaXNzIjoiUmVjaXBlU2hhcmVBcGkiLCJhdWQiOiJSZWNpcGVTaGFyZUFwaVVzZXJzIn0.t6Q44P0P9lk-c6ZelYP1zW0M9rWy35GvyAntLYeUOrA
+
+9
+
+
+### شوف مين المستخدم رقم 1 عم يتابع
+GET {{baseUrl}}/api/follow/6

@@ -1,0 +1,9 @@
+﻿# .NET Backend
+backend/bin/
+backend/obj/
+backend/.vs/
+*.user
+
+# React Frontend
+frontend/node_modules/
+frontend/dist/
