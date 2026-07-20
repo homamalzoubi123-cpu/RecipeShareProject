@@ -1,0 +1,90 @@
+.welcome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+    width: 100%;
+    margin: 0;
+    background: linear-gradient(135deg, #E8F3E8 0%, #FDF0E3 65%);
+}
+.welcome__logo {
+    width: 400px;
+    height: auto;
+}
+    .welcome__title_r {
+        color: #D98F5C;
+    }
+
+    .welcome__title_e {
+        color: #4A7C59;
+    }
+
+    .welcome__title_c {
+        color: #E07A3E;
+    }
+
+    .welcome__title_i {
+        color: #2D6E7E;
+    }
+
+    .welcome__title_p {
+        color: #D9A441;
+    }
+
+    .welcome__title_Hub {
+        color: #D9A441;
+    }
+
+    .welcome__title_Cook {
+        color: #4A7C59;
+        margin: 1px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .welcome__title_Share {
+        color: #E07A3E;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+.welcome__text {
+    color: #D9A441;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: 700;
+}
+.welcome__buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+.welcome__button__Anmeldung {
+    padding: 12px 32px;
+    border-radius: 8px;
+    font-size: 16px;
+    gap: 8px;
+    cursor: pointer;
+    border: none;
+    background-color: #D98F5C;
+    color: antiquewhite
+}
+    .welcome__button__Anmeldung:hover {
+        background-color: #e7986a;
+    }
+
+.welcome__button__Registrieren {
+    padding: 12px 32px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    background-color: #D98F5C;
+    color:antiquewhite
+}
+    .welcome__button__Registrieren:hover {
+        background-color: #e7986a;
+    }
+
