@@ -1,0 +1,65 @@
+.header__container {
+    display: flex;
+    height: 12%;
+    text-align: center;
+    background-color: white;
+    border-bottom: 2px solid #D98F5C;
+    gap: 10px;
+    justify-content: flex-start;
+
+    &__logo {
+        margin-top: 6px;
+        display: inline-block;
+        width: 80px;
+        height: 60px;
+    }
+
+    &__title {
+        font-size: 1.50rem;
+        font-weight: bold;
+        color: #D98F5C;
+        margin-left: -21px;
+       
+    }
+
+    &__search {
+        display: flex;
+        align-items: center;
+        width: 568px;
+        margin-top: 15px;
+        border-radius: 40px;
+        border: 1px solid #D98F5C;
+        z-index: 1;
+        position: relative;
+        max-width: 100%;
+        height: 28px;
+        padding: 7px 0 7px 0;
+        margin: auto;
+    }
+
+    &__pourder {
+        width: 35px;
+        height: auto;
+        color: white;
+        margin-right: 10px;
+        margin-top: 5px;
+    }
+
+    &__account {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        width: 45px;
+        height: 45px;
+        margin-top: 15px;
+    }
+
+    &__home {
+        width: 45px;
+        height: 45px;
+        color: white;
+        fill: #D98F5C;
+        margin-top: 15px;
+        margin-left: auto
+    }
+}
