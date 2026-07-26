@@ -1,4 +1,5 @@
 import nurlogo from "../assets/nurlogo.png";
+import { Link } from "react-router-dom";
 import "./welcome.css"
 function Welcome() {
     return (
@@ -16,8 +17,17 @@ function Welcome() {
             <p> <span className="welcome__title_Cook">Cook</span> •  <span className="welcome__title_Share">Share</span></p>
             <p className="welcome__text">Teile deine lieblingsrezepte und entdecke neue Rezepte</p>
             <div className="welcome__buttons">
+
                 <button className="welcome__button__Anmeldung">Anmeldung</button>
                 <button className="welcome__button__Registrieren">Registrieren</button>
+
+                <Link to="/login" >
+                    <button className="welcome__button__Anmeldung">Anmeldung</button>
+                </Link>
+                <Link to="/register" >
+                    <button className="welcome__button__Registrieren">Registrieren</button>
+                </Link>
+
             </div>
            
         </div>
