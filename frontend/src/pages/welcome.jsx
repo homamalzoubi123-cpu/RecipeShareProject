@@ -15,7 +15,7 @@ function Welcome() {
                 <span className="welcome__title_Hub">Hub</span>
            </h1>
             <p> <span className="welcome__title_Cook">Cook</span> •  <span className="welcome__title_Share">Share</span></p>
-            <p className="welcome__text">Teile deine lieblingsrezepte und entdecke neue Rezepte</p>
+            <p className="welcome__text">Teile deine lieblingsrezepte und entdecke  Rezepte</p>
             <div className="welcome__buttons">
 
                 <button className="welcome__button__Anmeldung">Anmeldung</button>
