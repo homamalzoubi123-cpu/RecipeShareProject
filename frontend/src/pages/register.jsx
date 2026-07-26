@@ -23,7 +23,9 @@ const Register = () => {
             [e.target.name]: e.target.value
         });
     };
-
+    console.log("email", formData.email);
+    console.log("password", formData.password);
+    console.log("confirmPassword", formData.confirmPassword);
     // إرسال البيانات إلى الـ Backend
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -105,11 +107,11 @@ const Register = () => {
                         type="email"
                         name="email"
                         placeholder="E-Mail-Adresse"
-                        value={formData.email}
+                       
                         onChange={handleChange}
                         required
                     />
-                </div>
+                </div> 
 
                 <div className="register__card__field">
                     <label className="register__card__field__label">Passwort</label>

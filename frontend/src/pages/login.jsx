@@ -29,29 +29,29 @@ const Login = () => {
 
         try {
             // 2. إرسال طلب POST إلى الـ API الخاص بك
-            const response = await fetch("http://localhost:5082/api/auth/register", {
+            const response = await fetch("http://localhost:5082/api/auth/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    username: formData.username,
+                 
                     email: formData.email,
                     password: formData.password
                 })
             });
 
             const data = await response.json();
-
+            localStorage.setItem("token", data.token);
             if (!response.ok) {
                 // إظهار نص الخطأ القادم من الـ Backend
                 throw new Error(data.message || data || "Registrierung fehlerhaft");
             }
 
             // 3. النجاح وتوجيه المستخدم لصفحة تسجيل الدخول
-            setSuccess("Konto erfolgreich erstellt! Sie werden weitergeleitet...");
+            setSuccess("Erfolgreich angemeldet! Sie werden weitergeleitet...");
             setTimeout(() => {
-                navigate("/login");
+                navigate("/");
             }, 2000);
 
         } catch (err) {

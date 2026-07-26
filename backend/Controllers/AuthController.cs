@@ -26,7 +26,10 @@ public class AuthController: ControllerBase
     {
         if (await _context.Users.AnyAsync(u => u.Email == dto.Email))
         {
-            return BadRequest("\"Diese E-Mail wird bereits verwendet.\"");
+            return BadRequest(new
+            {
+                message = "Diese E-Mail wird bereits verwendet."
+            });
         }
         var user = new User
         {
@@ -46,7 +49,10 @@ public class AuthController: ControllerBase
         if(user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash))
 
         {
-            return Unauthorized("E-Mail oder Passwort ist falsch.");
+            return Unauthorized(new
+            {
+                message = "E-Mail oder Passwort ist falsch."
+            });
         }
         var token = GenerateJwtToken(user);
         return Ok(new { token });
