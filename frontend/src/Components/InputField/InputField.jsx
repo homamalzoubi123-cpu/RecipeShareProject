@@ -1,20 +1,13 @@
-interface Props {
-    label: string;
-    type: string;
-    name: string;
-    value: string;
-    placeholder: string;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
 
-const InputField = ({
+
+            const InputField = ({
                                label,
                                 type,
                                 name,
                                 value,
                                 placeholder,
                                 onChange
-                            }: Props) => {
+                            }) => {
     return (
         <div className="register__card__field">
             <label className="register__card__field__label">{label}</label>
