@@ -2,10 +2,12 @@ import "./login.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import InputField from "../Components/InputField/InputField";
-
+import { usecontext } from "react";
+import { AuthContext } from "../context/AuthContext"; 
 const Login = (
     
 ) => {
+    const { login } = usecontext(AuthContext);
     const [formData, setFormData] = useState({
         email: "",
         password: ""
@@ -46,11 +48,12 @@ const Login = (
 
             const data = await response.json();
             localStorage.setItem("token", data.token);
+           
             if (!response.ok) {
                 
                 throw new Error(data.message || data || "Registrierung fehlerhaft");
             }
-         
+            login(data.user, data.token);
             setSuccess("Erfolgreich angemeldet! Sie werden weitergeleitet...");
             setTimeout(() => {
                 navigate("/");
