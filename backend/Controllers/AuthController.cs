@@ -55,7 +55,17 @@ public class AuthController: ControllerBase
             });
         }
         var token = GenerateJwtToken(user);
-        return Ok(new { token });
+
+        return Ok(new
+        {
+            token,
+            user = new
+            {
+                user.Id,
+                user.Username,
+                user.Email
+            }
+        });
     }
     //GenerateJwtToken — بيحط معلومات أساسية عن اليوزر (Id, Username, Email) جوا الـtoken نفسه، عشان لما يرجع الطلب بعدين نعرف مين هو من غير ما نرجع نسأل قاعدة البيانا 
     private string GenerateJwtToken(User user)
