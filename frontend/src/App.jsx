@@ -4,6 +4,8 @@ import { Routes, Route } from "react-router-dom";
 import Login from "./pages/login";
 import Register from "./pages/register";
 import Layout from "./pages/layoutlet";
+import Home from "./pages/Home";
+import CreateRecipe from "./pages/CreateRecipe";
 function App() {
     return (
        
@@ -11,6 +13,8 @@ function App() {
             
             <Route path="/" element={<Layout />}>
                 <Route index element={<Welcome />} />
+                <Route path="/CreateRecipe" element={<CreateRecipe />} />
+                <Route path="/Home" element={<Home />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
             </Route>

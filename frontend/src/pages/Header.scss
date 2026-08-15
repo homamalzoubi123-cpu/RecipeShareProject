@@ -86,20 +86,25 @@
 
         .header__container__dropdown {
             position: absolute;
-            top: 100%;
+            top: 100%; /* تظهر مباشرة تحت الهيدر */
+            right: 0; /* تضمن محاذاتها لليمين تحت الأيقونة */
             z-index: 1000;
-            right: -30px;
-            left: auto;
-            min-width: 130px;
-            z-index: 9999;
 
-            .header__container__link {
+            .header__container__link,
+            .button__header__container__link {
                 display: block;
+                box-sizing: border-box;
+                width: 100%;
                 padding: 10px 15px;
                 text-decoration: none;
                 background-color: antiquewhite;
-                margin-left: 5px;
+                margin-left: 23px;
                 color: #D98F5C;
+                font-size: 16px;
+                font-family: inherit;
+                text-align: center;
+                border: none;
+                cursor: pointer;
 
                 &:hover {
                     background-color: #D98F5C;

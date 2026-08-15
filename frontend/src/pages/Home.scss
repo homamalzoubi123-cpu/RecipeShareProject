@@ -1,0 +1,60 @@
+.home-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    h2 {
+        color: #D98F5C;
+        text-align: center;
+        margin-bottom: 25px;
+    }
+}
+
+/* عرض الكروت بجانب بعضها (Grid) */
+.recipes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.recipe-card {
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+
+    &:hover {
+        transform: translateY(-5px);
+    }
+
+    .recipe-image {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+    }
+
+    .recipe-content {
+        padding: 15px;
+
+        h3 {
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+
+        .description {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .recipe-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #888;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+        }
+    }
+}

@@ -2,12 +2,12 @@ import "./login.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import InputField from "../Components/InputField/InputField";
-import { usecontext } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext"; 
 const Login = (
     
 ) => {
-    const { login } = usecontext(AuthContext);
+    const { login } = useContext(AuthContext);
     const [formData, setFormData] = useState({
         email: "",
         password: ""
