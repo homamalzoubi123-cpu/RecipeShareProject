@@ -1,18 +1,12 @@
-.home-container {
+.profile-container {
     padding: 20px;
     max-width: 800px; /* Auf 800px verkleinert, damit die Karten untereinander schöner aussehen */
     margin: 0 auto;
     height: 100%; /* Höhe auf 100% des Viewports gesetzt */
-
-    h2 {
-        color: #D98F5C;
-        text-align: center;
-        margin-bottom: 25px;
-    }
+   
 }
 
-/* Karten untereinander ausrichten */
-.recipes-grid {
+.my-recipes-grid {
     display: flex;
     flex-direction: column; /* Richtet die Elemente vertikal untereinander aus */
     gap: 20px;

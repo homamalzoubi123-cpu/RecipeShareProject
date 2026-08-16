@@ -1,6 +1,8 @@
 import "./CreateRecipe.scss";
 import { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import InputField from "../Components/InputField/InputField";
+import { Link } from "react-router-dom";
 
 function CreateRecipe() {
     const { token } = useContext(AuthContext);
@@ -10,84 +12,133 @@ function CreateRecipe() {
         description: "",
         instructions: "",
         prepTimeMinutes: 15,
-        difficulty: "Easy",
-        imageUrl: ""
+        difficulty: "Easy"
     });
+    const [imageFile, setImageFile] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
         const { name, value, type } = e.target;
-        setFormData({
-            ...formData,
-            // تحويل قيمة وقت التحضير إلى رقم صحيح
+        setFormData((prev) => ({
+            ...prev,
             [name]: type === "number" ? parseInt(value) || 0 : value
-        });
+        }));
+    };
+
+    const handleFileChange = (e) => {
+        if (e.target.files && e.target.files[0]) {
+            setImageFile(e.target.files[0]);
+        }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log("Form Submitted! Data:", formData); // للتأكد من تنفيذ الدالة
+
+        setLoading(true);
+
+        const data = new FormData();
+        data.append("Title", formData.title);
+        data.append("Description", formData.description || "");
+        data.append("Instructions", formData.instructions);
+        data.append("PrepTimeMinutes", formData.prepTimeMinutes);
+        data.append("Difficulty", formData.difficulty);
+
+        if (imageFile) {
+            data.append("ImageFile", imageFile);
+        }
 
         try {
+            const headers = {};
+            if (token) {
+                headers["Authorization"] = `Bearer ${token}`;
+            }
+
             const response = await fetch("http://localhost:5082/api/recipes", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-                },
-                body: JSON.stringify(formData)
+                headers: headers,
+                body: data
             });
 
+            console.log("Response Status:", response.status);
+
             if (response.ok) {
+                const resData = await response.json();
+                console.log("Saved Recipe:", resData);
                 alert("تمت إضافة الوصفة بنجاح!");
             } else {
-                // طباعة خطأ الـ Backend لمعرفة السبب بدقة في Console
-                const errorData = await response.json().catch(() => null);
-                console.error("تفاصيل الخطأ من السيرفر:", response.status, errorData);
-                alert(`حدث خطأ أثناء إضافة الوصفة (كود الخطأ: ${response.status})`);
+                const errorText = await response.text();
+                console.error("Server Error:", errorText);
+                alert(`حدث خطأ أثناء الإرسال: ${response.status}`);
             }
-        } catch (error) {
-            console.error("خطأ الاتصال بالخادم:", error);
+        } catch (err) {
+            console.error("Fetch Error:", err);
+            alert("فشل الاتصال بالخادم!");
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input
-                name="title"
-                placeholder="عنوان الوصفة"
-                onChange={handleChange}
-                required
-            />
-            <input
-                name="description"
-                placeholder="وصف قصير"
-                onChange={handleChange}
-            />
-            <textarea
-                name="instructions"
-                placeholder="طريقة التحضير"
-                onChange={handleChange}
-                required
-            />
-            <input
-                type="number"
-                name="prepTimeMinutes"
-                value={formData.prepTimeMinutes}
-                placeholder="وقت التحضير بالدقائق"
-                onChange={handleChange}
-            />
-            <select name="difficulty" value={formData.difficulty} onChange={handleChange}>
-                <option value="Easy">سهل</option>
-                <option value="Medium">متوسط</option>
-                <option value="Hard">صعب</option>
-            </select>
-            <input
-                name="imageUrl"
-                placeholder="رابط الصورة"
-                onChange={handleChange}
-            />
-            {/* تم إزالة onChange من الزر */}
-            <button type="submit">حفظ الوصفة</button>
-        </form>
+        <div className="create__recipe__container">
+            <div className="create__recipe__card">
+                <Link to="/">
+                    <button type="button" className="login__card__back">Zurück</button>
+                </Link>
+                <h2 className="login__title">neue Rezept erstellen</h2>
+
+                <form onSubmit={handleSubmit}>
+                    <InputField
+                        name="title"
+                        value={formData.title}
+                        placeholder="title"
+                        onChange={handleChange}
+                        required
+                    />
+                    <InputField
+                        name="description"
+                        value={formData.description}
+                        placeholder="description"
+                        onChange={handleChange}
+                    />
+                    <textarea
+                        className="create__recipe__card__instructions"
+                        name="instructions"
+                        value={formData.instructions}
+                        placeholder="instructions"
+                        onChange={handleChange}
+                        required
+                    />
+                    <InputField
+                        type="number"
+                        name="prepTimeMinutes"
+                        value={formData.prepTimeMinutes}
+                        placeholder="prep time (minutes)"
+                        onChange={handleChange}
+                    />
+                    <select name="difficulty" value={formData.difficulty} onChange={handleChange}>
+                        <option value="Easy">Easy</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Hard">Hard</option>
+                    </select>
+
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleFileChange}
+                        className="create__recipe__file__input"
+                    />
+
+                    <button
+                        className="create__recipe__card__button"
+                        type="submit"
+                        disabled={loading}
+                    >
+                        {loading ? "wird gespeichert..." : "speichern"}
+                    </button>
+                </form>
+            </div>
+        </div>
     );
 }
 

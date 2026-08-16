@@ -6,6 +6,7 @@ import Register from "./pages/register";
 import Layout from "./pages/layoutlet";
 import Home from "./pages/Home";
 import CreateRecipe from "./pages/CreateRecipe";
+import Profile from "./pages/Profile";
 function App() {
     return (
        
@@ -13,6 +14,7 @@ function App() {
             
             <Route path="/" element={<Layout />}>
                 <Route index element={<Welcome />} />
+                <Route path="/profile" element={<Profile />} />
                 <Route path="/CreateRecipe" element={<CreateRecipe />} />
                 <Route path="/Home" element={<Home />} />
                 <Route path="/register" element={<Register />} />

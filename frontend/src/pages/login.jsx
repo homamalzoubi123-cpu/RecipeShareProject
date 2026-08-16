@@ -56,7 +56,7 @@ const Login = (
             login(data.user, data.token);
             setSuccess("Erfolgreich angemeldet! Sie werden weitergeleitet...");
             setTimeout(() => {
-                navigate("/");
+                navigate("/Home");
             }, 2000);
 
         } catch (err) {
@@ -125,7 +125,7 @@ const Login = (
                     disabled={loading}
                     className="login__card__button"
                     onClick={handleSubmit}>
-                {loading ? "Anmelden..." : "Anmelden"}
+                    {loading ? "Anmelden..." : "Anmelden"}
                 </button>
 
                 <p className="login__card__footer">

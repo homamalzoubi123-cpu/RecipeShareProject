@@ -44,7 +44,7 @@ var app = builder.Build();
 
 // 4. تفعيل سياسة الـ CORS (ترتيب هذا السطر مهم جداً!)
 app.UseCors("AllowReactApp");
-
+app.UseStaticFiles();
 // ملاحظة: إذا كنت تشغل السيرفر على http://localhost:5082 يمكنك إيقاف UseHttpsRedirection مؤقتاً
 // app.UseHttpsRedirection(); 
 

@@ -1,110 +1,134 @@
 .header__container {
     display: flex;
-    height: 12%;
-    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    height: 80px;
     background-color: white;
     border-bottom: 2px solid #D98F5C;
-    gap: 10px;
-    justify-content: flex-start;
+    gap: 12px;
+    align-items: center;
+    padding: 0 15px;
+    box-sizing: border-box;
+    width: 100%;
 
     &__logo {
-        background: url("../assets/nurlogo.png");
-        background-size: 80px 60px;
-        width: 90px;
-        height: 60px;
-        margin-top: 6px;
+        background: url("../assets/nurlogo.png") no-repeat center/contain;
+        width: 70px;
+        height: 50px;
+        flex-shrink: 0; /* Verhindert das Quetschen des Logos */
     }
 
     &__title {
-        font-size: 1.50rem;
+        font-size: 1.40rem;
         font-weight: bold;
         color: #D98F5C;
-        margin-left: -21px;
+        white-space: nowrap; /* Verhindert Zeilenumbruch im Titel */
+        flex-shrink: 0;
     }
-
+    /* Dynamische Suchleiste */
     .header__container__search__container {
         position: relative;
         display: flex;
         align-items: center;
-        width: 100%;
-        max-width: 500px;
-        margin-left: auto;
+        flex: 1; /* Nimmt den verbleibenden Platz flexibel ein */
+        max-width: 450px;
+        min-width: 140px; /* Schrumpft bei kleinerem Fenster */
 
         .header__container__search {
-            display: flex;
-            align-items: center;
-            width: 568px;
-            margin-top: 15px;
+            width: 100%; /* Ersetzt 568px durch 100% Flexibilität */
             border-radius: 40px;
             border: 1px solid #D98F5C;
             z-index: 1;
-            position: relative;
-            max-width: 100%;
-            height: 28px;
-            padding: 7px 0 7px 0;
-            margin: auto;
+            height: 36px;
+            padding: 0 40px 0 15px;
             outline: none;
+            box-sizing: border-box;
 
             &::placeholder {
-                padding-left: 10px;
+                color: #b5b5b5;
             }
         }
 
         .header__container__search__icon {
             position: absolute;
-            right: 15px;
-            left: auto;
+            right: 12px;
             z-index: 2;
             pointer-events: none;
-            background-size: contain;
-            width: 20px;
-            height: 20px;
-            display: block;
+            width: 18px;
+            height: 18px;
             background-color: #D98F5C;
             -webkit-mask: url('/src/assets/search.svg') no-repeat center/contain;
             mask: url("/src/assets/search.svg") no-repeat center/contain;
         }
     }
+    /* 1. HOME-ICON SCHIEBT ALLES RECHTE NACH RECHTS */
+    .header__container__link__home {
+        margin-left: auto; /* Schiebt Icons nach rechts */
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
 
-
+        .header__container__home {
+            width: 38px;
+            height: 38px;
+            fill: #D98F5C;
+        }
+    }
+    /* 2. PLUS-BUTTON */
+    .add-recipe-btn {
+        background: url("../assets/plus.svg") no-repeat center/contain;
+        width: 38px;
+        height: 38px;
+        display: block;
+        flex-shrink: 0;
+    }
+    /* 3. DROPDOWN (ACCOUNT) */
     .header__container__dropdowns {
         position: relative;
-        display: inline-block;
-
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
 
         .header__container__button {
             background: none;
             border: none;
             cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
         }
 
         .header__container__account {
-            width: 45px;
-            height: 45px;
-            margin-top: 15px;
+            width: 38px;
+            height: 38px;
         }
 
         .header__container__dropdown {
             position: absolute;
-            top: 100%; /* تظهر مباشرة تحت الهيدر */
-            right: 0; /* تضمن محاذاتها لليمين تحت الأيقونة */
+            top: 40px;
+            right: -24px;
             z-index: 1000;
+            background-color: antiquewhite;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
 
             .header__container__link,
             .button__header__container__link {
                 display: block;
                 box-sizing: border-box;
                 width: 100%;
-                padding: 10px 15px;
+                padding: 10px 20px;
                 text-decoration: none;
-                background-color: antiquewhite;
-                margin-left: 23px;
+                background-color: transparent;
                 color: #D98F5C;
-                font-size: 16px;
+                font-size: 15px;
                 font-family: inherit;
                 text-align: center;
                 border: none;
                 cursor: pointer;
+                white-space: nowrap;
 
                 &:hover {
                     background-color: #D98F5C;
@@ -114,25 +138,16 @@
         }
     }
 
-
     &__pourder {
-        width: 35px;
+        width: 30px;
         height: auto;
-        color: white;
-        margin-right: 10px;
-        margin-top: 5px;
+        flex-shrink: 0;
     }
+}
 
-    .header__container__link__home {
-        margin-left: auto;
-
-
-        .header__container__home {
-            width: 45px;
-            height: 45px;
-            color: white;
-            fill: #D98F5C;
-            margin-top: 15px;
-        }
+/* Optional: Blendet den Titel auf sehr kleinen Bildschirmen aus */
+@media (max-width: 650px) {
+    .header__container__title {
+        display: none;
     }
 }
