@@ -12,7 +12,16 @@
     gap: 20px;
     width: 100%;
 }
-
+.profile-image-wrapper {
+    .profile-image {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 15px;
+        border: none;
+    }
+}
 .recipe-card {
     background-color: #fff;
     border-radius: 12px;

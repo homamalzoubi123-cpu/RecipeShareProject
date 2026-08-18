@@ -43,11 +43,13 @@ function Home() {
                 ) : (
                     recipes.map((recipe) => (
                         <div key={recipe.id} className="recipe-card">
-                            <img
-                                src={getImageUrl(recipe.imageUrl)}
-                                alt={recipe.title}
-                                className="recipe-image"
-                            />
+                            {recipe.imageUrl && (
+                                <img
+                                    src={getImageUrl(recipe.imageUrl)}
+                                    alt={recipe.title}
+                                    className="recipe-image"
+                                />
+                            )}
                             <div className="recipe-content">
                                 <h3>{recipe.title}</h3>
                                 <p className="description">{recipe.description}</p>
