@@ -1,7 +1,10 @@
 import nurlogo from "../assets/nurlogo.png";
 
 import "./welcome.css"
-function Welcome() {
+interface WelcomeProps {
+
+}
+const Welcome = ({ }: WelcomeProps) => {
     return (
         <div className="welcome">
             <img src={nurlogo} alt="logo" />

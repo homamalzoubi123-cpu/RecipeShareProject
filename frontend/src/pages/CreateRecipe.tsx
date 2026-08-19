@@ -1,12 +1,15 @@
 import "./CreateRecipe.scss";
 import { useState, useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext, AuthContextType } from "../context/AuthContext";
 import InputField from "../Components/InputField/InputField";
 import { Link } from "react-router-dom";
+interface CreateRecipeProps {
 
-function CreateRecipe() {
-    const { token } = useContext(AuthContext);
+}
+function CreateRecipe({
 
+}: CreateRecipeProps) {
+    const { token } = useContext(AuthContext) as AuthContextType;
     const [formData, setFormData] = useState({
         title: "",
         description: "",
@@ -14,24 +17,23 @@ function CreateRecipe() {
         prepTimeMinutes: 15,
         difficulty: "Easy"
     });
-    const [imageFile, setImageFile] = useState(null);
+    const [imageFile, setImageFile] = useState<File | null>(null);
     const [loading, setLoading] = useState(false);
 
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value, type } = e.target;
         setFormData((prev) => ({
             ...prev,
             [name]: type === "number" ? parseInt(value) || 0 : value
         }));
     };
-
-    const handleFileChange = (e) => {
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             setImageFile(e.target.files[0]);
         }
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log("Form Submitted! Data:", formData); // للتأكد من تنفيذ الدالة
 
@@ -41,7 +43,7 @@ function CreateRecipe() {
         data.append("Title", formData.title);
         data.append("Description", formData.description || "");
         data.append("Instructions", formData.instructions);
-        data.append("PrepTimeMinutes", formData.prepTimeMinutes);
+        data.append("PrepTimeMinutes", formData.prepTimeMinutes.toString());
         data.append("Difficulty", formData.difficulty);
 
         if (imageFile) {
@@ -49,7 +51,7 @@ function CreateRecipe() {
         }
 
         try {
-            const headers = {};
+            const headers: Record<string, string> = {};
             if (token) {
                 headers["Authorization"] = `Bearer ${token}`;
             }
@@ -94,13 +96,14 @@ function CreateRecipe() {
                         placeholder="title"
                         onChange={handleChange}
                         required
+                        label={""}
                     />
+
                     <InputField
                         name="description"
                         value={formData.description}
                         placeholder="description"
-                        onChange={handleChange}
-                    />
+                        onChange={handleChange} label={""}                    />
                     <textarea
                         className="create__recipe__card__instructions"
                         name="instructions"
@@ -114,9 +117,9 @@ function CreateRecipe() {
                         name="prepTimeMinutes"
                         value={formData.prepTimeMinutes}
                         placeholder="prep time (minutes)"
-                        onChange={handleChange}
-                    />
-                    <select name="difficulty" value={formData.difficulty} onChange={handleChange}>
+                        onChange={handleChange} label={""}                    />
+                    <select name="difficulty" value={formData.difficulty}
+                        onChange={handleChange}>
                         <option value="Easy">Easy</option>
                         <option value="Medium">Medium</option>
                         <option value="Hard">Hard</option>

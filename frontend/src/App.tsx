@@ -3,11 +3,12 @@ import { Routes, Route } from "react-router-dom";
 //import Home from "./pages/Home <Route path="/home" element={<Home />} />
 import Login from "./pages/login";
 import Register from "./pages/register";
-import Layout from "./pages/layoutlet";
+import Layout from "./pages/Layoutlet";
 import Home from "./pages/Home";
 import CreateRecipe from "./pages/CreateRecipe";
 import Profile from "./pages/Profile";
-function App() {
+interface AppProps { }  
+function App({ }: AppProps) {
     return (
        
         <Routes>

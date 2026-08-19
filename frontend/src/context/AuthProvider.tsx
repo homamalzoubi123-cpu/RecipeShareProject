@@ -1,23 +1,28 @@
-import { useState } from "react";
+// AuthProvider.tsx
+import { useState, ReactNode } from "react";
 import { AuthContext } from "./AuthContext";
 
-export const AuthProvider = ({ children }) => {
-    // استرجاع الـ token والـ user المخزنين في localStorage
-    const [token, setToken] = useState(() => localStorage.getItem("token") || null);
-    const [user, setUser] = useState(() => {
+interface AuthProviderProps {
+    children: ReactNode;
+
+}
+
+export const AuthProvider = ({ children }: AuthProviderProps) => {
+    const [token, setToken] = useState<string | null>(
+        () => localStorage.getItem("token") || null
+    );
+    const [user, setUser] = useState<any>(() => {
         const savedUser = localStorage.getItem("user");
         return savedUser ? JSON.parse(savedUser) : null;
     });
 
-    // دالة تسجيل الدخول
-    const login = (userData, userToken) => {
+    const login = (userData: any, userToken: string) => {
         setUser(userData);
         setToken(userToken);
         localStorage.setItem("token", userToken);
         localStorage.setItem("user", JSON.stringify(userData));
     };
 
-    // دالة تسجيل الخروج
     const logout = () => {
         setUser(null);
         setToken(null);

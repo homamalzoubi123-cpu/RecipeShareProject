@@ -3,9 +3,21 @@ import "./Home.scss";
 
 const API_BASE_URL = "http://localhost:5082";
 
-function Home() {
-    const [recipes, setRecipes] = useState([]);
-    const [loading, setLoading] = useState(true);
+interface Recipe {
+    id: number;
+    title: string;
+    description: string;
+    instructions: string;
+    prepTimeMinutes: number;
+    difficulty: string;
+    imageUrl: string | null;
+}
+
+interface HomeProps { }
+
+function Home({ }: HomeProps) {
+    const [recipes, setRecipes] = useState<Recipe[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         fetch(`${API_BASE_URL}/api/recipes`)
@@ -15,7 +27,7 @@ function Home() {
                 }
                 return res.json();
             })
-            .then((data) => {
+            .then((data: Recipe[]) => {
                 setRecipes(data);
                 setLoading(false);
             })
@@ -25,8 +37,7 @@ function Home() {
             });
     }, []);
 
-    // دالة لتكوين رابط الصورة بشكل صحيح
-    const getImageUrl = (imagePath) => {
+    const getImageUrl = (imagePath: string | null) => {
         if (!imagePath) return "https://via.placeholder.com/300x200?text=No+Image";
         if (imagePath.startsWith("http")) return imagePath;
         return `${API_BASE_URL}${imagePath}`;

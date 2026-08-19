@@ -3,11 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import InputField from "../Components/InputField/InputField";
 import { useContext } from "react";
-import { AuthContext } from "../context/AuthContext"; 
-const Login = (
-    
-) => {
-    const { login } = useContext(AuthContext);
+import { AuthContext, AuthContextType } from "../context/AuthContext";
+interface LoginProps { }
+const Login = ({ }: LoginProps) => {
+    const { login } = useContext(AuthContext) as AuthContextType;
     const [formData, setFormData] = useState({
         email: "",
         password: ""
@@ -19,13 +18,13 @@ const Login = (
 
     const navigate = useNavigate();
 
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
         });
     };
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setError("");
         setSuccess("");
@@ -60,7 +59,11 @@ const Login = (
             }, 2000);
 
         } catch (err) {
-            setError(err.message);
+            if (err instanceof Error) {
+                setError(err.message);
+            } else {
+                setError("حدث خطأ غير متوقع");
+            }
         } finally {
             setLoading(false);
         }

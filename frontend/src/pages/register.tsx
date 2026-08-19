@@ -2,8 +2,10 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./register.scss";
 import InputField from "../Components/InputField/InputField";
+interface RegisterProps {
 
-const Register = () => {
+}
+const Register = ({ }: RegisterProps) => {
     const [formData, setFormData] = useState({
         username: "",
         email: "",
@@ -17,14 +19,14 @@ const Register = () => {
 
     const navigate = useNavigate();
 
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
         });
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement> ) => {
         e.preventDefault();
         setError("");
         setSuccess("");
@@ -59,6 +61,7 @@ const Register = () => {
             }, 2000);
 
         } catch (err) {
+            if (err instanceof Error)
             setError(err.message);
         } finally {
             setLoading(false);

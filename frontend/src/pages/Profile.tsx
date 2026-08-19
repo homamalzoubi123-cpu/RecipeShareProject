@@ -4,14 +4,27 @@ import acaunt from "../assets/account.svg";
 
 const API_BASE_URL = "http://localhost:5082";
 
-function Profile() {
-    const [myRecipes, setMyRecipes] = useState([]);
-    const [userProfile, setUserProfile] = useState({ imageUrl: null, username: "" });
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+interface Recipe {
+    id: number;
+    title: string;
+    description: string;
+    prepTimeMinutes: number;
+    difficulty: string;
+    imageUrl: string | null;
+}
 
-    // Ref für das unsichtbare File-Input
-    const fileInputRef = useRef(null);
+interface UserProfile {
+    imageUrl: string | null;
+    username: string;
+}
+
+function Profile() {
+    const [myRecipes, setMyRecipes] = useState<Recipe[]>([]);
+    const [userProfile, setUserProfile] = useState<UserProfile>({ imageUrl: null, username: "" });
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -28,34 +41,33 @@ function Profile() {
                 if (!recipesRes.ok) throw new Error("Fehler beim Laden der Rezepte.");
                 if (!userRes.ok) throw new Error("Fehler beim Laden des Benutzerprofils.");
 
-                const recipesData = await recipesRes.json();
-                const userData = await userRes.json();
+                const recipesData: Recipe[] = await recipesRes.json();
+                const userData: UserProfile = await userRes.json();
 
                 setMyRecipes(recipesData);
                 setUserProfile(userData);
                 setLoading(false);
             })
-            .catch((err) => {
+            .catch((err: unknown) => {
                 console.error("Profil-Fehler:", err);
-                setError(err.message);
+                setError(err instanceof Error ? err.message : "Unbekannter Fehler");
                 setLoading(false);
             });
     }, []);
 
-    const handleImageUpload = async (event) => {
-        const file = event.target.files[0];
+    const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
         if (!file) return;
 
         const token = localStorage.getItem("token");
         const formData = new FormData();
-        formData.append("file", file); // 👈 Name muss im C#-Backend 'file' sein
+        formData.append("file", file);
 
         try {
             const res = await fetch(`${API_BASE_URL}/api/users/upload-profile-image`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`
-                    // WICHTIG: Kein 'Content-Type' Header setzen! FormData setzt das 'multipart/form-data' inkl. Boundary automatisch.
                 },
                 body: formData
             });
@@ -67,12 +79,13 @@ function Profile() {
 
             const data = await res.json();
             setUserProfile((prev) => ({ ...prev, imageUrl: data.imageUrl }));
-        } catch (err) {
+        } catch (err: unknown) {
             console.error("Upload-Fehler:", err);
-            alert(err.message);
+            alert(err instanceof Error ? err.message : "Unbekannter Fehler");
         }
     };
-    const handleDelete = async (id) => {
+
+    const handleDelete = async (id: number) => {
         if (!window.confirm("Möchtest du dieses Rezept wirklich löschen?")) return;
 
         const token = localStorage.getItem("token");
@@ -88,13 +101,13 @@ function Profile() {
             if (!res.ok) throw new Error("Fehler beim Löschen des Rezepts.");
 
             setMyRecipes((prev) => prev.filter((recipe) => recipe.id !== id));
-        } catch (err) {
+        } catch (err: unknown) {
             console.error(err);
-            alert(err.message);
+            alert(err instanceof Error ? err.message : "Unbekannter Fehler");
         }
     };
 
-    const getImageUrl = (imagePath) => {
+    const getImageUrl = (imagePath: string | null) => {
         if (!imagePath) return "https://picsum.photos/300/200";
         if (imagePath.startsWith("http")) return imagePath;
         return `${API_BASE_URL}${imagePath}`;
@@ -108,7 +121,6 @@ function Profile() {
             <div className="profile-header">
                 <h2>Mein Profil</h2>
 
-                {/* Hidden File Input */}
                 <input
                     type="file"
                     accept="image/*"
@@ -117,29 +129,28 @@ function Profile() {
                     style={{ display: "none" }}
                 />
 
-                {/* Bild oder Platzhalter klickbar machen */}
-                <div
-                    className="profile-image-wrapper"
-                   
-                >
+                <div className="profile-image-wrapper">
                     {!userProfile?.imageUrl ? (
-                        <button 
-                            onClick={() => fileInputRef.current.click()}
+                        <button
+                            onClick={() => fileInputRef.current?.click()}
                             style={{ cursor: "pointer" }}
-                            title="Klicken zum Ändern des Profilbilds">
+                            title="Klicken zum Ändern des Profilbilds"
+                        >
                             <img className="header__container__account" src={acaunt} alt="account" />
                         </button>
                     ) : (
-                            <button 
+                        <button
                             className="profile-image"
-                            onClick={() => fileInputRef.current.click()}
+                            onClick={() => fileInputRef.current?.click()}
                             style={{ cursor: "pointer" }}
-                            title="Klicken zum Ändern des Profilbilds">
-                        <img
-                            src={getImageUrl(userProfile.imageUrl)}
-                            alt="Profilbild"
-                            className="profile-image"
-                        /></button>
+                            title="Klicken zum Ändern des Profilbilds"
+                        >
+                            <img
+                                src={getImageUrl(userProfile.imageUrl)}
+                                alt="Profilbild"
+                                className="profile-image"
+                            />
+                        </button>
                     )}
                 </div>
 
