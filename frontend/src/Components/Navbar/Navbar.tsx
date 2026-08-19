@@ -1,4 +1,6 @@
-function Navbar() {
+interface NavbarProps { }
+
+const Navbar = ({ }: NavbarProps) =>  {
     return (
   <div className="navbar">
             <div className="navbar__Container">

@@ -5,15 +5,19 @@ import acaunt from "../assets/account.svg";
 const API_BASE_URL = "http://localhost:5082";
 
 interface Recipe {
+    userId: number;
+    userName?: string;
     id: number;
     title: string;
     description: string;
+    instructions: string;
     prepTimeMinutes: number;
     difficulty: string;
     imageUrl: string | null;
 }
 
 interface UserProfile {
+    id?: number;
     imageUrl: string | null;
     username: string;
 }
@@ -21,6 +25,11 @@ interface UserProfile {
 function Profile() {
     const [myRecipes, setMyRecipes] = useState<Recipe[]>([]);
     const [userProfile, setUserProfile] = useState<UserProfile>({ imageUrl: null, username: "" });
+
+    // أعداد المتابعين والمتابَعين
+    const [followersCount, setFollowersCount] = useState<number>(0);
+    const [followingCount, setFollowingCount] = useState<number>(0);
+
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -46,6 +55,16 @@ function Profile() {
 
                 setMyRecipes(recipesData);
                 setUserProfile(userData);
+
+                // جلب قائمة المتابَعين (الأشخاص الذين تتابعهم أنت)
+                if (userData.id) {
+                    const followingRes = await fetch(`${API_BASE_URL}/api/follow/${userData.id}`);
+                    if (followingRes.ok) {
+                        const followingData = await followingRes.json();
+                        setFollowingCount(followingData.length);
+                    }
+                }
+
                 setLoading(false);
             })
             .catch((err: unknown) => {
@@ -118,44 +137,50 @@ function Profile() {
 
     return (
         <div className="profile-container">
-            <div className="profile-header">
-                <h2>Mein Profil</h2>
+            <div className="profile-header-wrapper">
+                <h2 className="profile-title">Mein Profil</h2>
 
-                <input
-                    type="file"
-                    accept="image/*"
-                    ref={fileInputRef}
-                    onChange={handleImageUpload}
-                    style={{ display: "none" }}
-                />
+                <div className="profile-header">
+                    <input
+                        type="file"
+                        accept="image/*"
+                        ref={fileInputRef}
+                        onChange={handleImageUpload}
+                        style={{ display: "none" }}
+                    />
 
-                <div className="profile-image-wrapper">
-                    {!userProfile?.imageUrl ? (
-                        <button
-                            onClick={() => fileInputRef.current?.click()}
-                            style={{ cursor: "pointer" }}
-                            title="Klicken zum Ändern des Profilbilds"
-                        >
-                            <img className="header__container__account" src={acaunt} alt="account" />
-                        </button>
-                    ) : (
-                        <button
-                            className="profile-image"
-                            onClick={() => fileInputRef.current?.click()}
-                            style={{ cursor: "pointer" }}
-                            title="Klicken zum Ändern des Profilbilds"
-                        >
-                            <img
-                                src={getImageUrl(userProfile.imageUrl)}
-                                alt="Profilbild"
-                                className="profile-image"
-                            />
-                        </button>
-                    )}
+                    <div className="profile-image-wrapper">
+                        {!userProfile?.imageUrl ? (
+                            <button
+                                onClick={() => fileInputRef.current?.click()}
+                                style={{ cursor: "pointer" }}
+                                title="Klicken zum Ändern des Profilbilds"
+                            >
+                                <img className="header__container__account" src={acaunt} alt="account" />
+                            </button>
+                        ) : (
+                            <button
+                                onClick={() => fileInputRef.current?.click()}
+                                style={{ cursor: "pointer" }}
+                                title="Klicken zum Ändern des Profilbilds"
+                            >
+                                <img
+                                    src={getImageUrl(userProfile.imageUrl)}
+                                    alt="Profilbild"
+                                    className="profile-image"
+                                />
+                            </button>
+                        )}
+                    </div>
+
+                    <p className="username">{userProfile?.username || "Benutzer"}</p>
+
+                    {/* عرض إحصائيات البروفايل بدلاً من السطر الذي كان يسبب خطأ */}
+                    <div className="profile-stats">
+                        <span><strong>{myRecipes.length}</strong> Rezepte</span>
+                        <span><strong>{followingCount}</strong> Gefolgt</span>
+                    </div>
                 </div>
-
-                <p>{userProfile?.username || "Benutzer"}</p>
-                <p>Geteilte Rezepte: {myRecipes.length}</p>
             </div>
 
             <div className="my-recipes-grid">

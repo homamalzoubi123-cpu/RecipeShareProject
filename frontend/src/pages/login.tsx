@@ -4,8 +4,12 @@ import { useState } from "react";
 import InputField from "../Components/InputField/InputField";
 import { useContext } from "react";
 import { AuthContext, AuthContextType } from "../context/AuthContext";
-interface LoginProps { }
-const Login = ({ }: LoginProps) => {
+interface LoginProps {
+
+}
+const Login = ({
+
+}: LoginProps) => {
     const { login } = useContext(AuthContext) as AuthContextType;
     const [formData, setFormData] = useState({
         email: "",

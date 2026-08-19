@@ -19,9 +19,25 @@ public class RecipesController : ControllerBase
 
     // 1. Alle Rezepte holen (für die Hauptseite / Home)
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Recipe>>> GetRecipes()
+    public async Task<ActionResult<IEnumerable<object>>> GetRecipes()
     {
-        var recipes = await _context.Recipes.ToListAsync();
+        var recipes = await _context.Recipes
+            .Include(r => r.User) // ربط جدول الوصفات بجدول المستخدمين في Database
+            .Select(r => new
+            {
+                r.Id,
+                r.UserId,
+                UserName = r.User != null ? r.User.Username : "Unbekannt", // جلب اسم المستخدم
+                r.Title,
+                r.Description,
+                r.Instructions,
+                r.PrepTimeMinutes,
+                r.Difficulty,
+                r.ImageUrl,
+                r.CreatedAt
+            })
+            .ToListAsync();
+
         return Ok(recipes);
     }
 
@@ -88,6 +104,7 @@ public class RecipesController : ControllerBase
 
             var recipe = new Recipe
             {
+
                 UserId = userId,
                 Title = dto.Title,
                 Description = dto.Description,
