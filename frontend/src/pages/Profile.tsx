@@ -211,14 +211,16 @@ function Profile() {
                                 <div className="recipe-info">
                                     <span>⏱️ {recipe.prepTimeMinutes} Min</span>
                                     <span>📊 {recipe.difficulty}</span>
+                                    <button
+                                        className="delete-btn"
+                                        onClick={() => handleDelete(recipe.id)}
+                                    >
+                                        <span className="Optionen__icon" title="Optionen anzeigen" />
+                                    </button>
                                 </div>
 
-                                <button
-                                    className="delete-btn"
-                                    onClick={() => handleDelete(recipe.id)}
-                                >
-                                    <span className="Optionen__icon" />
-                                </button>
+
+                          
                               
                             </div>
                         </div>
