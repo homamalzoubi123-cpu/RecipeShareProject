@@ -64,7 +64,7 @@ function CreateRecipe({
                 body: data
             });
 
-            console.log("Response Status:", response.status);
+            console.log("response status:", response.status);
 
             if (response.ok) {
                 const resData = await response.json();
@@ -105,7 +105,7 @@ function CreateRecipe({
                         name="description"
                         value={formData.description}
                         placeholder="description"
-                        onChange={handleChange} label={""}                    />
+                        onChange={handleChange} label={""} />
                     <textarea
                         className="create__recipe__card__instructions"
                         name="instructions"
@@ -119,7 +119,7 @@ function CreateRecipe({
                         name="prepTimeMinutes"
                         value={formData.prepTimeMinutes}
                         placeholder="prep time (minutes)"
-                        onChange={handleChange} label={""}                    />
+                        onChange={handleChange} label={""} />
                     <select name="difficulty" value={formData.difficulty}
                         onChange={handleChange}>
                         <option value="Easy">Easy</option>

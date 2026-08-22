@@ -3,16 +3,21 @@ import { AuthContext, AuthContextType } from "../../context/AuthContext";
 
 interface FollowProps {
     targetUserId: number;
-    isFollowing: boolean; // استلام الحالة من الأب
-    onToggleFollow: (targetUserId: number, newStatus: boolean) => void; // إعلام الأب بالتغيير
+    isFollowing: boolean; 
+    onToggleFollow: (targetUserId: number, newStatus: boolean) => void; 
 }
 
-const Follow = ({ targetUserId, isFollowing, onToggleFollow }: FollowProps) => {
+const Follow = ({
+                        targetUserId,
+                        isFollowing,
+                        onToggleFollow
+}: FollowProps) => {
+
     const { user } = useContext(AuthContext) as AuthContextType;
     const [loading, setLoading] = useState(false);
-
+    
     const handleFollowToggle = async () => {
-        const token = localStorage.getItem("token");
+     const token = localStorage.getItem("token");
         if (!token) {
             alert("You must be logged in to follow users.");
             return;
@@ -53,7 +58,7 @@ const Follow = ({ targetUserId, isFollowing, onToggleFollow }: FollowProps) => {
         }
     };
 
-    // عدم إظهار الزر إذا كان الكاتب هو صاحب الحساب الحالي
+     
     if (user && user.id === targetUserId) {
         return null;
     }

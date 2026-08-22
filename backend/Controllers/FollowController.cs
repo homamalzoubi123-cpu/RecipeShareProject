@@ -65,5 +65,19 @@ public class FollowController : ControllerBase
 
         return NoContent();
     }
+    [HttpGet("followers/{userId}")]
+    public async Task<ActionResult<IEnumerable<object>>> GetFollowers(int userId)
+    {
+       var followers =await _context.Follows
+            .Where(f => f.FollowingId == userId)
+            .Select(f => new { f.FollowerId, f.Follower!.Username })
+            .ToListAsync();
 
+        if (followers == null || !followers.Any())
+        {
+            return NotFound("Keine Follower gefunden.");
+        } return Ok(followers);
+
+
+    }
 }
