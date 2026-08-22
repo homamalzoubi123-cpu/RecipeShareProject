@@ -138,7 +138,6 @@ function Profile() {
     return (
         <div className="profile-container">
             <div className="profile-header-wrapper">
-                <h2 className="profile-title">Mein Profil</h2>
 
                 <div className="profile-header">
                     <input
@@ -172,13 +171,23 @@ function Profile() {
                             </button>
                         )}
                     </div>
-
-                    <p className="username">{userProfile?.username || "Benutzer"}</p>
-
-                    {/* عرض إحصائيات البروفايل بدلاً من السطر الذي كان يسبب خطأ */}
+                    <div className="profile-info">
+                    <div className="username">{userProfile?.username || "Benutzer"}</div>
                     <div className="profile-stats">
-                        <span><strong>{myRecipes.length}</strong> Rezepte</span>
-                        <span><strong>{followingCount}</strong> Gefolgt</span>
+                            <div className="profile-stats__item">
+                                <span>{myRecipes.length}</span>
+                                <strong>Beiträge</strong>
+                            </div>
+                            <div className="profile-stats__item">
+                                <span>289</span>
+                                <strong>Follower</strong>
+                            </div>
+                            <div className="profile-stats__item">
+                                <span>{followingCount}</span>
+                                <strong>Gefolgt</strong>
+                               
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -202,14 +211,17 @@ function Profile() {
                                 <div className="recipe-info">
                                     <span>⏱️ {recipe.prepTimeMinutes} Min</span>
                                     <span>📊 {recipe.difficulty}</span>
+                                    <button
+                                        className="delete-btn"
+                                        onClick={() => handleDelete(recipe.id)}
+                                    >
+                                        <span className="Optionen__icon" title="Optionen anzeigen" />
+                                    </button>
                                 </div>
 
-                                <button
-                                    className="delete-btn"
-                                    onClick={() => handleDelete(recipe.id)}
-                                >
-                                    🗑️ Löschen
-                                </button>
+
+                          
+                              
                             </div>
                         </div>
                     ))
