@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { AuthContext, AuthContextType } from "../../context/AuthContext";
-
+import "./Follow.scss";
 interface FollowProps {
     targetUserId: number;
     isFollowing: boolean; 
@@ -66,7 +66,7 @@ const Follow = ({
     return (
         <div className="follow-container">
             <button
-                className={`follow__btn ${isFollowing ? "follow__btn--active" : ""}`}
+                className={"follow__btn"}
                 onClick={handleFollowToggle}
                 disabled={loading}
             >

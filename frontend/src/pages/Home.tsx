@@ -84,6 +84,19 @@ function Home({ }: HomeProps) {
                 ) : (
                     recipes.map((recipe) => (
                         <div key={recipe.id} className="recipe-card">
+                            <div className="recipe-author-box">
+                                <strong>{recipe.userName || "Unbekannt"}</strong>
+
+                                {/* نمرر إذا ما كان userId موجود داخل قائمة المتابعة */}
+                                <div className="follow-button">
+                                <Follow
+                                    
+                                    targetUserId={recipe.userId}
+                                    isFollowing={followedUserIds.includes(recipe.userId)}
+                                    onToggleFollow={handleToggleFollow}
+                                    />
+                               </div>
+                            </div>
                             {recipe.imageUrl && (
                                 <img
                                     src={getImageUrl(recipe.imageUrl)}
@@ -93,17 +106,6 @@ function Home({ }: HomeProps) {
                             )}
                             <div className="recipe-content">
                                 <h3>{recipe.title}</h3>
-
-                                <div className="recipe-author-box">
-                                    <strong>{recipe.userName || "Unbekannt"}</strong>
-
-                                    {/* نمرر إذا ما كان userId موجود داخل قائمة المتابعة */}
-                                    <Follow
-                                        targetUserId={recipe.userId}
-                                        isFollowing={followedUserIds.includes(recipe.userId)}
-                                        onToggleFollow={handleToggleFollow}
-                                    />
-                                </div>
 
                                 <p className="description">{recipe.description}</p>
                                 <p className="instructions">{recipe.instructions}</p>
