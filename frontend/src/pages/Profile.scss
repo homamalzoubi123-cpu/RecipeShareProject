@@ -7,7 +7,7 @@
    
 }
 
-/* Farbiger Bereich NUR für Header, Foto & Username */
+
 .profile-header-wrapper {
     background: linear-gradient(135deg, #E8F3E8 0%, #FDF0E3 0%);
     padding: 20px;
@@ -30,7 +30,6 @@
         .username {
             font-size: 20px;
             font-weight: bold;
-           
         }
 
         .profile-stats {
@@ -44,6 +43,23 @@
                 display: flex;
                 flex-direction: column;
                 margin-right: auto;
+
+                .following-button {
+                    border: none;
+                    background: transparent;
+                    display: flex;
+                    flex-direction: column;
+                    margin-right: auto;
+
+                    span {
+                        font-size: 13px;
+                       
+                    }
+
+                    strong {
+                        font-size: 15px;
+                    }
+                }
             }
         }
     }
@@ -93,8 +109,8 @@
 
     .recipe-image {
         width: 100%;
-        height: 220px;
-        object-fit: cover;
+        height: 250px;
+        /* object-fit: contain;*/ object-fit: cover;
     }
 
     .recipe-content {
@@ -125,8 +141,6 @@
             flex-shrink: 0;
             margin-left: auto;
         }
-
-
 
         .delete-btn {
             display: flex;

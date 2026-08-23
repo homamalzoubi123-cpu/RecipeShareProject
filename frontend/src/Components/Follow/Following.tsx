@@ -1,17 +1,17 @@
 import React, { useContext, useState } from "react";
 import { AuthContext, AuthContextType } from "../../context/AuthContext";
-import "./Follow.scss";
-interface FollowProps {
+import "./Following.scss";
+interface FollowingProps {
     targetUserId: number;
     isFollowing: boolean; 
     onToggleFollow: (targetUserId: number, newStatus: boolean) => void; 
 }
 
-const Follow = ({
+const Following = ({
                         targetUserId,
                         isFollowing,
                         onToggleFollow
-}: FollowProps) => {
+}: FollowingProps) => {
 
     const { user } = useContext(AuthContext) as AuthContextType;
     const [loading, setLoading] = useState(false);
@@ -62,7 +62,9 @@ const Follow = ({
     if (user && user.id === targetUserId) {
         return null;
     }
-
+    console.log("targetUserId:", targetUserId);
+    console.log("isFollowing:",     isFollowing);
+    console.log("user:", user);
     return (
         <div className="follow-container">
             <button
@@ -76,4 +78,4 @@ const Follow = ({
     );
 };
 
-export default Follow;
+export default Following;

@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Profile.scss";
 import acaunt from "../assets/account.svg";
 
@@ -23,6 +24,8 @@ interface UserProfile {
 }
 
 function Profile() {
+    const navigate = useNavigate();
+
     const [myRecipes, setMyRecipes] = useState<Recipe[]>([]);
     const [userProfile, setUserProfile] = useState<UserProfile>({ imageUrl: null, username: "" });
 
@@ -172,8 +175,8 @@ function Profile() {
                         )}
                     </div>
                     <div className="profile-info">
-                    <div className="username">{userProfile?.username || "Benutzer"}</div>
-                    <div className="profile-stats">
+                        <div className="username">{userProfile?.username || "Benutzer"}</div>
+                        <div className="profile-stats">
                             <div className="profile-stats__item">
                                 <span>{myRecipes.length}</span>
                                 <strong>Beiträge</strong>
@@ -183,9 +186,18 @@ function Profile() {
                                 <strong>Follower</strong>
                             </div>
                             <div className="profile-stats__item">
-                                <span>{followingCount}</span>
-                                <strong>Gefolgt</strong>
                                
+                                <button
+                                    className="following-button"
+                                    onClick={() => {
+                                        if (userProfile.id) {
+                                            navigate(`/profile/${userProfile.id}/following`);
+                                        }
+                                    }}
+                                >
+                                    <span>{followingCount}</span>
+                                    <strong>Gefolgt</strong>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -218,10 +230,6 @@ function Profile() {
                                         <span className="Optionen__icon" title="Optionen anzeigen" />
                                     </button>
                                 </div>
-
-
-                          
-                              
                             </div>
                         </div>
                     ))

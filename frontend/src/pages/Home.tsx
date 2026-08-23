@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import "./Home.scss";
-import Follow from "../Components/Follow/Follow";
+import Follow from "../Components/Follow/Following";
 import { AuthContext, AuthContextType } from "../context/AuthContext";
 
 const API_BASE_URL = "http://localhost:5082";
