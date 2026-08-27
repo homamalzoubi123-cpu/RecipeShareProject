@@ -5,4 +5,46 @@
     height: 100%; /* Höhe auf 100% des Viewports gesetzt */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     min-height: calc(100vh - 70px);
+
+    .following-page__header {
+        width: 100%;
+        border-bottom: 1px solid #6b6375;
+        display: block;
+
+        h2 {
+            padding-bottom: 10px;
+            border-bottom: 4px solid #D98F5C;
+            width: fit-content;
+            margin: 0;
+        }
+
+        .following-page__back {
+            background-color: #e5e5e5;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 12px;
+            font-size: 13px;
+            color: #333;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+    }
+
+    .following-list {
+        margin-top: 20px;
+
+
+        .following-list__item {
+            display: grid;
+            grid-auto-flow: column;
+            justify-content: space-between; /* Abstände zwischen Spalten */
+            align-items: center;
+            margin-bottom: 15px;
+
+            span {
+                font-size: 18px;
+                font-weight: 500;
+            }
+        }
+    }
 }

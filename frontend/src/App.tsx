@@ -7,7 +7,7 @@ import Layout from "./pages/Layoutlet";
 import Home from "./pages/Home";
 import CreateRecipe from "./pages/CreateRecipe";
 import FollowingList from "./Components/Follow/FollowingList";
-
+import FollowersList from "./Components/Follow/FollowersList";
 import Profile from "./pages/Profile";
 interface AppProps { }  
 function App({ }: AppProps) {
@@ -19,6 +19,7 @@ function App({ }: AppProps) {
                 <Route index element={<Welcome />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/profile/:userId/following" element={<FollowingList />} />
+                <Route path="/profile/:userId/followers" element={<FollowersList />} />
                 <Route path="/CreateRecipe" element={<CreateRecipe />} />
                 <Route path="/Home" element={<Home />} />
                 <Route path="/register" element={<Register />} />

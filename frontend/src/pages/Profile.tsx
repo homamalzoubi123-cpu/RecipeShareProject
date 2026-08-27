@@ -177,16 +177,30 @@ function Profile() {
                     <div className="profile-info">
                         <div className="username">{userProfile?.username || "Benutzer"}</div>
                         <div className="profile-stats">
+
+
                             <div className="profile-stats__item">
                                 <span>{myRecipes.length}</span>
                                 <strong>Beiträge</strong>
                             </div>
+
+
                             <div className="profile-stats__item">
-                                <span>289</span>
-                                <strong>Follower</strong>
+                                <button
+                                    className="following-button"
+                                    onClick={() => {
+                                        if (userProfile.id) {
+                                            navigate(`/profile/${userProfile.id}/followers`);
+                                        }
+                                    }}
+                                >
+                                    <span>289</span>
+                                    <strong>Follower</strong>
+                                </button>
                             </div>
+
+
                             <div className="profile-stats__item">
-                               
                                 <button
                                     className="following-button"
                                     onClick={() => {

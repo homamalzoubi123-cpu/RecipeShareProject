@@ -11,7 +11,7 @@ interface FollowingUser {
 }
 
 const FollowingList = () => {
-    // بيجيب userId من الـ URL نفسه، مثلاً /profile/5/following → userId = "5"
+   
     const { userId } = useParams<{ userId: string }>();
     const navigate = useNavigate();
 
@@ -43,7 +43,7 @@ const FollowingList = () => {
     };
 
     if (loading) return <p>Loading...</p>;
-
+    console.log("Following List:", followingList);
     return (
         <div className="following-page">
             <div className="following-page__header">
