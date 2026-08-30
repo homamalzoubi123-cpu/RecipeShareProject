@@ -48,7 +48,7 @@ var app = builder.Build();
 app.UseCors("AllowReactApp");
 app.UseStaticFiles();
 // ملاحظة: إذا كنت تشغل السيرفر على http://localhost:5082 يمكنك إيقاف UseHttpsRedirection مؤقتاً
-// app.UseHttpsRedirection(); 
+ app.UseHttpsRedirection(); 
 
 app.UseAuthentication();
 app.UseAuthorization();
