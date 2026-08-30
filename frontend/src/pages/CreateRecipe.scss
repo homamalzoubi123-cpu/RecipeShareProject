@@ -5,6 +5,29 @@
     min-height: 100vh;
     background: linear-gradient(135deg, #E8F3E8 0%, #FDF0E3 65%);
 
+    .create__recipe__card__time {
+        position: relative;
+        width: 100%;
+        /* Nutzt das native InputField ohne extra Wrapper-Ränder */
+        .register__card__field__input {
+            width: 100%;
+            box-sizing: border-box;
+            padding-right: 20px; /* Damit der Text nicht das min überlagert, falls man sehr lang tippt */
+        }
+
+        .input-suffix {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            font-size: 14px;
+            pointer-events: none; /* Macht das Suffix klickdurchlässig */
+            white-space: nowrap;
+            user-select: none;
+            transition: left 0.05s ease-out; /* Lässt das min flüssig mitwandern */
+        }
+    }
+
     .create__recipe__card {
         background-color: #ffffff;
         padding: 35px 40px;

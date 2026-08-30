@@ -1,12 +1,12 @@
-.following-page {
+.followers-Container {
     padding: 20px;
-    max-width: 800px; /* Auf 800px verkleinert, damit die Karten untereinander schÃ¶ner aussehen */
+    max-width: 800px; /* Auf 800px verkleinert, damit die Karten untereinander schöner aussehen */
     margin: 0 auto;
-    height: 100%; /* HÃ¶he auf 100% des Viewports gesetzt */
+    height: 100%; /* Höhe auf 100% des Viewports gesetzt */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     min-height: calc(100vh - 70px);
 
-    .following-page__header {
+    .followers-page__header {
         width: 100%;
         border-bottom: 1px solid #6b6375;
         display: block;
@@ -35,7 +35,7 @@
             }
         }
 
-        .following-page__back {
+        .followers-page__back {
             background-color: #e5e5e5;
             border: none;
             padding: 6px 14px;
@@ -47,14 +47,22 @@
         }
     }
 
-    .following-list {
+    .followers-List {
         margin-top: 20px;
 
+        .follow-button {
+            background: none;
+            cursor: pointer;
+            border-radius: 3px;
+            padding: 5px 20px;
+            font-size: 15px;
+            box-sizing: border-box;
+        }
 
-        .following-list__item {
+        .followers-List__item {
             display: grid;
             grid-auto-flow: column;
-            justify-content: space-between; /* AbstÃ¤nde zwischen Spalten */
+            justify-content: space-between; /* Abstände zwischen Spalten */
             align-items: center;
             margin-bottom: 15px;
 

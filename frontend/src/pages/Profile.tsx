@@ -32,12 +32,14 @@ function Profile() {
     // أعداد المتابعين والمتابَعين
     const [followersCount, setFollowersCount] = useState<number>(0);
     const [followingCount, setFollowingCount] = useState<number>(0);
-
+    const recipesGridRef = useRef<HTMLInputElement>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
     const fileInputRef = useRef<HTMLInputElement>(null);
-
+    const scrollToRecipes = () => {
+        recipesGridRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
     useEffect(() => {
         const token = localStorage.getItem("token");
         const headers = {
@@ -179,7 +181,7 @@ function Profile() {
                         <div className="profile-stats">
 
 
-                            <div className="profile-stats__item">
+                            <div className="profile-stats__item" onClick={scrollToRecipes} style={{ cursor: "pointer" }}>
                                 <span>{myRecipes.length}</span>
                                 <strong>Beiträge</strong>
                             </div>
@@ -218,7 +220,7 @@ function Profile() {
                 </div>
             </div>
 
-            <div className="my-recipes-grid">
+            <div className="my-recipes-grid" ref={recipesGridRef}>
                 {myRecipes.length === 0 ? (
                     <p>Du hast noch keine Rezepte geteilt.</p>
                 ) : (

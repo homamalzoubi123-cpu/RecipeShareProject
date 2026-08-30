@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-
+import "./FollowersList.scss";
 const API_BASE_URL = "http://localhost:5082";
-
+import { NavLink } from "react-router-dom";
 // Typ für jedes einzelne Element in der Liste (kommt vom Backend)
 interface FollowerUser {
     followerId: number;
@@ -15,6 +15,7 @@ const FollowersList = () => {
     const navigate = useNavigate();
     const [followersList, setFollowersList] = useState<FollowerUser[]>([]);
     const [loading, setLoading] = useState(true);
+    const [loadingId, setLoadingId] = useState<number | null>(null);
 
     useEffect(() => {
         if (!userId) return;
@@ -50,13 +51,74 @@ const FollowersList = () => {
             });
     }, [userId]);
 
+    const handleToggleFollow = async (followerId: number, currentStatus: boolean) => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            alert("You must be logged in to follow users.");
+            return;
+        }
+
+        setLoadingId(followerId);
+        try {
+            if (currentStatus) {
+                const response = await fetch(`${API_BASE_URL}/api/Follow/${followerId}`, {
+                    method: "DELETE",
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
+                });
+                if (response.ok) {
+
+                    setFollowersList((prev) =>
+                        prev.map((f) =>
+                            f.followerId === followerId ? { ...f, isFollowedByMe: false } :
+                                f
+                        )
+                    );
+                }
+            } else {
+                const response = await fetch(`${API_BASE_URL}/api/Follow`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    },
+                    body: JSON.stringify(followerId)
+                });
+                if (response.ok) {
+                    setFollowersList((prev) =>
+                        prev.map((f) =>
+                            f.followerId === followerId ? { ...f, isFollowedByMe: true } : f
+                        )
+                    );
+                }
+            }
+        }
+        catch (error) {
+            console.error("Error toggling follow:", error);
+        } finally {
+            setLoadingId(null);
+        }
+
+
+    };
+
     return (
         <div className="followers-Container">
             <div className="followers-page__header">
-                <button className="followers-page__back" onClick={() => navigate(-1)}>
+                <button className="followers-page__back" onClick={() => navigate("/Profile")}>
                     Zurück
                 </button>
-                <h2>Follower</h2>
+                <div className="followers-page__titles">
+                    <NavLink to={`/profile/${userId}/followers`}
+                        className={({ isActive }) => isActive ? "follow-link follow-link--active" : "follow-link"}>
+                        <h2>Follower</h2>
+                    </NavLink>
+                    <NavLink to={`/profile/${userId}/following`}
+                        className={({ isActive }) => isActive ? "follow-link follow-link--active" : "follow-link"}>
+                        <h2>Gefolgt</h2>
+                    </NavLink>
+                </div>
             </div>
             <div className="followers-List">
                 {loading ? (
@@ -72,7 +134,19 @@ const FollowersList = () => {
                                     className={`follow-status ${follower.isFollowedByMe ? "follow-status--following" : ""
                                         }`}
                                 >
-                                    {follower.isFollowedByMe ? "Gefolgt" : "Nicht gefolgt"}
+                                    <button
+                                        className="follow-button"
+                                        disabled={loadingId === follower.followerId}
+                                        onClick={() =>
+                                            handleToggleFollow(follower.followerId, follower.isFollowedByMe)
+                                        }
+                                    >
+                                        {loadingId === follower.followerId
+                                            ? "..."
+                                            : follower.isFollowedByMe
+                                                ? "Gefolgt"
+                                                : "Auch Folgen"}
+                                    </button>
                                 </span>
                             </div>
                         ))}

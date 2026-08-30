@@ -114,12 +114,24 @@ function CreateRecipe({
                         onChange={handleChange}
                         required
                     />
-                    <InputField
-                        type="number"
-                        name="prepTimeMinutes"
-                        value={formData.prepTimeMinutes}
-                        placeholder="prep time (minutes)"
-                        onChange={handleChange} label={""} />
+                    <div className="create__recipe__card__time">
+                        <InputField
+                            type="number"
+                            name="prepTimeMinutes"
+                            value={formData.prepTimeMinutes}
+                            placeholder="15"
+                            onChange={handleChange}
+                            label=""
+                        />
+                        <span
+                            className="input-suffix"
+                            style={{
+                                left: `calc(30px + ${String(formData.prepTimeMinutes ?? '').length}ch)`
+                            }}
+                        >
+                            min
+                        </span>
+                    </div>
                     <select name="difficulty" value={formData.difficulty}
                         onChange={handleChange}>
                         <option value="Easy">Easy</option>

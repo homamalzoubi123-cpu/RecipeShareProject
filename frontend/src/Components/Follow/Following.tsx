@@ -3,21 +3,21 @@ import { AuthContext, AuthContextType } from "../../context/AuthContext";
 import "./Following.scss";
 interface FollowingProps {
     targetUserId: number;
-    isFollowing: boolean; 
-    onToggleFollow: (targetUserId: number, newStatus: boolean) => void; 
+    isFollowing: boolean;
+    onToggleFollow: (targetUserId: number, newStatus: boolean) => void;
 }
 
 const Following = ({
-                        targetUserId,
-                        isFollowing,
-                        onToggleFollow
+    targetUserId,
+    isFollowing,
+    onToggleFollow
 }: FollowingProps) => {
 
     const { user } = useContext(AuthContext) as AuthContextType;
     const [loading, setLoading] = useState(false);
-    
+
     const handleFollowToggle = async () => {
-     const token = localStorage.getItem("token");
+        const token = localStorage.getItem("token");
         if (!token) {
             alert("You must be logged in to follow users.");
             return;
@@ -58,13 +58,11 @@ const Following = ({
         }
     };
 
-     
+
     if (user && user.id === targetUserId) {
         return null;
     }
-    console.log("targetUserId:", targetUserId);
-    console.log("isFollowing:",     isFollowing);
-    console.log("user:", user);
+
     return (
         <div className="follow-container">
             <button

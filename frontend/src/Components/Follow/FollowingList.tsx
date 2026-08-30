@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Following from "./Following";
 import "./FollowingList.scss";
-
+import { NavLink } from "react-router-dom";
 const API_BASE_URL = "http://localhost:5082";
 
 interface FollowingUser {
@@ -11,7 +11,7 @@ interface FollowingUser {
 }
 
 const FollowingList = () => {
-   
+
     const { userId } = useParams<{ userId: string }>();
     const navigate = useNavigate();
 
@@ -47,10 +47,19 @@ const FollowingList = () => {
     return (
         <div className="following-page">
             <div className="following-page__header">
-                <button className="following-page__back" onClick={() => navigate(-1)}>
-                     Zurück
+                <button className="following-page__back" onClick={() => navigate("/Profile")}>
+                    Zurück
                 </button>
-                <h2>Gefolgt</h2>
+                <div className="followers-page__titles">
+                    <NavLink to={`/profile/${userId}/followers`}
+                        className={({ isActive }) => isActive ? "follow-link follow-link--active" : "follow-link"}>
+                        <h2>Follower</h2>
+                    </NavLink>
+                    <NavLink to={`/profile/${userId}/following`}
+                        className={({ isActive }) => isActive ? "follow-link follow-link--active" : "follow-link"}>
+                        <h2>Gefolgt</h2>
+                    </NavLink>
+                </div>
             </div>
 
             <div className="following-list">
