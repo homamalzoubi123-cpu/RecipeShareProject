@@ -4,6 +4,7 @@ import { useState } from "react";
 import InputField from "../Components/InputField/InputField";
 import { useContext } from "react";
 import { AuthContext, AuthContextType } from "../context/AuthContext";
+import {API_BASE_URL} from "../config";
 interface LoginProps {
 
 }
@@ -37,7 +38,7 @@ const Login = ({
 
         try {
        
-            const response = await fetch("http://localhost:5082/api/auth/login", {
+            const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

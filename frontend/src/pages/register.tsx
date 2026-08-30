@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./register.scss";
 import InputField from "../Components/InputField/InputField";
+import { API_BASE_URL } from "../config";
 interface RegisterProps {
 
 }
@@ -39,7 +40,7 @@ const Register = ({ }: RegisterProps) => {
         setLoading(true);
 
         try {
-            const response = await fetch("http://localhost:5082/api/auth/register", {
+            const response = await fetch(`${API_BASE_URL}/api/auth/register`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({

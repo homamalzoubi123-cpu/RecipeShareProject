@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { AuthContext, AuthContextType } from "../../context/AuthContext";
 import "./Following.scss";
+import { API_BASE_URL } from "../../config";
 interface FollowingProps {
     targetUserId: number;
     isFollowing: boolean;
@@ -28,7 +29,7 @@ const Following = ({
         try {
             if (isFollowing) {
                 // إلغاء المتابعة DELETE
-                const response = await fetch(`http://localhost:5082/api/follow/${targetUserId}`, {
+                const response = await fetch(`${API_BASE_URL}/api/follow/${targetUserId}`, {
                     method: "DELETE",
                     headers: {
                         "Authorization": `Bearer ${token}`
@@ -39,7 +40,7 @@ const Following = ({
                 }
             } else {
                 // إضافة متابعة POST
-                const response = await fetch(`http://localhost:5082/api/follow`, {
+                const response = await fetch(`${API_BASE_URL}/api/follow`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",

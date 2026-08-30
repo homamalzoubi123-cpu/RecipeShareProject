@@ -3,8 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./Profile.scss";
 import acaunt from "../assets/account.svg";
 
-const API_BASE_URL = "http://localhost:5082";
-
+import { API_BASE_URL } from "../config";
 interface Recipe {
     userId: number;
     userName?: string;

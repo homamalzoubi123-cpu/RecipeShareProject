@@ -1,8 +1,9 @@
 import { use, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./FollowersList.scss";
-const API_BASE_URL = "http://localhost:5082";
+
 import { NavLink } from "react-router-dom";
+import { API_BASE_URL } from "../../config";
 // Typ für jedes einzelne Element in der Liste (kommt vom Backend)
 interface FollowerUser {
     followerId: number;

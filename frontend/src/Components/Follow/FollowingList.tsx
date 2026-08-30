@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import Following from "./Following";
 import "./FollowingList.scss";
 import { NavLink } from "react-router-dom";
-const API_BASE_URL = "http://localhost:5082";
+import { API_BASE_URL } from "../../config";
 
 interface FollowingUser {
     followingId: number;
