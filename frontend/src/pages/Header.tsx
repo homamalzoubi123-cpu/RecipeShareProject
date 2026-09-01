@@ -13,7 +13,7 @@ interface HeaderProps {
 }
 
 const Header = ({ }: HeaderProps) => {
-    // Type Assertion (as AuthContextType) löst die "Property does not exist on type '{}'" Fehler
+   
     const { user, logout } = useContext(AuthContext) as AuthContextType;
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -53,7 +53,6 @@ const Header = ({ }: HeaderProps) => {
 
             {user && (
                 <Link to="/CreateRecipe" className="add-recipe-btn">
-                    {/* Hier kannst du Text oder ein Icon einfügen */}
                 </Link>
             )}
 
