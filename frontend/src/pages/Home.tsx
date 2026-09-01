@@ -24,11 +24,11 @@ function Home({ }: HomeProps) {
     const [recipes, setRecipes] = useState<Recipe[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
-    // قائمة تجمع أرقام الأشخاص الذين نتابعهم
+    
     const [followedUserIds, setFollowedUserIds] = useState<number[]>([]);
 
     useEffect(() => {
-        // 1. جلب الوصفات
+       
         fetch(`${API_BASE_URL}/api/recipes`)
             .then((res) => res.json())
             .then((data: Recipe[]) => {
@@ -40,7 +40,7 @@ function Home({ }: HomeProps) {
                 setLoading(false);
             });
 
-        // 2. جلب قائمة الأشخاص الذين يتابعهم المستخدم الحالي مرة واحدة
+        
         if (user) {
             fetch(`${API_BASE_URL}/api/follow/${user.id}`)
                 .then((res) => {
@@ -48,7 +48,7 @@ function Home({ }: HomeProps) {
                     return [];
                 })
                 .then((followingList) => {
-                    // استخراج الـ followingId فقط ووضعه في قائمة
+                   
                     const ids = followingList.map((item: { followingId: number }) => item.followingId);
                     setFollowedUserIds(ids);
                 })
@@ -56,13 +56,13 @@ function Home({ }: HomeProps) {
         }
     }, [user]);
 
-    // دالة تحديث قائمة المتابعة لجميع المنشورات في الصفحة
+    
     const handleToggleFollow = (targetUserId: number, newStatus: boolean) => {
         if (newStatus) {
-            // إضافة المستخدم للـ Array
+            
             setFollowedUserIds((prev) => [...prev, targetUserId]);
         } else {
-            // إزالة المستخدم من الـ Array
+            
             setFollowedUserIds((prev) => prev.filter((id) => id !== targetUserId));
         }
     };
@@ -87,7 +87,7 @@ function Home({ }: HomeProps) {
                             <div className="recipe-author-box">
                                 <strong>{recipe.userName || "Unbekannt"}</strong>
 
-                                {/* نمرر إذا ما كان userId موجود داخل قائمة المتابعة */}
+                         
                                 <div className="follow-button">
                                 <Follow
                                     
