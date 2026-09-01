@@ -1,6 +1,6 @@
 import nurlogo from "../assets/nurlogo.png";
 
-import "./welcome.css"
+import "./welcome.scss"
 interface WelcomeProps {
 
 }
