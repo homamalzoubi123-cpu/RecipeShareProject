@@ -37,7 +37,7 @@ function CreateRecipe({
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log("Form Submitted! Data:", formData); // للتأكد من تنفيذ الدالة
+        console.log("Form Submitted! Data:", formData);
 
         setLoading(true);
 
