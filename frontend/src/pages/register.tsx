@@ -30,7 +30,10 @@ const Register = ({ }: RegisterProps) => {
         e.preventDefault();
         setError("");
         setSuccess("");
-
+        if (formData.password.length < 8) {
+            setError("Passwort muss mindestens 8 Zeichen lang sein!");
+            return;
+        }
         if (formData.password !== formData.confirmPassword) {
             setError("Passwörter stimmen nicht überein!");
             return;

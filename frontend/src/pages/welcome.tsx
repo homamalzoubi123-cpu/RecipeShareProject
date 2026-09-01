@@ -20,8 +20,7 @@ const Welcome = ({ }: WelcomeProps) => {
             <p> <span className="welcome__title_Cook">Cook</span> •  <span className="welcome__title_Share">Share</span></p>
             <p className="welcome__text">Teile deine lieblingsrezepte und entdecke neue Rezepte</p>
             <div className="welcome__buttons">
-
-            </div>
+           </div>
            
         </div>
   )
