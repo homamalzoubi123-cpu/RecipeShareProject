@@ -29,7 +29,7 @@ function Profile() {
     const [myRecipes, setMyRecipes] = useState<Recipe[]>([]);
     const [userProfile, setUserProfile] = useState<UserProfile>({ imageUrl: null, username: "" });
 
-    // أعداد المتابعين والمتابَعين
+   
     const [followersCount, setFollowersCount] = useState<number>(0);
     const [followingCount, setFollowingCount] = useState<number>(0);
     const recipesGridRef = useRef<HTMLInputElement>(null);
@@ -60,16 +60,23 @@ function Profile() {
 
                 setMyRecipes(recipesData);
                 setUserProfile(userData);
-
-                // جلب قائمة المتابَعين (الأشخاص الذين تتابعهم أنت)
                 if (userData.id) {
-                    const followingRes = await fetch(`${API_BASE_URL}/api/follow/${userData.id}`);
+             
+                   const followersRes = await fetch(`${API_BASE_URL}/api/Follow/followers/${userData.id}`, { headers });
+                    if (followersRes.ok) {
+                        const followersData = await followersRes.json();
+                        setFollowersCount(followersData.length);
+                    }
+                }
+               
+                if (userData.id) { 
+                    const followingRes = await fetch(`${API_BASE_URL}/api/follow/${userData.id}`, { headers });
                     if (followingRes.ok) {
                         const followingData = await followingRes.json();
                         setFollowingCount(followingData.length);
                     }
                 }
-
+                 
                 setLoading(false);
             })
             .catch((err: unknown) => {
@@ -139,11 +146,10 @@ function Profile() {
 
     if (loading) return <p>Lade Profil...</p>;
     if (error) return <p className="error">{error}</p>;
-
+    console.log("followersCount:", followersCount);
     return (
         <div className="profile-container">
             <div className="profile-header-wrapper">
-
                 <div className="profile-header">
                     <input
                         type="file"
@@ -196,7 +202,7 @@ function Profile() {
                                         }
                                     }}
                                 >
-                                    <span>289</span>
+                                    <span>{followersCount}</span>
                                     <strong>Follower</strong>
                                 </button>
                             </div>
