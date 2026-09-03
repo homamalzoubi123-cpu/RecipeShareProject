@@ -64,7 +64,6 @@ function CreateRecipe({
                 body: data
             });
 
-            console.log("response status:", response.status);
 
             if (response.ok) {
                 const resData = await response.json();

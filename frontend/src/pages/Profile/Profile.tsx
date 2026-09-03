@@ -1,7 +1,8 @@
 import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Profile.scss";
-import acaunt from "../assets/account.svg";
+import ProfileHeader from "./ProfileHeader";
+import RecipeGrid from "./RecipeGrid";
 
 const API_BASE_URL = "http://localhost:5082";
 
@@ -146,117 +147,39 @@ function Profile() {
 
     if (loading) return <p>Lade Profil...</p>;
     if (error) return <p className="error">{error}</p>;
-    console.log("followersCount:", followersCount);
+
     return (
         <div className="profile-container">
-            <div className="profile-header-wrapper">
-                <div className="profile-header">
-                    <input
-                        type="file"
-                        accept="image/*"
-                        ref={fileInputRef}
-                        onChange={handleImageUpload}
-                        style={{ display: "none" }}
-                    />
 
-                    <div className="profile-image-wrapper">
-                        {!userProfile?.imageUrl ? (
-                            <button
-                                onClick={() => fileInputRef.current?.click()}
-                                style={{ cursor: "pointer" }}
-                                title="Klicken zum Ändern des Profilbilds"
-                            >
-                                <img className="header__container__account" src={acaunt} alt="account" />
-                            </button>
-                        ) : (
-                            <button
-                                onClick={() => fileInputRef.current?.click()}
-                                style={{ cursor: "pointer" }}
-                                title="Klicken zum Ändern des Profilbilds"
-                            >
-                                <img
-                                    src={getImageUrl(userProfile.imageUrl)}
-                                    alt="Profilbild"
-                                    className="profile-image"
-                                />
-                            </button>
-                        )}
-                    </div>
-                    <div className="profile-info">
-                        <div className="username">{userProfile?.username || "Benutzer"}</div>
-                        <div className="profile-stats">
+            <ProfileHeader
+                userProfile={userProfile}
+                recipesCount={myRecipes.length}
+                followersCount={followersCount}
+                followingCount={followingCount}
+                fileInputRef={fileInputRef}
+                onImageUpload={handleImageUpload}
+                onRecipesClick={scrollToRecipes}
+                onFollowersClick={() => {
+                    if (userProfile.id) {
+                        navigate(`/profile/${userProfile.id}/followers`);
+                    }
+                }}
+                onFollowingClick={() => {
+                    if (userProfile.id) {
+                        navigate(`/profile/${userProfile.id}/following`);
+                    }
+                }}
+                getImageUrl={getImageUrl}
+            />
 
-
-                            <div className="profile-stats__item" onClick={scrollToRecipes} style={{ cursor: "pointer" }}>
-                                <span>{myRecipes.length}</span>
-                                <strong>Beiträge</strong>
-                            </div>
-
-
-                            <div className="profile-stats__item">
-                                <button
-                                    className="following-button"
-                                    onClick={() => {
-                                        if (userProfile.id) {
-                                            navigate(`/profile/${userProfile.id}/followers`);
-                                        }
-                                    }}
-                                >
-                                    <span>{followersCount}</span>
-                                    <strong>Follower</strong>
-                                </button>
-                            </div>
-
-
-                            <div className="profile-stats__item">
-                                <button
-                                    className="following-button"
-                                    onClick={() => {
-                                        if (userProfile.id) {
-                                            navigate(`/profile/${userProfile.id}/following`);
-                                        }
-                                    }}
-                                >
-                                    <span>{followingCount}</span>
-                                    <strong>Gefolgt</strong>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div ref={recipesGridRef}>
+                <RecipeGrid
+                    recipes={myRecipes}
+                    onDelete={handleDelete}
+                    getImageUrl={getImageUrl}
+                />
             </div>
 
-            <div className="my-recipes-grid" ref={recipesGridRef}>
-                {myRecipes.length === 0 ? (
-                    <p>Du hast noch keine Rezepte geteilt.</p>
-                ) : (
-                    myRecipes.map((recipe) => (
-                        <div key={recipe.id} className="recipe-card">
-                            {recipe.imageUrl && (
-                                <img
-                                    src={getImageUrl(recipe.imageUrl)}
-                                    alt={recipe.title}
-                                    className="recipe-image"
-                                />
-                            )}
-                            <div className="recipe-content">
-                                <h3>{recipe.title}</h3>
-                                <p>{recipe.description}</p>
-                                <div className="recipe-info">
-                                    <span>⏱️ {recipe.prepTimeMinutes} Min</span>
-                                    <span>📊 {recipe.difficulty}</span>
-                                    <button
-                                        className="delete-btn"
-                                        onClick={() => handleDelete(recipe.id)}
-                                    >
-                                        <span className="Optionen__icon" title="Optionen anzeigen" />
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    ))
-                )}
-            </div>
         </div>
     );
 }
