@@ -1,0 +1,106 @@
+.my-recipes-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 20px;
+}
+
+.recipe-card {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+  width: 100%;
+  position: relative;
+
+  &:hover {
+    transform: translateY(-3px);
+  }
+
+  &:has(.recipe-options) {
+    z-index: 50;
+  }
+
+  .recipe-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+  }
+
+  .recipe-content {
+    padding: 15px;
+    gap: 10px;
+
+    h3 {
+      margin: 0 0 10px 0;
+      color: #333;
+    }
+
+    .recipe-info {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      font-size: 13px;
+      color: #888;
+      gap: 10px;
+      border-top: 1px solid #eee;
+      padding-top: 10px;
+      margin-top: 10px;
+      position: relative;
+    }
+
+    .Optionen__icon {
+      background: url("../../assets/Optionen.svg") no-repeat center;
+      width: 20px;
+      height: 20px;
+      display: block;
+      background-size: contain;
+      flex-shrink: 0;
+      margin-left: auto;
+    }
+
+    .delete-btn {
+      display: flex;
+      background: none;
+      border: none;
+      cursor: pointer;
+      pointer-events: auto;
+      margin-left: auto;
+      position: relative;
+    }
+
+    .recipe-options {
+      position: absolute;
+      bottom: 65%;
+      right: 0;
+      margin-bottom: 8px;
+      z-index: 100;
+      background-color: antiquewhite;
+      border-radius: 6px;
+      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.18);
+
+      button {
+        display: block;
+        box-sizing: border-box;
+        width: 100%;
+        padding: 10px 20px;
+        text-decoration: none;
+        background-color: transparent;
+        color: #D98F5C;
+        font-size: 15px;
+        font-family: inherit;
+        text-align: center;
+        border: none;
+        cursor: pointer;
+        white-space: nowrap;
+
+        &:hover {
+          background-color: #D98F5C;
+          color: antiquewhite;
+        }
+      }
+    }
+  }
+}

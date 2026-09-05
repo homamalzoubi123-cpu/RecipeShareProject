@@ -1,158 +1,84 @@
 .profile-container {
-   
-    max-width: 800px;
-    margin: 0 auto;
-    min-height: calc(100vh - 70px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-   
+  max-width: 800px;
+  margin: 0 auto;
+  min-height: calc(100vh - 70px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  color: black;
+  color-scheme: light;
 }
 
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 
-.profile-header-wrapper {
-    background: linear-gradient(135deg, #E8F3E8 0%, #FDF0E3 0%);
-    padding: 20px;
-    height: 150px;
-    margin-bottom: 25px;
-}
-
-.profile-header {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    
-
-    .profile-info {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        margin-left: 30px;
-
-        .username {
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .profile-stats {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-
-            .profile-stats__item {
-                display: flex;
-                flex-direction: column;
-                margin-right: auto;
-
-                .following-button {
-                    border: none;
-                    background: transparent;
-                    display: flex;
-                    flex-direction: column;
-                    margin-right: auto;
-                    gap: 5px;
-                    margin-top: 4px;
-                    cursor: pointer;
-
-                    span {
-                        color: #6b6375;
-                        font-size: 16px;
-                    }
-
-                    strong {
-                        color: #6b6375;
-                        font-size: 16px;
-                    }
-                }
-            }
-        }
-    }
-
-    .profile-image-wrapper {
-        button {
-            background: transparent;
-            border: none;
-            padding: 0;
-        }
-
-        .profile-image {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #fff;
-        }
-
-        .header__container__account {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-        }
-    }
-}
-
-.my-recipes-grid {
+  .modal-box {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 20px;
-    
-    margin:20px;
-}
+    padding: 20px;
+    width: 40%;
+    background-color: white;
+    border-radius: 17px;
+    min-width: 300px;
+    max-width: calc(100% - 40px);
+    position: relative;
 
-.recipe-card {
-   
-    background-color: #fff;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease-in-out;
-    width: 100%;
-    z-index: 1;
+    .close-button {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      cursor: pointer;
+      background-color: transparent;
+      border: none;
+      color: #333;
+      font-size: 24px;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+  }
 
-    &:hover {
-        transform: translateY(-3px);
+  p {
+    font-size: 18px;
+    color: #333;
+    padding: 0 20px;
+  }
+
+  .modal-actions {
+    display: flex;
+    gap: 100px;
+    margin-top: 20px;
+
+    @media (max-width: 400px) {
+      gap: 40px;
     }
 
-    .recipe-image {
-        width: 100%;
-        height: 250px;
-        /* object-fit: contain;*/ object-fit: cover;
+    button {
+      background-color: #D98F5C;
+      display: flex;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+
+      &:hover {
+        background-color: #c87a4f;
+      }
     }
-
-    .recipe-content {
-        padding: 15px;
-        gap: 10px;
-
-        h3 {
-            margin: 0 0 10px 0;
-            color: #333;
-        }
-
-        .recipe-info {
-            justify-content: flex-start;
-            font-size: 13px;
-            color: #888;
-            gap: 10px;
-            border-top: 1px solid #eee;
-            padding-top: 10px;
-            margin-top: 10px;
-        }
-
-        .Optionen__icon {
-            background: url("../assets/Optionen.svg") no-repeat center;
-            width: 20px;
-            height: 20px;
-            display: block;
-            background-size: contain;
-            flex-shrink: 0;
-            margin-left: auto;
-        }
-
-        .delete-btn {
-            display: flex;
-            background: none;
-            border: none;
-            cursor: pointer;
-            pointer-events: auto;
-            margin-left: auto;
-        }
-    }
+  }
 }
