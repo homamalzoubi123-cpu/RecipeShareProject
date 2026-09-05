@@ -1,18 +1,15 @@
 ﻿import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext, AuthContextType } from "../context/AuthContext";
-
 import Pourder from "../assets/pourder.svg";
 import acaunt from "../assets/account.svg";
 import home from "../assets/home.svg";
 import "./Header.scss";
 
 
-interface HeaderProps {
-   
-}
 
-const Header = ({ }: HeaderProps) => {
+
+const Header = ({ }) => {
    
     const { user, logout } = useContext(AuthContext) as AuthContextType;
     const navigate = useNavigate();

@@ -1,0 +1,46 @@
+.profile-header-wrapper {
+  background: linear-gradient(135deg, #E8F3E8 0%, #FDF0E3 0%);
+  padding: 20px;
+  height: 150px;
+  margin-bottom: 25px;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  .profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-left: 30px;
+
+    .username {
+      font-size: 20px;
+      font-weight: bold;
+    }
+  }
+
+  .profile-image-wrapper {
+    button {
+      background: transparent;
+      border: none;
+      padding: 0;
+    }
+
+    .profile-image {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #fff;
+    }
+
+    .header__container__account {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+    }
+  }
+}

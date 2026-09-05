@@ -1,14 +1,14 @@
 import { Outlet } from "react-router-dom";
 import Header from "./Header";
-interface LayoutProps {
-}
-const Layout = ({ }: LayoutProps) => {
+
+const Layout = ({ }) => {
     return (
         <div>
             <Header />
-            <nav></nav>
+
             <main className="main">
-                <Outlet />
+
+             <Outlet />
             </main>
         </div>
     );

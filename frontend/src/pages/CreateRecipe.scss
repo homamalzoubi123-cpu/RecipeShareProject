@@ -13,6 +13,8 @@
             width: 100%;
             box-sizing: border-box;
             padding-right: 20px; /* Damit der Text nicht das min überlagert, falls man sehr lang tippt */
+            background-color: white;
+      
         }
 
         .input-suffix {
@@ -36,6 +38,9 @@
         width: 100%;
         max-width: 600px;
         box-sizing: border-box;
+        background-color: white;
+        color: black;
+        color-scheme: light;
 
         .login__card__back {
             background-color: #e5e5e5;

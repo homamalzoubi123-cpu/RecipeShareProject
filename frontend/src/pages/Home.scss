@@ -1,8 +1,8 @@
 .home-container {
     padding: 20px;
-    max-width: 800px; /* Auf 800px verkleinert, damit die Karten untereinander schöner aussehen */
+    max-width: 800px; 
     margin: 0 auto;
-    height: 100%; /* Höhe auf 100% des Viewports gesetzt */
+    height: 100%; 
 
     h2 {
         color: #D98F5C;
@@ -11,10 +11,9 @@
     }
 }
 
-/* Karten untereinander ausrichten */
 .recipes-grid {
     display: flex;
-    flex-direction: column; /* Richtet die Elemente vertikal untereinander aus */
+    flex-direction: column; 
     gap: 20px;
     width: 100%;
 }
@@ -30,7 +29,7 @@
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease-in-out;
-    width: 100%; /* Nimmt die volle Breite des Containers ein */
+    width: 100%; 
 
     &:hover {
         transform: translateY(-3px);
@@ -54,7 +53,7 @@
 
     .recipe-image {
         width: 100%;
-        height: 220px; /* Leicht erhöht für ein besseres Hochformat-Layout */
+        height: 220px; 
         object-fit: cover;
     }
 

@@ -12,8 +12,8 @@ const Navbar = ({ }: NavbarProps) =>  {
                     <span>About</span>
                   </div>
                     <div className="navbar__navItems">
-                        <button className="navbar__navButton">Register</button>
-                        <button className="navbar__navButton">Login</button>
+                      <button className="navbar__navButton">Register</button>
+                      <button className="navbar__navButton">Login</button>
                 </div>
             </div>
         </div>

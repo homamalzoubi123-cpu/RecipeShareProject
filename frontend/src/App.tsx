@@ -8,7 +8,7 @@ import Home from "./pages/Home";
 import CreateRecipe from "./pages/CreateRecipe";
 import FollowingList from "./Components/Follow/FollowingList";
 import FollowersList from "./Components/Follow/FollowersList";
-import Profile from "./pages/Profile";
+import Profile from "./pages/Profile/Profile";
 interface AppProps { }  
 function App({ }: AppProps) {
     return (
