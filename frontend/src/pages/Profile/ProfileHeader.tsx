@@ -45,24 +45,26 @@ function ProfileHeader({
         />
 
         <div className="profile-image-wrapper">
+          {!userProfile.imageUrl ? (
+            <img
+              className="header__container__account"
+              src={acaunt}
+              alt="account"
+            />
+          ) : (
+            <img
+              src={getImageUrl(userProfile.imageUrl)}
+              alt="Profilbild"
+              className="profile-image"
+            />
+          )}
+
           <button
             onClick={() => fileInputRef.current?.click()}
-            style={{ cursor: "pointer" }}
+            className="change-image-btn"
             title="Klicken zum Ändern des Profilbilds"
           >
-            {!userProfile.imageUrl ? (
-              <img
-                className="header__container__account"
-                src={acaunt}
-                alt="account"
-              />
-            ) : (
-              <img
-                src={getImageUrl(userProfile.imageUrl)}
-                alt="Profilbild"
-                className="profile-image"
-              />
-            )}
+            <span className="change-image-text"></span>
           </button>
         </div>
 

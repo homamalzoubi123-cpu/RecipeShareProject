@@ -4,7 +4,29 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: linear-gradient(135deg, #E8F3E8 0%, #FDF0E3 65%);
+    background: #F5F0DE;
+
+    &.login--welcome {
+        position: absolute;
+        right: 40px;
+        top: 40px;
+        width: 40%;
+        min-height: auto;
+        background: transparent;
+        justify-content: flex-end;
+        align-items: flex-start;
+        padding: 0;
+
+        @media (max-width: 768px) {
+            position: relative;
+            right: auto;
+            top: auto;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+    }
 }
 
 // تصميم الكرت الأبيض
@@ -16,7 +38,33 @@
     width: 100%;
     max-width: 420px;
     box-sizing: border-box;
-    // زر الرجوع
+
+    &.card--welcome {
+        width: 50%;
+        position: relative;
+
+        @media (max-width: 768px) {
+            width: 90%;
+            max-width: 400px;
+        }
+    }
+
+    .login--welcome & {
+        padding: 2rem;
+        box-shadow: none;
+        width: 100%;
+        max-width: none;
+        background: #F5F0DE;
+
+        @media (max-width: 768px) {
+            width: 90%;
+            max-width: 400px;
+            background: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 35px 40px;
+        }
+    }
+
     .login__card__back {
         background-color: #e5e5e5;
         border: none;
@@ -27,7 +75,9 @@
         cursor: pointer;
         margin-bottom: 20px;
     }
-    // العنوان الرئيسي
+
+
+
     .login__title {
         text-align: center;
         font-size: 26px;
@@ -35,7 +85,7 @@
         margin-bottom: 35px;
         color: #111;
     }
-    // الحقول والمسافات
+
     .login__card__field {
         margin-bottom: 22px;
     }
@@ -47,7 +97,7 @@
         color: #111;
         margin-bottom: 6px;
     }
-    // صف كلمة السر لرصف النصين بجانب بعضهما
+
     .login__card__label__row {
         display: flex;
         justify-content: space-between;
@@ -64,7 +114,7 @@
             text-decoration: underline;
         }
     }
-    // المدخلات الإدخالية
+
     .login__card__input {
         width: 100%;
         padding: 12px 18px;
@@ -78,7 +128,7 @@
             color: #aaa;
         }
     }
-    // الزر الأصفر
+
     .login__card__button {
         width: 100%;
         padding: 12px;
@@ -96,7 +146,7 @@
             background-color: #e7986a;
         }
     }
-    // نص التسجيل الأسفل
+
     .login__card__footer {
         text-align: center;
         font-size: 13px;

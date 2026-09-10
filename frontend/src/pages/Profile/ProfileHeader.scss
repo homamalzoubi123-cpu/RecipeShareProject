@@ -6,41 +6,57 @@
 }
 
 .profile-header {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-
-  .profile-info {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-left: 30px;
+    align-items: center;
+    gap: 20px;
 
-    .username {
-      font-size: 20px;
-      font-weight: bold;
-    }
-  }
+    .profile-info {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-left: 30px;
 
-  .profile-image-wrapper {
-    button {
-      background: transparent;
-      border: none;
-      padding: 0;
+        .username {
+            font-size: 20px;
+            font-weight: bold;
+        }
     }
 
-    .profile-image {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid #fff;
-    }
+    .profile-image-wrapper {
+        position: relative;
 
-    .header__container__account {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
+        .change-image-btn {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: none;
+            border:none;
+            padding: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .change-image-text {
+            width: 24px;
+            height: 24px;
+            background: url("../../assets/plusaddimage.svg") no-repeat center/contain;
+            display: block;
+        }
+
+        .profile-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #fff;
+        }
+
+        .header__container__account {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+        }
     }
-  }
 }
