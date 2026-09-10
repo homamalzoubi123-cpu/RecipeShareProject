@@ -40,11 +40,11 @@ const Header = ({ }) => {
 
             {!user ? (
                 <Link className="header__container__link__home" to="/">
-                    <img className="header__container__home" src={home} alt="home" />
+                    <img className="header__container__home" src={home} alt="Home" />
                 </Link>
             ) : (
                 <Link className="header__container__link__home" to="/Home">
-                    <img className="header__container__home" src={home} alt="home" />
+                    <img className="header__container__home" src={home} alt="Home" />
                 </Link>
             )}
 

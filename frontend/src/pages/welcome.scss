@@ -1,90 +1,152 @@
 .welcome {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    text-align: center;
+    position: relative;
     width: 100%;
-    margin: 0;
-    background: linear-gradient(135deg, #E8F3E8 0%, #FDF0E3 65%);
-}
-    .welcome img {
-        width: 400px;
-        height: auto;
-    }
-    .welcome__title_r {
-        color: #D98F5C;
-    }
-
-    .welcome__title_e {
-        color: #4A7C59;
-    }
-
-    .welcome__title_c {
-        color: #E07A3E;
-    }
-
-    .welcome__title_i {
-        color: #2D6E7E;
-    }
-
-    .welcome__title_p {
-        color: #D9A441;
-    }
-
-    .welcome__title_Hub {
-        color: #D9A441;
-    }
-
-    .welcome__title_Cook {
-        color: #4A7C59;
-        margin: 1px;
-        font-size: 20px;
-        font-weight: bold;
-    }
-
-    .welcome__title_Share {
-        color: #E07A3E;
-        font-size: 20px;
-        font-weight: bold;
-    }
-
-.welcome__text {
-    color: #D9A441;
-    font-size: 16px;
-    line-height: 1.5;
-    font-weight: 700;
-}
-.welcome__buttons {
+    min-height: 100vh;
+    background: #F5F0DE;
+    box-sizing: border-box;
     display: flex;
-    justify-content: center;
-    gap: 15px;
-}
-.welcome__button__Anmeldung {
-    padding: 12px 32px;
-    border-radius: 8px;
-    font-size: 16px;
-    gap: 8px;
-    cursor: pointer;
-    border: none;
-    background-color: #D98F5C;
-    color: antiquewhite
-}
-    .welcome__button__Anmeldung:hover {
-        background-color: #e7986a;
+    align-items: flex-start;
+    z-index: 2;
+    height: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
 
-.welcome__button__Registrieren {
-    padding: 12px 32px;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    border: none;
-    background-color: #D98F5C;
-    color:antiquewhite
-}
-    .welcome__button__Registrieren:hover {
-        background-color: #e7986a;
+    &__container {
+        max-width: 360px;
+        flex: 0 0 auto;
+        margin-left: 80px;
+        margin-top: 50px;
+
+        @media (max-width: 768px) {
+            margin-left: 0;
+            margin-top: 20px;
+            text-align: center;
+        }
     }
 
+    &__logo {
+        width: 140px;
+        height: auto;
+        margin-bottom: 40px;
+        margin-top: 30px;
+
+        @media (max-width: 768px) {
+            margin: 30px auto 40px auto;
+            display: block;
+        }
+    }
+
+    &__title {
+        font-size: 54px;
+        font-weight: 800;
+        line-height: 1.05;
+        color: #0d0d0d;
+        margin: 0 0 24px 0;
+
+        .line1,
+        .line2 {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            display: none;
+        }
+    }
+
+    &__tagline {
+        font-size: 22px;
+        font-weight: 600;
+        color: #1a1a1a;
+        margin: 0 0 16px 0;
+
+        @media (max-width: 768px) {
+            display: none;
+        }
+    }
+
+    &__text {
+        font-size: 18px;
+        color: #4a4a4a;
+        line-height: 1.4;
+        margin: 0;
+
+        @media (max-width: 768px) {
+            display: none; // بيخفي العنصر كامل عالشاشة الصغيرة
+        }
+    }
+
+    &__images {
+        position: relative;
+        width: 500px;
+        height: 500px;
+        left: 0%;
+        margin-top: 35px;
+        margin-left: 80px;
+
+        @media (max-width: 1200px) {
+            width: 400px;
+            height: 400px;
+            left: 0%;
+        }
+
+        @media (max-width: 1022px) {
+            display: none;
+        }
+
+        .card {
+            position: absolute;
+            background: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+
+            &--lasagna {
+                top: 80px;
+                left: 0;
+                width: 150px;
+                height: 110px;
+                z-index: 1;
+            }
+
+            &--crepe {
+                top: 0;
+                right: 0;
+                width: 190px;
+                height: 270px;
+                z-index: 2;
+            }
+
+            &--ramen {
+                bottom: 40px;
+                left: 30px;
+                width: 140px;
+                height: 180px;
+                z-index: 3;
+            }
+
+            &--chef {
+                bottom: 0;
+                left: 100px;
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                border: 4px solid #1877f2;
+                z-index: 4;
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+            }
+        }
+    }
+}

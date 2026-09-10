@@ -9,14 +9,19 @@ import CreateRecipe from "./pages/CreateRecipe";
 import FollowingList from "./Components/Follow/FollowingList";
 import FollowersList from "./Components/Follow/FollowersList";
 import Profile from "./pages/Profile/Profile";
+import { useContext } from "react";
+import { AuthContext, AuthContextType } from "./context/AuthContext";
+
 interface AppProps { }  
 function App({ }: AppProps) {
+    const { user } = useContext(AuthContext) as AuthContextType;
+
     return (
-       
+
         <Routes>
-            
-            <Route path="/" element={<Layout />}>
-                <Route index element={<Welcome />} />
+
+                <Route path="/" element={<Layout />}>
+                <Route index element={user ? <Home /> : <Welcome />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/profile/:userId/following" element={<FollowingList />} />
                 <Route path="/profile/:userId/followers" element={<FollowersList />} />

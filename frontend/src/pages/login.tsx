@@ -1,15 +1,15 @@
 import "./login.scss";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InputField from "../Components/InputField/InputField";
 import { useContext } from "react";
 import { AuthContext, AuthContextType } from "../context/AuthContext";
 import {API_BASE_URL} from "../config";
 interface LoginProps {
-
+    isInWelcome?: boolean;
 }
-const Login = ({
-
+const Login =({
+    isInWelcome
 }: LoginProps) => {
     const { login } = useContext(AuthContext) as AuthContextType;
     const [formData, setFormData] = useState({
@@ -35,7 +35,7 @@ const Login = ({
         setSuccess("");
 
         setLoading(true);
-
+       
         try {
        
             const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
@@ -59,6 +59,7 @@ const Login = ({
             }
             login(data.user, data.token);
             setSuccess("Erfolgreich angemeldet! Sie werden weitergeleitet...");
+            setFormData({ email: "", password: "" });
             setTimeout(() => {
                 navigate("/Home");
             }, 2000);
@@ -73,16 +74,18 @@ const Login = ({
             setLoading(false);
         }
     };
-
-
+    useEffect(() => { setFormData({ email: "", password: "" }) }, []);
+    console.log("formData.password:", formData.password);
+    console.log("formData.email:", formData.email);
     return (
-        <div className="login">
-            <div className="login__card">
-                <Link to="/">
-                     <button className="login__card__back">Zurück</button>
-                </Link>
-                <h2
-                    className="login__title">
+      <div className={`login ${isInWelcome ? "login--welcome" : ""}`}>
+            <div className={`login__card ${isInWelcome ? "login__card--welcome" : ""}`}>
+                {!isInWelcome && (
+                    <Link to="/">
+                        <button className="login__card__back">Zurück</button>
+                    </Link>
+                )}
+                <h2 className="login__title">
                     Willkommen
                 </h2>
                 {error &&
@@ -110,6 +113,7 @@ const Login = ({
                     placeholder="E-Mail-Adresse"
                     value={formData.email}
                     onChange={handleChange}
+                    autoComplete="email"
                 />
                 <InputField
                     label="Passwort"
@@ -118,6 +122,7 @@ const Login = ({
                     placeholder="Passwort"
                     value={formData.password}
                     onChange={handleChange}
+                    autoComplete="new-password"
                 />
                 <div
                     className="login__card__label__row">

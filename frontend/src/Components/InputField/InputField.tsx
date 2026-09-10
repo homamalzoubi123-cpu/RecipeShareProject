@@ -7,17 +7,19 @@ interface InputFieldProps {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     required?: boolean;
     className?: string;
+    autoComplete?: string;
 }
 
-            const InputField = ({
+     const InputField = ({
                                label,
                                 type,
                                 name,
                                 value,
                                 placeholder,
                                 onChange,
-                                required
-                            }: InputFieldProps) => {
+                                required,
+                                autoComplete
+    }: InputFieldProps) => {
     return (
         <div className="register__card__field">
             <label className="register__card__field__label">{label}</label>
@@ -28,6 +30,7 @@ interface InputFieldProps {
                 placeholder={placeholder}
                 value={value}
                 onChange={onChange}
+                autoComplete={autoComplete || "off"}
                 required
             />
         </div>

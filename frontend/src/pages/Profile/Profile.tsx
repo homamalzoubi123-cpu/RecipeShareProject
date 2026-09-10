@@ -4,7 +4,7 @@ import "./Profile.scss";
 import ProfileHeader from "./ProfileHeader";
 import RecipeGrid from "./RecipeGrid";
 
-const API_BASE_URL = "http://localhost:5082";
+import { API_BASE_URL } from "../../config";
 
 interface Recipe {
   userId: number;

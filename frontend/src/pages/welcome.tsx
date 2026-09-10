@@ -1,29 +1,52 @@
 import nurlogo from "../assets/nurlogo.png";
+import imagegruppe from "../assets/imagegruppe.jpeg";
+import "./welcome.scss";
+import Login from "./login";
+import { useContext } from "react";
+import { AuthContext, AuthContextType } from "../context/AuthContext";
+interface WelcomeProps { }
 
-import "./welcome.scss"
-interface WelcomeProps {
-
-}
 const Welcome = ({ }: WelcomeProps) => {
+    const { user } = useContext(AuthContext) as AuthContextType;
     return (
-        <div className="welcome">
-            <img src={nurlogo} alt="logo" />
-            <h1 className="welcome__title">
-                <span className="welcome__title_r">R</span>
-                <span className="welcome__title_e">e</span>
-                <span className="welcome__title_c">c</span>
-                <span className="welcome__title_i">i</span>
-                <span className="welcome__title_p">p</span>
-                <span className="welcome__title_e">e</span>
-                <span className="welcome__title_Hub">Hub</span>
-            </h1>
-            <p> <span className="welcome__title_Cook">Cook</span> •  <span className="welcome__title_Share">Share</span></p>
-            <p className="welcome__text">Teile deine lieblingsrezepte und entdecke neue Rezepte</p>
-            <div className="welcome__buttons">
-           </div>
-           
-        </div>
-  )
-}
+        <>
+            <div className="welcome">
+            <div className="welcome__container">
+                <img className="welcome__logo" src={nurlogo} alt="Recipe Share Logo" />
 
-export default Welcome
+                <h1 className="welcome__title">
+                    <span className="line1">Recipe</span>
+                    <span className="line2">Share</span>
+                </h1>
+
+                <p className="welcome__tagline">Cook. Share. Discover.</p>
+                <p className="welcome__text">
+                    Teile deine Lieblingsrezepte <br /> und entdecke neue Rezepte
+                </p>
+            </div>
+
+            <div className="welcome__images">
+                {/* <div className="card card--lasagna">
+                 <img src={Lasagna} alt="Lasagna" />
+                 </div>
+                    <div className="card card--crepe">
+                        <img src={Crip} alt="Crepe with Pancakes" />
+                    </div>
+
+                    <div className="card card--ramen">
+                        <img src={HeartyRamen} alt="Hearty Ramen" />
+                    </div>
+                    */}
+                <div className="card card--imagegruppe">
+                    <img src={imagegruppe} alt="imagegruppe" />
+                </div>
+                </div>
+                  <Login isInWelcome={true} />
+            </div>
+          
+              
+        </> 
+    );
+};
+
+export default Welcome;

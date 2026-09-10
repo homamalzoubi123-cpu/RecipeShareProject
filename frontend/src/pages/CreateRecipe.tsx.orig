@@ -4,9 +4,15 @@ import { AuthContext, AuthContextType } from "../context/AuthContext";
 import InputField from "../Components/InputField/InputField";
 import { Link } from "react-router-dom";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { API_BASE_URL } from "../config";
 =======
 
+interface CreateRecipeProps {}
+>>>>>>> develop
+=======
+import { API_BASE_URL } from "../config";
+<<<<<<< HEAD
 interface CreateRecipeProps {}
 >>>>>>> develop
 
@@ -21,6 +27,11 @@ function CreateRecipe({}: CreateRecipeProps) {
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> fa10531 (configure production and development environment variables)
+>>>>>>> develop
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -61,12 +72,17 @@ function CreateRecipe({}: CreateRecipeProps) {
         headers["Authorization"] = `Bearer ${token}`;
       }
 
+<<<<<<< HEAD
       const response = await fetch("http://localhost:5082/api/recipes", {
+=======
+            const response = await fetch(`${API_BASE_URL}/api/recipes`, {
+>>>>>>> develop
         method: "POST",
         headers: headers,
         body: data
       });
 
+<<<<<<< HEAD
 <<<<<<< HEAD
             const response = await fetch(`${API_BASE_URL}/api/recipes`, {
                 method: "POST",
@@ -74,6 +90,8 @@ function CreateRecipe({}: CreateRecipeProps) {
                 body: data
             });
 =======
+=======
+>>>>>>> develop
       if (response.ok) {
         const resData = await response.json();
         console.log("Saved Recipe:", resData);
@@ -90,9 +108,43 @@ function CreateRecipe({}: CreateRecipeProps) {
       setLoading(false);
     }
   };
+<<<<<<< HEAD
 >>>>>>> develop
 
       return (
+=======
+
+<<<<<<< HEAD
+      return (
+=======
+            const response = await fetch(`${API_BASE_URL}/api/recipes`, {
+                method: "POST",
+                headers: headers,
+                body: data
+            });
+
+            console.log("response status:", response.status);
+
+            if (response.ok) {
+                const resData = await response.json();
+                console.log("Saved Recipe:", resData);
+                alert("تمت إضافة الوصفة بنجاح!");
+            } else {
+                const errorText = await response.text();
+                console.error("Server Error:", errorText);
+                alert(`حدث خطأ أثناء الإرسال: ${response.status}`);
+            }
+        } catch (err) {
+            console.error("Fetch Error:", err);
+            alert("فشل الاتصال بالخادم!");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return (
+>>>>>>> fa10531 (configure production and development environment variables)
+>>>>>>> develop
         <div className="create__recipe__container">
           <div className="create__recipe__card">
             <Link to="/">
