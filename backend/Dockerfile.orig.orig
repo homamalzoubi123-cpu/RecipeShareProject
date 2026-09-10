@@ -1,0 +1,26 @@
+<<<<<<< HEAD
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+=======
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+<<<<<<< HEAD
+>>>>>>> 654c81c3cda61354fb6dc2138a31ea458caf5e3f
+=======
+>>>>>>> 654c81c (Add Dockerfile for backend)
+>>>>>>> 3968cf6 (Dickfile 10)
+WORKDIR /src
+COPY . .
+RUN dotnet restore
+RUN dotnet publish -c Release -o /app/out
+
+<<<<<<< HEAD
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
+=======
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+<<<<<<< HEAD
+>>>>>>> 654c81c3cda61354fb6dc2138a31ea458caf5e3f
+=======
+>>>>>>> 654c81c (Add Dockerfile for backend)
+>>>>>>> 3968cf6 (Dickfile 10)
+WORKDIR /app
+COPY --from=build /app/out .
+ENTRYPOINT ["dotnet", "RecipeShare.Api.dll"]
