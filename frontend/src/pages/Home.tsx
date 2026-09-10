@@ -2,8 +2,8 @@ import { useEffect, useState, useContext } from "react";
 import "./Home.scss";
 import Follow from "../Components/Follow/Following";
 import { AuthContext, AuthContextType } from "../context/AuthContext";
+import { API_BASE_URL } from "../config";
 
-const API_BASE_URL = "http://localhost:5082";
 
 interface Recipe {
     userId: number;

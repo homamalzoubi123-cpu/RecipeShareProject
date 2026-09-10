@@ -3,7 +3,7 @@ import { useState, useContext } from "react";
 import { AuthContext, AuthContextType } from "../context/AuthContext";
 import InputField from "../Components/InputField/InputField";
 import { Link } from "react-router-dom";
-
+import { API_BASE_URL } from "../config";
 interface CreateRecipeProps {}
 
 function CreateRecipe({}: CreateRecipeProps) {
@@ -57,7 +57,7 @@ function CreateRecipe({}: CreateRecipeProps) {
         headers["Authorization"] = `Bearer ${token}`;
       }
 
-      const response = await fetch("http://localhost:5082/api/recipes", {
+            const response = await fetch(`${API_BASE_URL}/api/recipes`, {
         method: "POST",
         headers: headers,
         body: data
