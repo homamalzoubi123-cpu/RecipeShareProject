@@ -1,22 +1,25 @@
 <<<<<<< HEAD
 ﻿FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 =======
-FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
->>>>>>> 7e21da6 (Add Dockerfile for backend update)
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+>>>>>>> 654c81c (Add Dockerfile for backend)
 WORKDIR /src
 COPY . .
 RUN dotnet restore
 RUN dotnet publish -c Release -o /app/out
 
+<<<<<<< HEAD
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
 WORKDIR /app
 COPY --from=build /app/out .
-<<<<<<< HEAD
 
 # أسطر لتوجيه المنفذ البيئي الخاص بـ Render
 ENV ASPNETCORE_URLS=http://+:$PORT
 EXPOSE 10000
 
 =======
->>>>>>> 7e21da6 (Add Dockerfile for backend update)
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+WORKDIR /app
+COPY --from=build /app/out .
+>>>>>>> 654c81c (Add Dockerfile for backend)
 ENTRYPOINT ["dotnet", "RecipeShare.Api.dll"]
