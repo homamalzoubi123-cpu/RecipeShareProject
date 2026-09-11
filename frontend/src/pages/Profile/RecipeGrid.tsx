@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./RecipeGrid.scss";
 
 interface Recipe {
@@ -21,7 +21,16 @@ interface RecipeGridProps {
 
 function RecipeGrid({ recipes, onDelete, getImageUrl }: RecipeGridProps) {
   const [openMenuId, setOpenMenuId] = useState<number | null>(null);
+  const [copiedId, setCopiedId] = useState<number | null>(null);
   const menuRefs = useRef<Record<number, HTMLButtonElement | null>>({});
+
+  const handleShareRecipe = (recipeId: number) => {
+    const recipeLink = `${window.location.origin}/recipe/${recipeId}`;
+    navigator.clipboard.writeText(recipeLink).then(() => {
+      setCopiedId(recipeId);
+      setTimeout(() => setCopiedId(null), 2000);
+    });
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -100,9 +109,12 @@ function RecipeGrid({ recipes, onDelete, getImageUrl }: RecipeGridProps) {
 
                       <button
                         type="button"
-                        onClick={() => console.log("Teilen")}
+                        onClick={() => {
+                          handleShareRecipe(recipe.id);
+                          setOpenMenuId(null);
+                        }}
                       >
-                        Teilen
+                        {copiedId === recipe.id ? "✓ Kopiert!" : "Teilen"}
                       </button>
                     </div>
                   )}

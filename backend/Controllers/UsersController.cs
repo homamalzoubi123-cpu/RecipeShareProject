@@ -122,4 +122,24 @@ public class UsersController : ControllerBase
         await _context.SaveChangesAsync();
         return Ok(new { message = $"Created {users.Count} users" });
     }
+    [HttpGet("search")]
+    [Authorize]
+    public async Task<IActionResult> SearchUsers([FromQuery] string query)
+    {
+        if (string.IsNullOrWhiteSpace(query))
+            return Ok(new List<object>());
+
+        var users = await _context.Users
+            .Where(u => u.Username.ToLower().Contains(query.ToLower()))
+            .Select(u => new
+            {
+                id = u.Id,
+                username = u.Username,
+                imageUrl = u.ProfileImageUrl
+            })
+            .Take(10)
+            .ToListAsync();
+
+        return Ok(users);
+    }
 }
