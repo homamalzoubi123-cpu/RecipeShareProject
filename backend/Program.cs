@@ -18,8 +18,7 @@ builder.Services.AddControllers();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp",
-        policy => policy.AllowAnyOrigin()
-        policy => policy.AllowAnyOrigin()
+        policy => policy.WithOrigins(
             "http://localhost:5173",
             "http://localhost:3000",
             "https://recipe-share-project-eight.vercel.app"
@@ -53,7 +52,7 @@ var app = builder.Build();
 app.UseCors("AllowReactApp");
 app.UseStaticFiles();
 // ملاحظة: إذا كنت تشغل السيرفر على http://localhost:5082 يمكنك إيقاف UseHttpsRedirection مؤقتاً
- app.UseHttpsRedirection(); 
+app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
