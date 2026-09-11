@@ -83,14 +83,20 @@ public class UsersController : ControllerBase
         return Ok(new { imageUrl = user.ProfileImageUrl });
     }
 
+    // ⚠️ Gibt alle Benutzer inkl. E-Mail zurück -> nur für eingeloggte Nutzer
     [HttpGet]
+    [Authorize]
     public async Task<ActionResult<IEnumerable<User>>> GetUsers()
     {
         var users = await _context.Users.ToListAsync();
         return Ok(users);
     }
 
+    // ℹ️ Falls dieser Endpoint für die öffentliche Registrierung gedacht ist,
+    // bitte [Authorize] wieder entfernen und stattdessen über einen eigenen
+    // AuthController/Register-Endpoint mit Passwort-Hashing arbeiten.
     [HttpPost]
+    [Authorize]
     public async Task<ActionResult<User>> CreateUser(User user)
     {
         _context.Users.Add(user);
@@ -99,6 +105,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize]
     public async Task<IActionResult> DeleteUser(int id)
     {
         var user = await _context.Users.FindAsync(id);
@@ -112,6 +119,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost("bulk")]
+    [Authorize]
     public async Task<IActionResult> CreateUsersBulk(List<User> users)
     {
         if (users == null || !users.Any())
@@ -121,5 +129,25 @@ public class UsersController : ControllerBase
         await _context.Users.AddRangeAsync(users);
         await _context.SaveChangesAsync();
         return Ok(new { message = $"Created {users.Count} users" });
+    }
+    [HttpGet("search")]
+    [Authorize]
+    public async Task<IActionResult> SearchUsers([FromQuery] string query)
+    {
+        if (string.IsNullOrWhiteSpace(query))
+            return Ok(new List<object>());
+
+        var users = await _context.Users
+            .Where(u => u.Username.ToLower().Contains(query.ToLower()))
+            .Select(u => new
+            {
+                id = u.Id,
+                username = u.Username,
+                imageUrl = u.ProfileImageUrl
+            })
+            .Take(10)
+            .ToListAsync();
+
+        return Ok(users);
     }
 }

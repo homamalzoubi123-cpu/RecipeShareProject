@@ -48,6 +48,10 @@
             color: black;
             color-scheme: light;
 
+            .header__container__search--active {
+                border: 1px solid #000000;
+            }
+
             &::placeholder {
                 color: #b5b5b5;
             }
@@ -63,6 +67,50 @@
             background-color: #D98F5C;
             -webkit-mask: url('/src/assets/search.svg') no-repeat center/contain;
             mask: url("/src/assets/search.svg") no-repeat center/contain;
+        }
+
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            border-top: none;
+            max-height: 200px; /* Maximale Höhe der Suchergebnisse */
+            overflow-y: auto; /* Scrollbar, wenn die Ergebnisse zu groß sind */
+            z-index: 10;
+            height: auto;
+
+            .search-result-user {
+                width: 100%;
+                display: flex;
+                gap: 5px;
+                border-bottom: 1px solid #D98F5C;
+                height: 40px;
+
+                span {
+                    padding-top: 5px;
+                }
+
+
+                .search-result-image {
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                    margin-left: 10px;
+                    padding-top: 5px;
+                }
+
+                .search-result-placeholder {
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                    margin-left: 10px;
+                    padding-top: 5px;
+                }
+            }
         }
     }
     /* 1. HOME-ICON SCHIEBT ALLES RECHTE NACH RECHTS */

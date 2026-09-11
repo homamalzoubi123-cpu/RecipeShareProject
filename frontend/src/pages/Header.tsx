@@ -5,15 +5,55 @@ import Pourder from "../assets/pourder.svg";
 import acaunt from "../assets/account.svg";
 import home from "../assets/home.svg";
 import "./Header.scss";
+import { API_BASE_URL } from "../config";
 
-
-
-
+interface SearchUser {
+    id: number;
+    username: string;
+    imageUrl?: string;
+}
 const Header = ({ }) => {
-   
-    const { user, logout } = useContext(AuthContext) as AuthContextType;
+
+    const { user, token, logout } = useContext(AuthContext) as AuthContextType;
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [allUser, setAllUser] = useState<string>("");
+    const [searchResults, setSearchResults] = useState<SearchUser[]>([]);
+    const [isinputactive, setIsinputactive] = useState<boolean>(false);
+    const handlealluser = async (
+        e: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        const value = e.target.value;
+
+        setAllUser(value);
+
+        if (!value.trim()) {
+            setSearchResults([]);
+            return;
+        }
+
+        try {
+            const response = await fetch(
+                `${API_BASE_URL}/api/users/search?query=${encodeURIComponent(value)}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error("Fehler bei der Suche");
+            }
+
+            const data = await response.json();
+
+            setSearchResults(data);
+        } catch (error) {
+            console.error("Search error:", error);
+            setSearchResults([]);
+        }
+    };
 
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
@@ -26,17 +66,52 @@ const Header = ({ }) => {
     };
 
     return (
-        <header className="header__container">
+        <header className="header__container" >
             <span className="header__container__logo" />
             <h2 className="header__container__title">Recipe Share</h2>
             <div className="header__container__search__container">
                 <span className="header__container__search__icon" />
+
                 <input
-                    className="header__container__search"
+                    className={`header__container__search ${isinputactive ? " header__container__search--active" : ""}`}
                     type="text"
                     placeholder="Search for recipes..."
+                    value={allUser}
+                    onChange={handlealluser}
+                    onClick={() => setIsinputactive(true)}
                 />
+                {searchResults.length > 0 && (
+                    <div className="search-results">
+                        {searchResults.map((searchUser) => (
+                            <div
+                                key={searchUser.id}
+                                className="search-result-user"
+                                onClick={() => {
+                                    navigate(`/profile/${searchUser.id}`);
+                                    setAllUser("");
+                                    setSearchResults([]);
+                                }}
+                            >
+                                {searchUser.imageUrl ? (
+                                    <img
+                                        src={`${API_BASE_URL}${searchUser.imageUrl}`}
+                                        alt={searchUser.username}
+                                        className="search-result-image"
+                                    />
+                                ) : (
+                                    <div className="search-result-placeholder">
+                                        👤
+                                    </div>
+                                )}
+                                <span>
+                                    {searchUser.username ? searchUser.username : "Keiner gefunden"}
+                                </span>
+                            </div>
+                        ))}
+                    </div>
+                )}
             </div>
+
 
             {!user ? (
                 <Link className="header__container__link__home" to="/">
@@ -50,10 +125,12 @@ const Header = ({ }) => {
 
             {user && (
                 <Link to="/CreateRecipe" className="add-recipe-btn">
+                   
                 </Link>
             )}
 
-            <div className="header__container__dropdowns">
+            <div className="header__container__dropdowns"
+            >
                 <button className="header__container__button" onClick={toggleDropdown}>
                     <img className="header__container__account" src={acaunt} alt="account" />
                 </button>
