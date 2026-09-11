@@ -19,6 +19,10 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp",
         policy => policy.AllowAnyOrigin()
+            "http://localhost:5173",
+            "http://localhost:3000",
+            "https://recipe-share-project.vercel.app"
+            ) // منافذ Vite و React
                         .AllowAnyHeader()
                         .AllowAnyMethod());
 });
