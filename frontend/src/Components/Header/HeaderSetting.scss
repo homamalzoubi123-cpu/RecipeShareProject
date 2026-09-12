@@ -1,0 +1,62 @@
+.header__container__setting {
+    position: fixed;
+    top: 0;
+    right: -100%; // مخفي برا الشاشة كوضع افتراضي
+    width: 25%;
+    height: 100vh;
+    background-color: white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    transition: right 0.50s ease-in-out; // الخاصية الوحيدة المتحركة
+
+    &.header__container__setting--open {
+        right: 0; // بس هاد بيتغير لما تنفتح
+    }
+
+    .header__container__setting__Liste {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+
+        .header__container__setting__Close {
+            width: 10%;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            font-size: 20px;
+        }
+
+        .header__container__setting__button {
+            width: 100%;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            gap: 10px;
+            border: none;
+            background: transparent;
+
+            &:hover {
+                background-color: #F5F0DE;
+            }
+        }
+    }
+}
+.header__container__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999; // أقل من الـ panel (1000) عشان يطلع تحته
+}

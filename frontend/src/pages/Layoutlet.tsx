@@ -1,5 +1,5 @@
 import { Outlet, useLocation } from "react-router-dom";
-import Header from "./Header";
+import HeaderComponents from "../Components/Header/HeaderComponents";
 import { useContext } from "react";
 import { AuthContext, AuthContextType } from "../context/AuthContext";
 
@@ -8,7 +8,7 @@ const Layout = () => {
 
   return (
     <div>
-      {user && <Header />}
+      {user && <HeaderComponents />}
       <main className="main">
         <Outlet />
       </main>

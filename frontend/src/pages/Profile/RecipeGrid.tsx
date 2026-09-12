@@ -19,7 +19,12 @@ interface RecipeGridProps {
   getImageUrl: (imagePath: string | null) => string;
 }
 
-function RecipeGrid({ recipes, onDelete, getImageUrl }: RecipeGridProps) {
+function RecipeGrid({
+    recipes,
+    onDelete,
+    getImageUrl
+
+}: RecipeGridProps) {
   const [openMenuId, setOpenMenuId] = useState<number | null>(null);
   const menuRefs = useRef<Record<number, HTMLButtonElement | null>>({});
 
