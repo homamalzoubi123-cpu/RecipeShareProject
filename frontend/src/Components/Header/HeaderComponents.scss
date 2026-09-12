@@ -13,7 +13,7 @@
     width: 100%;
 
     &__logo {
-        background: url("../assets/nurlogo.png") no-repeat center/contain;
+        background: url("../../assets/nurlogo.png") no-repeat center/contain;
         width: 70px;
         height: 50px;
         flex-shrink: 0; /* Verhindert das Quetschen des Logos */
@@ -65,8 +65,8 @@
             width: 18px;
             height: 18px;
             background-color: #D98F5C;
-            -webkit-mask: url('/src/assets/search.svg') no-repeat center/contain;
-            mask: url("/src/assets/search.svg") no-repeat center/contain;
+            -webkit-mask: url('../../assets/search.svg') no-repeat center/contain;
+            mask: url("../../assets/search.svg") no-repeat center/contain;
         }
 
         .search-results {
@@ -128,7 +128,7 @@
     }
     /* 2. PLUS-BUTTON */
     .add-recipe-btn {
-        background: url("../assets/plus.svg") no-repeat center/contain;
+        background: url("../../assets/plus.svg") no-repeat center/contain;
         width: 38px;
         height: 38px;
         display: block;
@@ -189,10 +189,17 @@
         }
     }
 
-    &__pourder {
-        width: 30px;
-        height: auto;
-        flex-shrink: 0;
+    .header__container__pourder-button {
+        border: none;
+        background: none;
+        cursor: pointer;
+
+
+        .header__container__pourder {
+            width: 30px;
+            height: auto;
+            flex-shrink: 0;
+        }
     }
 }
 
