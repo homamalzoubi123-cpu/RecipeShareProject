@@ -42,6 +42,23 @@ public class UsersController : ControllerBase
             imageUrl = user.ProfileImageUrl
         });
     }
+    // 👤 Öffentliches Profil eines bestimmten Users abrufen
+    [HttpGet("{id}")]
+    [Authorize]
+    public async Task<IActionResult> GetUserById(int id)
+    {
+        var user = await _context.Users.FindAsync(id);
+        if (user == null)
+            return NotFound(new { error = "Benutzer nicht gefunden." });
+
+        return Ok(new
+        {
+            id = user.Id,
+            username = user.Username,
+            imageUrl = user.ProfileImageUrl
+            // ملاحظة: ما رجعنا الـ email هون، عشان هاد بروفايل عام لمستخدم تاني
+        });
+    }
 
     // 📸 Profilbild hochladen (WICHTIG: [Authorize] hinzugefügt!)
     [HttpPost("upload-profile-image")]

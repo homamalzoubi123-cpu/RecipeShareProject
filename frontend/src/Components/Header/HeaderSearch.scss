@@ -78,6 +78,11 @@
             gap: 5px;
             border-bottom: 1px solid #D98F5C;
             height: 40px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #F6f7fb;
+            }
 
             span {
                 padding-top: 5px;

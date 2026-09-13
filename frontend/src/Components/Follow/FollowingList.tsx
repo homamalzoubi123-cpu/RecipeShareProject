@@ -47,7 +47,7 @@ const FollowingList = () => {
     return (
         <div className="following-page">
             <div className="following-page__header">
-                <button className="following-page__back" onClick={() => navigate("/Profile")}>
+                <button className="following-page__back" onClick={() => navigate(-1)}>
                     Zurück
                 </button>
                 <div className="followers-page__titles">

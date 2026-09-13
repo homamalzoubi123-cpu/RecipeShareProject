@@ -92,7 +92,7 @@ const HeaderSearch: React.FC<HeaderSearchProps> = ({
                                 key={searchUser.id}
                                 className="search-result-user"
                                 onClick={() => {
-                                    navigate(`${searchUser.id}/profile/`);
+                                    navigate(`/profile/${searchUser.id}`);
                                     setAllUser("");
                                     setSearchResults([]);
                                 }}

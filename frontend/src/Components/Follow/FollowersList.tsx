@@ -107,7 +107,7 @@ const FollowersList = () => {
     return (
         <div className="followers-Container">
             <div className="followers-page__header">
-                <button className="followers-page__back" onClick={() => navigate("/Profile")}>
+                <button className="followers-page__back" onClick={() => navigate(-1)}>
                     Zurück
                 </button>
                 <div className="followers-page__titles">

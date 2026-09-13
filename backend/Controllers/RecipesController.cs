@@ -60,6 +60,17 @@ public class RecipesController : ControllerBase
 
         return Ok(myRecipes);
     }
+    // 📖 Rezepte eines bestimmten Users abrufen (öffentlich einsehbar)
+    [HttpGet("user/{userId}")]
+    [Authorize]
+    public async Task<ActionResult<IEnumerable<Recipe>>> GetRecipesByUserId(int userId)
+    {
+        var recipes = await _context.Recipes
+            .Where(r => r.UserId == userId)
+            .ToListAsync();
+
+        return Ok(recipes);
+    }
 
     // 3. Neues Rezept erstellen
     [HttpPost]

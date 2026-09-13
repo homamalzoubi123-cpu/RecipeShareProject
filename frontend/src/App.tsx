@@ -23,6 +23,7 @@ function App({ }: AppProps) {
                 <Route path="/" element={<Layout />}>
                 <Route index element={user ? <Home /> : <Welcome />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/profile/:userId" element={<Profile />} />
                 <Route path="/profile/:userId/following" element={<FollowingList />} />
                 <Route path="/profile/:userId/followers" element={<FollowersList />} />
                 <Route path="/CreateRecipe" element={<CreateRecipe />} />
