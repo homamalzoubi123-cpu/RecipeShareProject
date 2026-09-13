@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext, AuthContextType } from "../../context/AuthContext";
 import Pourder from "../../assets/pourder.svg";
@@ -14,6 +14,7 @@ const Header = ({ }) => {
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [isSettingOpen, setIsSettingOpen] = useState<boolean>(false);
+    const menuRef = useRef<HTMLDivElement | null>(null);
 
     const toggleSetting = () => {
         setIsSettingOpen(!isSettingOpen);
@@ -29,11 +30,27 @@ const Header = ({ }) => {
         navigate("/");
     };
 
+   
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+                setIsOpen(false);
+            }
+        };
+        if (isOpen) {
+            document.addEventListener("mousedown", handleClickOutside);
+        }
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [isOpen]);
+
     return (
-        <header className="header__container" >
+        <header className="header__container">
             <span className="header__container__logo" />
             <h2 className="header__container__title">Recipe Share</h2>
-            <HeaderSearch />
+          <HeaderSearch />
             {!user ? (
                 <Link className="header__container__link__home" to="/">
                     <img className="header__container__home" src={home} alt="Home" />
@@ -49,8 +66,13 @@ const Header = ({ }) => {
                 </Link>
             )}
 
-            <div className="header__container__dropdowns">
-                <button className="header__container__button" onClick={toggleDropdown}>
+            <div className="header__container__dropdowns" ref={menuRef}>
+                <button
+                    className="header__container__button"
+                    onClick={() => {
+                        toggleDropdown();
+                    }}
+                >
                     <img className="header__container__account" src={acaunt} alt="account" />
                 </button>
 
