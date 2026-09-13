@@ -1,0 +1,105 @@
+.header__container__search__container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex: 1;
+    max-width: 450px;
+    min-width: 140px;
+    margin-left: auto;
+
+    .header__container__search {
+        width: 100%;
+        border-radius: 40px;
+        border: 2px solid #D98F5C;
+        z-index: 1;
+        height: 36px;
+        padding: 0 40px 0 15px;
+        outline: none;
+        box-sizing: border-box;
+        background-color: white;
+        color: black;
+        color-scheme: light;
+
+        &--active {
+            border: none;
+            box-shadow: 0 3px 20px #D98F5C;
+        }
+
+        &::placeholder {
+            color: #b5b5b5;
+        }
+    }
+
+    .header__container__search__icon {
+        position: absolute;
+        right: 12px;
+        z-index: 2;
+        pointer-events: none;
+        width: 18px;
+        height: 18px;
+        background-color: #D98F5C;
+        -webkit-mask: url('../../assets/search.svg') no-repeat center/contain;
+        mask: url("../../assets/search.svg") no-repeat center/contain;
+    }
+
+    .search-results {
+        position: absolute;
+        top: 120%;
+        left: 0;
+        width: 100%;
+        background-color: white;
+        border-top: none;
+        max-height: 200px;
+        overflow-y: auto;
+        border-radius: 10px;
+        z-index: 10;
+        height: auto;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        /* Firefox */
+        scrollbar-width: thin;
+        /* Chrome, Edge, Safari */
+        &::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            border-radius: 7px;
+        }
+
+
+
+        .search-result-user {
+            width: 100%;
+            display: flex;
+            gap: 5px;
+            border-bottom: 1px solid #D98F5C;
+            height: 40px;
+
+            span {
+                padding-top: 5px;
+            }
+
+            .search-result-image {
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                object-fit: cover;
+                margin-left: 10px;
+                padding-top: 5px;
+            }
+
+            .search-result-placeholder {
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                object-fit: cover;
+                margin-left: 10px;
+                padding-top: 5px;
+            }
+        }
+    }
+}
