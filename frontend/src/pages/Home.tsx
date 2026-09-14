@@ -3,7 +3,7 @@ import "./Home.scss";
 import Follow from "../Components/Follow/Following";
 import { AuthContext, AuthContextType } from "../context/AuthContext";
 import { API_BASE_URL } from "../config";
-
+import { useNavigate } from "react-router-dom";
 
 interface Recipe {
     userId: number;
@@ -23,7 +23,7 @@ function Home({ }: HomeProps) {
     const { user } = useContext(AuthContext) as AuthContextType;
     const [recipes, setRecipes] = useState<Recipe[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
-
+    const navigate = useNavigate();
     
     const [followedUserIds, setFollowedUserIds] = useState<number[]>([]);
 
@@ -85,8 +85,10 @@ function Home({ }: HomeProps) {
                     recipes.map((recipe) => (
                         <div key={recipe.id} className="recipe-card">
                             <div className="recipe-author-box">
-                                <strong>{recipe.userName || "Unbekannt"}</strong>
-
+                                <button className="recipe-author-box__schowuser"
+                                    onClick={() => navigate(`/profile/${recipe.userId}`)}>
+                                    <strong>{recipe.userName || "Unbekannt"}</strong>
+                                </button>
                          
                                 <div className="follow-button">
                                 <Follow
