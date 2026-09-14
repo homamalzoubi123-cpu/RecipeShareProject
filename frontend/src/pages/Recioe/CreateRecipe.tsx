@@ -1,9 +1,9 @@
 import "./CreateRecipe.scss";
 import { useState, useContext } from "react";
-import { AuthContext, AuthContextType } from "../context/AuthContext";
-import InputField from "../Components/InputField/InputField";
+import { AuthContext, AuthContextType } from "../../context/AuthContext";
+import InputField from "../../Components/InputField/InputField";
 import { Link } from "react-router-dom";
-import { API_BASE_URL } from "../config";
+import { API_BASE_URL } from "../../config";
 
 interface CreateRecipeProps {
 

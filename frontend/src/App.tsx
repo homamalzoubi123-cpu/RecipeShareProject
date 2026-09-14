@@ -5,12 +5,13 @@ import Login from "./pages/login";
 import Register from "./pages/register";
 import Layout from "./pages/Layoutlet";
 import Home from "./pages/Home";
-import CreateRecipe from "./pages/CreateRecipe";
+import CreateRecipe from "./pages/Recioe/CreateRecipe";
 import FollowingList from "./Components/Follow/FollowingList";
 import FollowersList from "./Components/Follow/FollowersList";
 import Profile from "./pages/Profile/Profile";
 import { useContext } from "react";
 import { AuthContext, AuthContextType } from "./context/AuthContext";
+import RecipeDetail from "./pages/Recioe/RecipeDetail";
 
 interface AppProps { }  
 function App({ }: AppProps) {
@@ -27,6 +28,7 @@ function App({ }: AppProps) {
                 <Route path="/profile/:userId/following" element={<FollowingList />} />
                 <Route path="/profile/:userId/followers" element={<FollowersList />} />
                 <Route path="/CreateRecipe" element={<CreateRecipe />} />
+                <Route path="/recipe/:id" element={<RecipeDetail />} />
                 <Route path="/Home" element={<Home />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />

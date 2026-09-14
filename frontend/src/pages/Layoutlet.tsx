@@ -11,7 +11,8 @@ const Layout = () => {
     const profileMatch =
         matchPath("/profile/:userId", location.pathname) ||
         matchPath("/profile/:userId/followers", location.pathname) ||
-        matchPath("/profile/:userId/following", location.pathname)
+        matchPath("/profile/:userId/following", location.pathname) ||
+        matchPath("/recipe/:userId", location.pathname)
 ;
 
     const isViewingOtherProfile =

@@ -71,6 +71,31 @@
         }
 
 
+        .search-results_filter_button {
+            background: none;
+            border: none;
+            margin-right: auto;
+            cursor: pointer;
+            padding: 10px;
+            gap: 10px;
+
+            &--active {
+                border-bottom: 4px solid #D98F5C;
+            }
+        }
+
+        .search-results_filterUser_button {
+            background: none;
+            border: none;
+            margin-right: auto;
+            cursor: pointer;
+            padding: 10px;
+           
+
+            &--active {
+                border-bottom: 4px solid #D98F5C;
+            }
+        }
 
         .search-result-user {
             width: 100%;
@@ -87,6 +112,7 @@
             span {
                 padding-top: 5px;
             }
+
 
             .search-result-image {
                 width: 30px;

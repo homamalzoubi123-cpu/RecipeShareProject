@@ -71,7 +71,35 @@ public class RecipesController : ControllerBase
 
         return Ok(recipes);
     }
+    // 📖 Eine einzelne Rezept-Detailansicht abrufen
+    [HttpGet("{id}")]
+    public async Task<ActionResult<object>> GetRecipeById(int id)
+    {
+        var recipe = await _context.Recipes
+            .Include(r => r.User)
+            .Where(r => r.Id == id)
+            .Select(r => new
+            {
+                r.Id,
+                r.UserId,
+                UserName = r.User != null ? r.User.Username : "Unbekannt",
+                r.Title,
+                r.Description,
+                r.Instructions,
+                r.PrepTimeMinutes,
+                r.Difficulty,
+                r.ImageUrl,
+                r.CreatedAt
+            })
+            .FirstOrDefaultAsync();
 
+        if (recipe == null)
+        {
+            return NotFound(new { error = "Rezept nicht gefunden." });
+        }
+
+        return Ok(recipe);
+    }
     // 3. Neues Rezept erstellen
     [HttpPost]
     [Authorize]
@@ -182,5 +210,31 @@ public class RecipesController : ControllerBase
         await _context.Recipes.AddRangeAsync(recipes);
         await _context.SaveChangesAsync();
         return Ok(new { message = $"Created {recipes.Count} recipes" });
+    }
+    [HttpGet("search")]
+    [Authorize]
+    public async Task<ActionResult<IEnumerable<Recipe>>> SearchRecipes([FromQuery] string query)
+    {
+        if (string.IsNullOrWhiteSpace(query))
+        {
+            return BadRequest(new { error = "Suchbegriff darf nicht leer sein." });
+        }
+        var recipes = await _context.Recipes
+            .Where(r => r.Title.Contains(query) || r.Description.Contains(query))
+            .Select(r => new
+            {
+                Id = r.Id,
+                UserId = r.UserId,
+                Title = r.Title,
+                Description = r.Description,
+                Instructions = r.Instructions,
+                PrepTimeMinutes = r.PrepTimeMinutes,
+                Difficulty = r.Difficulty,
+                ImageUrl = r.ImageUrl,
+                CreatedAt = r.CreatedAt
+            })
+            .Take(10)
+            .ToListAsync();
+        return Ok(recipes);
     }
 }
