@@ -1,9 +1,11 @@
-import { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./Profile.scss";
 import ProfileHeader from "./ProfileHeader";
 import RecipeGrid from "./RecipeGrid";
 import { API_BASE_URL } from "../../config";
+import { AuthContext, AuthContextType } from "../../context/AuthContext";
+import InputField from "../../Components/InputField/InputField";
 
 interface Recipe {
     userId: number;
@@ -23,24 +25,29 @@ interface UserProfile {
     username: string;
 }
 
-function Profile() {
+const Profile = () => {
     const navigate = useNavigate();
     const { userId } = useParams<{ userId: string }>();
-    const isOwnProfile = !userId; // keine ID in der URL = eigenes Profil
+    const isOwnProfile = !userId; // Keine ID in der URL = eigenes Profil
+    const { token } = useContext(AuthContext) as AuthContextType;
 
     const [myRecipes, setMyRecipes] = useState<Recipe[]>([]);
+    const [followersCount, setFollowersCount] = useState<number>(0);
+    const [followingCount, setFollowingCount] = useState<number>(0);
+    const recipesGridRef = useRef<HTMLDivElement>(null);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    const editFileInputRef = useRef<HTMLInputElement>(null); // Ref für Bild-Upload im Bearbeiten-Modal
+    const [confirmDeleteId, setConfirmDeleteId] = useState<number | null>(null);
+    const [editingRecipe, setEditingRecipe] = useState<Recipe | null>(null);
+    const [editImageFile, setEditImageFile] = useState<File | null>(null);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
     const [userProfile, setUserProfile] = useState<UserProfile>({
         imageUrl: null,
         username: ""
     });
-    const [followersCount, setFollowersCount] = useState<number>(0);
-    const [followingCount, setFollowingCount] = useState<number>(0);
-    const recipesGridRef = useRef<HTMLInputElement>(null);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
-    const fileInputRef = useRef<HTMLInputElement>(null);
-    const [confirmDeleteId, setConfirmDeleteId] = useState<number | null>(null);
-    const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     const scrollToRecipes = () => {
         recipesGridRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -50,15 +57,19 @@ function Profile() {
         setConfirmDeleteId(id);
     };
 
+    const handleEditClick = (recipe: Recipe) => {
+        setEditingRecipe(recipe);
+        setEditImageFile(null); // Bild-State beim Öffnen zurücksetzen
+    };
+
     useEffect(() => {
         setLoading(true);
-        const token = localStorage.getItem("token");
+        const storedToken = localStorage.getItem("token") || token;
         const headers = {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${storedToken}`,
             "Content-Type": "application/json"
         };
 
-        // Je nachdem ob eigenes oder fremdes Profil, unterschiedliche Endpunkte
         const userEndpoint = isOwnProfile
             ? `${API_BASE_URL}/api/users/me`
             : `${API_BASE_URL}/api/users/${userId}`;
@@ -110,13 +121,13 @@ function Profile() {
                 setError(err instanceof Error ? err.message : "Unbekannter Fehler");
                 setLoading(false);
             });
-    }, [userId, isOwnProfile]);
+    }, [userId, isOwnProfile, token]);
 
     const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (!file) return;
 
-        const token = localStorage.getItem("token");
+        const storedToken = localStorage.getItem("token") || token;
         const formData = new FormData();
         formData.append("file", file);
 
@@ -124,7 +135,7 @@ function Profile() {
             const res = await fetch(`${API_BASE_URL}/api/users/upload-profile-image`, {
                 method: "POST",
                 headers: {
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${storedToken}`
                 },
                 body: formData
             });
@@ -144,16 +155,60 @@ function Profile() {
         }
     };
 
+    // Bearbeitung des Rezepts per FormData (inklusive Bild-Upload)
+    const handleUpdateSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (!editingRecipe) return;
+
+        const storedToken = localStorage.getItem("token") || token;
+
+        const formData = new FormData();
+        formData.append("Title", editingRecipe.title);
+        formData.append("Description", editingRecipe.description || "");
+        formData.append("Instructions", editingRecipe.instructions || "");
+        formData.append("PrepTimeMinutes", editingRecipe.prepTimeMinutes.toString());
+        formData.append("Difficulty", editingRecipe.difficulty);
+
+        if (editImageFile) {
+            formData.append("ImageFile", editImageFile);
+        }
+
+        try {
+            const res = await fetch(`${API_BASE_URL}/api/recipes/${editingRecipe.id}`, {
+                method: "PUT",
+                headers: {
+                    Authorization: `Bearer ${storedToken}`
+                },
+                body: formData
+            });
+
+            if (!res.ok) throw new Error("Fehler beim Aktualisieren des Rezepts.");
+
+            const updatedRecipe = await res.json();
+
+            // Rezept-Liste lokal aktualisieren
+            setMyRecipes((prev) =>
+                prev.map((r) => (r.id === editingRecipe.id ? updatedRecipe : r))
+            );
+
+            setEditingRecipe(null);
+            setEditImageFile(null);
+        } catch (err) {
+            console.error(err);
+            alert("Fehler beim Aktualisieren des Rezepts.");
+        }
+    };
+
     const confirmDelete = async () => {
         if (confirmDeleteId === null) return;
 
-        const token = localStorage.getItem("token");
+        const storedToken = localStorage.getItem("token") || token;
 
         try {
             const res = await fetch(`${API_BASE_URL}/api/recipes/${confirmDeleteId}`, {
                 method: "DELETE",
                 headers: {
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${storedToken}`
                 }
             });
 
@@ -195,7 +250,6 @@ function Profile() {
                 followingCount={followingCount}
                 fileInputRef={fileInputRef}
                 onImageUpload={isOwnProfile ? handleImageUpload : undefined}
-          
                 onRecipesClick={scrollToRecipes}
                 onFollowersClick={() => {
                     if (userProfile.id) {
@@ -211,6 +265,7 @@ function Profile() {
             />
 
             <div ref={recipesGridRef}>
+                {/* Modal für Lösch-Bestätigung */}
                 {confirmDeleteId !== null && (
                     <div className="modal-overlay">
                         <div className="modal-box">
@@ -229,6 +284,151 @@ function Profile() {
                     </div>
                 )}
 
+                {/* Modal für Rezept bearbeiten */}
+                {editingRecipe && (
+                    <div className="modal-overlay">
+                        <div className="ubdate__Rezept">
+                            <button
+                                type="button"
+                                className="close-button"
+                                onClick={() => {
+                                    setEditingRecipe(null);
+                                    setEditImageFile(null);
+                                }}
+                            >
+                                ×
+                            </button>
+                            <h3>Rezept bearbeiten</h3>
+
+                            <form onSubmit={handleUpdateSubmit}>
+                                {/* Verstecktes File-Input für den Klick auf das Bild */}
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    ref={editFileInputRef}
+                                    style={{ display: "none" }}
+                                    onChange={(e) => {
+                                        if (e.target.files && e.target.files[0]) {
+                                            setEditImageFile(e.target.files[0]);
+                                        }
+                                    }}
+                                />
+
+                                {/* Klickbarer Bild-Container mit Overlay */}
+                                <div
+                                    className="edit__recipe__image__container"
+                                    onClick={() => editFileInputRef.current?.click()}
+                                    title="Klicke hier, um das Bild zu ändern"
+                                >
+                                    <img
+                                        src={
+                                            editImageFile
+                                                ? URL.createObjectURL(editImageFile)
+                                                : getImageUrl(editingRecipe.imageUrl)
+                                        }
+                                        alt="Rezeptbild"
+                                    />
+                                    <div className="image-overlay">
+                                        <span>Bild ändern</span>
+                                    </div>
+                                </div>
+
+                                {/* Title */}
+                                <InputField
+                                    type="text"
+                                    name="title"
+                                    value={editingRecipe.title}
+                                    placeholder="title"
+                                    onChange={(e) =>
+                                        setEditingRecipe({ ...editingRecipe, title: e.target.value })
+                                    }
+                                    required
+                                    label=""
+                                />
+
+                                {/* Description */}
+                                <InputField
+                                    type="text"
+                                    name="description"
+                                    value={editingRecipe.description || ""}
+                                    placeholder="description"
+                                    onChange={(e) =>
+                                        setEditingRecipe({ ...editingRecipe, description: e.target.value })
+                                    }
+                                    label=""
+                                />
+
+                                {/* Instructions */}
+                                <textarea
+                                    className="create__recipe__card__instructions"
+                                    name="instructions"
+                                    value={editingRecipe.instructions || ""}
+                                    placeholder="instructions"
+                                    onChange={(e) =>
+                                        setEditingRecipe({ ...editingRecipe, instructions: e.target.value })
+                                    }
+                                    required
+                                />
+
+                                {/* Time with "min" suffix */}
+                                <div className="create__recipe__card__time">
+                                    <InputField
+                                        type="number"
+                                        name="prepTimeMinutes"
+                                        value={editingRecipe.prepTimeMinutes}
+                                        placeholder="15"
+                                        onChange={(e) =>
+                                            setEditingRecipe({
+                                                ...editingRecipe,
+                                                prepTimeMinutes: parseInt(e.target.value) || 0
+                                            })
+                                        }
+                                        label=""
+                                    />
+                                    <span
+                                        className="input-suffix"
+                                        style={{
+                                            left: `calc(30px + ${String(editingRecipe.prepTimeMinutes ?? '').length}ch)`
+                                        }}
+                                    >
+                                        min
+                                    </span>
+                                </div>
+
+                                {/* Difficulty */}
+                                <select
+                                    className="create__recipe__select"
+                                    name="difficulty"
+                                    value={editingRecipe.difficulty}
+                                    onChange={(e) =>
+                                        setEditingRecipe({ ...editingRecipe, difficulty: e.target.value })
+                                    }
+                                >
+                                    <option value="Easy">Easy</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="Hard">Hard</option>
+                                </select>
+
+                                {/* Action Buttons */}
+                                <div className="modal-actions">
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setEditingRecipe(null);
+                                            setEditImageFile(null);
+                                        }}
+                                    >
+                                        Abbrechen
+                                    </button>
+                                    <button type="submit" className="create__recipe__card__button">
+                                        Speichern
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                )}
+
                 {errorMessage && (
                     <div className="error-toast">
                         {errorMessage}
@@ -240,10 +440,11 @@ function Profile() {
                     recipes={myRecipes}
                     onDelete={isOwnProfile ? handleDelete : undefined}
                     getImageUrl={getImageUrl}
+                    onEdit={isOwnProfile ? handleEditClick : undefined}
                 />
             </div>
         </div>
     );
-}
+};
 
 export default Profile;

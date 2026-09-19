@@ -11,17 +11,18 @@
         margin-top: 20px;
     }
 }
+
 .back-button_profile {
     display: flex;
     position: absolute;
     top: 10px;
-    left: 20px; /* oder left: 20px, je nachdem wo du ihn haben willst */
+    left: 20px;
     align-items: center;
     gap: 10px;
     cursor: pointer;
     color: antiquewhite;
     font-size: 20px;
-    width: max-content; /* max-intrinsic gibt's nicht, das war ein Tippfehler */
+    width: max-content;
     height: 40px;
     border-radius: 20px;
     padding: 0 28px;
@@ -33,6 +34,7 @@
         background-color: #E7986A;
     }
 }
+
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -45,6 +47,7 @@
     align-items: center;
     z-index: 1000;
 
+    /* 1. Modal für Löschen-Bestätigung */
     .modal-box {
         display: flex;
         flex-direction: column;
@@ -74,35 +77,223 @@
             justify-content: center;
             border-radius: 50%;
         }
-    }
 
-    p {
-        font-size: 18px;
-        color: #333;
-        padding: 0 20px;
-    }
-
-    .modal-actions {
-        display: flex;
-        gap: 100px;
-        margin-top: 20px;
-
-        @media (max-width: 400px) {
-            gap: 40px;
+        p {
+            font-size: 18px;
+            color: #333;
+            padding: 0 20px;
         }
 
-        button {
-            background-color: #D98F5C;
+        .modal-actions {
             display: flex;
-            color: white;
+            gap: 100px;
+            margin-top: 20px;
+
+            @media (max-width: 400px) {
+                gap: 40px;
+            }
+
+            button {
+                background-color: #D98F5C;
+                display: flex;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+
+                &:hover {
+                    background-color: #c87a4f;
+                }
+            }
+        }
+    }
+
+    /* 2. Modal für Rezept bearbeiten */
+    .ubdate__Rezept {
+        position: relative;
+        background-color: #ffffff;
+        padding: 35px 40px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        width: 100%;
+        max-width: 600px;
+        max-height: 100%;
+        overflow-y: auto;
+        box-sizing: border-box;
+        color: #000000;
+        color-scheme: light;
+
+        .close-button {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: transparent;
             border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
+            font-size: 24px;
             cursor: pointer;
-            font-size: 16px;
+            color: #666;
 
             &:hover {
-                background-color: #c87a4f;
+                color: #000;
+            }
+        }
+
+        h3 {
+            text-align: center;
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 25px;
+            color: #111111;
+        }
+
+        /* Klickbarer Bild-Container mit Hover-Effekt */
+        .edit__recipe__image__container {
+            position: relative;
+            width: 100%;
+            height: 180px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px dashed #ccc;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+                transition: transform 0.3s ease;
+            }
+
+            .image-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.4);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                opacity: 0;
+                transition: opacity 0.2s ease;
+
+                span {
+                    color: #ffffff;
+                    font-weight: bold;
+                    font-size: 15px;
+                    background-color: rgba(0, 0, 0, 0.6);
+                    padding: 8px 16px;
+                    border-radius: 20px;
+                }
+            }
+
+            &:hover {
+                img {
+                    transform: scale(1.03);
+                }
+
+                .image-overlay {
+                    opacity: 1;
+                }
+            }
+        }
+
+        /* Anleitungen (Textarea) */
+        .create__recipe__card__instructions {
+            width: 100%;
+            height: 120px;
+            resize: none;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-family: inherit;
+
+            &:focus {
+                outline: none;
+                border-color: #D98F5C;
+            }
+        }
+
+        /* Zeit-Container mit "min" */
+        .create__recipe__card__time {
+            position: relative;
+            width: 100%;
+            margin-bottom: 15px;
+
+            .register__card__field__input {
+                width: 100%;
+                box-sizing: border-box;
+                padding-right: 20px;
+                background-color: #ffffff;
+            }
+
+            .input-suffix {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #666666;
+                font-size: 14px;
+                pointer-events: none;
+                white-space: nowrap;
+                user-select: none;
+                transition: left 0.05s ease-out;
+            }
+        }
+
+        /* Difficulty Select Dropdown */
+        .create__recipe__select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            margin-bottom: 15px;
+            background-color: #fff;
+            font-size: 14px;
+
+            &:focus {
+                outline: none;
+                border-color: #D98F5C;
+            }
+        }
+
+        /* Buttons im Bearbeiten-Modal */
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+
+            button {
+                flex: 1;
+                padding: 12px;
+                border: none;
+                border-radius: 25px;
+                font-size: 16px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: background-color 0.2s ease;
+
+                &[type="submit"] {
+                    background-color: #D98F5C;
+                    color: antiquewhite;
+
+                    &:hover {
+                        background-color: #e7986a;
+                    }
+                }
+
+                &[type="button"] {
+                    background-color: #e5e5e5;
+                    color: #333333;
+
+                    &:hover {
+                        background-color: #d5d5d5;
+                    }
+                }
             }
         }
     }

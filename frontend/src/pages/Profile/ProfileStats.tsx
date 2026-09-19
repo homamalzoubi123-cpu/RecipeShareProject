@@ -9,16 +9,16 @@ interface ProfileStatsProps {
   onFollowingClick: () => void;
 }
 
-function ProfileStats({
+const ProfileStats = ({
   recipesCount,
   followersCount,
   followingCount,
   onRecipesClick,
   onFollowersClick,
   onFollowingClick
-}: ProfileStatsProps) {
+}: ProfileStatsProps) => {
   return (
-    <div className="profile-stats">
+    <div className="profile-stats"> 
       <div className="profile-stats__item">
         <button className="following-button" onClick={onRecipesClick}>
           <span>{recipesCount}</span>

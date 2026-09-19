@@ -17,7 +17,7 @@ interface Recipe {
     imageUrl: string | null;
 }
 
-interface HomeProps { }
+interface HomeProps { } 
 
 function Home({ }: HomeProps) {
     const { user } = useContext(AuthContext) as AuthContextType;
@@ -83,7 +83,10 @@ function Home({ }: HomeProps) {
                     <p>No recipes available.</p>
                 ) : (
                     recipes.map((recipe) => (
-                        <div key={recipe.id} className="recipe-card">
+                        <div key={recipe.id} className="recipe-card"
+                            onClick={() => {
+                                navigate(`/recipe/${recipe.id}`)
+                            }} >
                             <div className="recipe-author-box">
                                 <button className="recipe-author-box__schowuser"
                                     onClick={() => navigate(`/profile/${recipe.userId}`)}>

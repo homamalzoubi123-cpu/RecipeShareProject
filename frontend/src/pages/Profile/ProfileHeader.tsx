@@ -20,8 +20,8 @@ interface ProfileHeaderProps {
     onFollowingClick: () => void;
     getImageUrl: (imagePath: string | null) => string;
 }
-
-function ProfileHeader({
+ 
+const ProfileHeader = ({
     userProfile,
     recipesCount,
     followersCount,
@@ -31,8 +31,7 @@ function ProfileHeader({
     onRecipesClick,
     onFollowersClick,
     onFollowingClick,
-    getImageUrl
-}: ProfileHeaderProps) {
+    getImageUrl}: ProfileHeaderProps) => {
     const isOwnProfile = !!onImageUpload; // إذا فيه function، معناها بروفايلي أنا
 
     return (

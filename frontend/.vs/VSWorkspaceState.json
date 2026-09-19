@@ -1,4 +1,9 @@
 {
-  "ExpandedNodes": [],
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\pages"
+  ],
+  "SelectedNode": "\\src\\pages\\Home.tsx",
   "PreviewInSolutionExplorer": false
 }

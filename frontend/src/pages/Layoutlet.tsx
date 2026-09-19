@@ -7,7 +7,7 @@ const Layout = () => {
     const { user } = useContext(AuthContext) as AuthContextType;
     const location = useLocation();
 
-    // فحص إذا كنا حالياً على صفحة بروفايل شخص تاني أو صفحة المتابعين تبعو
+  
     const profileMatch =
         matchPath("/profile/:userId", location.pathname) ||
         matchPath("/profile/:userId/followers", location.pathname) ||

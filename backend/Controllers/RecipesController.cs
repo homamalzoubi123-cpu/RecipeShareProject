@@ -237,4 +237,57 @@ public class RecipesController : ControllerBase
             .ToListAsync();
         return Ok(recipes);
     }
+    // 6. Rezept aktualisieren
+    [HttpPut("{id}")]
+    [Authorize]
+    public async Task<IActionResult> UpdateRecipe(int id, [FromForm] CreateRecipeDto dto)
+    {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value
+                       ?? User.FindFirst("id")?.Value;
+
+        if (string.IsNullOrEmpty(userIdClaim))
+            return Unauthorized(new { error = "User-ID nicht im Token gefunden." });
+
+        int userId = int.Parse(userIdClaim);
+
+        var recipe = await _context.Recipes.FindAsync(id);
+        if (recipe == null)
+        {
+            return NotFound(new { error = "Rezept nicht gefunden." });
+        }
+
+        // Sicherheitsprüfung: Gehört das Rezept dem aktuellen Nutzer?
+        if (recipe.UserId != userId)
+        {
+            return Forbid();
+        }
+
+        recipe.Title = dto.Title;
+        recipe.Description = dto.Description;
+        recipe.Instructions = dto.Instructions;
+        recipe.PrepTimeMinutes = dto.PrepTimeMinutes;
+        recipe.Difficulty = dto.Difficulty;
+
+        if (dto.ImageFile != null && dto.ImageFile.Length > 0)
+        {
+            var wwwrootFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+            var uploadsFolder = Path.Combine(wwwrootFolder, "uploads");
+            if (!Directory.Exists(uploadsFolder))
+                Directory.CreateDirectory(uploadsFolder);
+
+            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(dto.ImageFile.FileName);
+            var filePath = Path.Combine(uploadsFolder, fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await dto.ImageFile.CopyToAsync(stream);
+            }
+
+            recipe.ImageUrl = $"/uploads/{fileName}";
+        }
+
+        await _context.SaveChangesAsync();
+
+        return Ok(recipe);
+    }
 }

@@ -18,10 +18,9 @@ function App({ }: AppProps) {
     const { user } = useContext(AuthContext) as AuthContextType;
 
     return (
-
         <Routes>
 
-                <Route path="/" element={<Layout />}>
+               <Route path="/" element={<Layout />}>
                 <Route index element={user ? <Home /> : <Welcome />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/profile/:userId" element={<Profile />} />
