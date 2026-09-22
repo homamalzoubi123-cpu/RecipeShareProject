@@ -4,10 +4,10 @@ using Microsoft.IdentityModel.Tokens;
 using RecipeShare.Api;
 using System.Text;
 
-
 var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
+
 // 1. إضافة قاعدة البيانات
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -18,13 +18,11 @@ builder.Services.AddControllers();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp",
-        policy => policy.WithOrigins(
-            "http://localhost:5173",
-            "http://localhost:3000",
-            "https://recipe-share-project-eight.vercel.app"
-            ) // منافذ Vite و React
-                        .AllowAnyHeader()
-                        .AllowAnyMethod());
+        policy => policy
+            .SetIsOriginAllowed(origin => true) // يسمح بجميع المنافذ المحلية
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials());
 });
 
 // 3. إعداد المصادقة بـ JWT
@@ -48,11 +46,12 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
-// 4. تفعيل سياسة الـ CORS (ترتيب هذا السطر مهم جداً!)
+// 4. تفعيل سياسة الـ CORS (يجب أن تكون قبل UseAuthorization)
 app.UseCors("AllowReactApp");
 app.UseStaticFiles();
-// ملاحظة: إذا كنت تشغل السيرفر على http://localhost:5082 يمكنك إيقاف UseHttpsRedirection مؤقتاً
-app.UseHttpsRedirection();
+
+// تم تعطيل UseHttpsRedirection لأن السيرفر يعمل على HTTP محلياً
+// app.UseHttpsRedirection(); 
 
 app.UseAuthentication();
 app.UseAuthorization();

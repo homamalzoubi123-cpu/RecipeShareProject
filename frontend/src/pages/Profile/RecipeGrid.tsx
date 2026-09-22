@@ -1,17 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import "./RecipeGrid.scss";
+import {Recipe} from "./Profile"
 
-interface Recipe {
-    userId: number;
-    userName?: string;
-    id: number;
-    title: string;
-    description: string;
-    instructions: string;
-    prepTimeMinutes: number;
-    difficulty: string;
-    imageUrl: string | null;
-}
 
 interface RecipeGridProps {
     recipes: Recipe[];

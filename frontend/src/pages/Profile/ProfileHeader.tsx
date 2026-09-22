@@ -1,12 +1,8 @@
 import acaunt from "../../assets/account.svg";
 import "./ProfileHeader.scss";
 import ProfileStats from "./ProfileStats";
+import {UserProfile} from "./Profile"
 
-interface UserProfile {
-    id?: number;
-    imageUrl: string | null;
-    username: string;
-}
 
 interface ProfileHeaderProps {
     userProfile: UserProfile;
@@ -34,6 +30,7 @@ const ProfileHeader = ({
     getImageUrl}: ProfileHeaderProps) => {
     const isOwnProfile = !!onImageUpload; // إذا فيه function، معناها بروفايلي أنا
 
+    
     return (
         <div className="profile-header-wrapper">
             <div className="profile-header">

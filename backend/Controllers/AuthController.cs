@@ -6,7 +6,7 @@ using RecipeShare.Api.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-namespace RecipeShare.Api.Controllers;
+namespace RecipeShare.Api.Controllers; 
 
 [ApiController]
 [Route("api/[controller]")]

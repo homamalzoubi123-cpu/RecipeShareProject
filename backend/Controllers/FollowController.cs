@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using RecipeShare.Api.Models;
-using System.Security.Claims;
-
-namespace RecipeShare.Api.Controllers;
+using RecipeShare.Api.Models; 
+using System.Security.Claims; 
+ 
+namespace RecipeShare.Api.Controllers; 
 
 [ApiController]
 [Route("api/[controller]")]

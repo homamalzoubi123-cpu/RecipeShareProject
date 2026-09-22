@@ -7,7 +7,7 @@ import { API_BASE_URL } from "../../config";
 import { AuthContext, AuthContextType } from "../../context/AuthContext";
 import InputField from "../../Components/InputField/InputField";
 
-interface Recipe {
+export interface Recipe {
     userId: number;
     userName?: string;
     id: number;
@@ -19,7 +19,8 @@ interface Recipe {
     imageUrl: string | null;
 }
 
-interface UserProfile {
+
+export interface UserProfile {
     id?: number;
     imageUrl: string | null;
     username: string;
@@ -30,7 +31,6 @@ const Profile = () => {
     const { userId } = useParams<{ userId: string }>();
     const isOwnProfile = !userId; // Keine ID in der URL = eigenes Profil
     const { token } = useContext(AuthContext) as AuthContextType;
-
     const [myRecipes, setMyRecipes] = useState<Recipe[]>([]);
     const [followersCount, setFollowersCount] = useState<number>(0);
     const [followingCount, setFollowingCount] = useState<number>(0);
@@ -41,13 +41,14 @@ const Profile = () => {
     const editFileInputRef = useRef<HTMLInputElement>(null); // Ref für Bild-Upload im Bearbeiten-Modal
     const [confirmDeleteId, setConfirmDeleteId] = useState<number | null>(null);
     const [editingRecipe, setEditingRecipe] = useState<Recipe | null>(null);
+    const [originalRecipe, setOriginalRecipe] = useState<Recipe | null>(null);
     const [editImageFile, setEditImageFile] = useState<File | null>(null);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
     const [userProfile, setUserProfile] = useState<UserProfile>({
         imageUrl: null,
         username: ""
     });
+
 
     const scrollToRecipes = () => {
         recipesGridRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -58,9 +59,19 @@ const Profile = () => {
     };
 
     const handleEditClick = (recipe: Recipe) => {
-        setEditingRecipe(recipe);
+        setEditingRecipe({ ...recipe });
+        setOriginalRecipe({ ...recipe }); // Unveränderte Kopie als Referenz
         setEditImageFile(null); // Bild-State beim Öffnen zurücksetzen
     };
+
+    const isUnchanged = originalRecipe && editingRecipe && (
+        editingRecipe.title === originalRecipe.title &&
+        (editingRecipe.description || "") === (originalRecipe.description || "") &&
+        (editingRecipe.instructions || "") === (originalRecipe.instructions || "") &&
+        editingRecipe.prepTimeMinutes === originalRecipe.prepTimeMinutes &&
+        editingRecipe.difficulty === originalRecipe.difficulty &&
+        !editImageFile // Prüft, ob kein neues Bild hochgeladen wurde
+    );
 
     useEffect(() => {
         setLoading(true);
@@ -158,7 +169,7 @@ const Profile = () => {
     // Bearbeitung des Rezepts per FormData (inklusive Bild-Upload)
     const handleUpdateSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (!editingRecipe) return;
+        if (!editingRecipe || isUnchanged) return;
 
         const storedToken = localStorage.getItem("token") || token;
 
@@ -192,6 +203,7 @@ const Profile = () => {
             );
 
             setEditingRecipe(null);
+            setOriginalRecipe(null);
             setEditImageFile(null);
         } catch (err) {
             console.error(err);
@@ -293,6 +305,7 @@ const Profile = () => {
                                 className="close-button"
                                 onClick={() => {
                                     setEditingRecipe(null);
+                                    setOriginalRecipe(null);
                                     setEditImageFile(null);
                                 }}
                             >
@@ -415,12 +428,17 @@ const Profile = () => {
                                         type="button"
                                         onClick={() => {
                                             setEditingRecipe(null);
+                                            setOriginalRecipe(null);
                                             setEditImageFile(null);
                                         }}
                                     >
                                         Abbrechen
                                     </button>
-                                    <button type="submit" className="create__recipe__card__button">
+                                    <button
+                                        type="submit"
+                                        disabled={!!isUnchanged}
+                                        className={`create__recipe__card__button ${isUnchanged ? "disabled" : ""}`}
+                                    >
                                         Speichern
                                     </button>
                                 </div>

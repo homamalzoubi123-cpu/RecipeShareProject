@@ -5,9 +5,11 @@ import InputField from "../Components/InputField/InputField";
 import { useContext } from "react";
 import { AuthContext, AuthContextType } from "../context/AuthContext";
 import {API_BASE_URL} from "../config";
+
 interface LoginProps {
     isInWelcome?: boolean;
 }
+
 const Login =({
     isInWelcome
 }: LoginProps) => {
@@ -16,11 +18,9 @@ const Login =({
         email: "",
         password: ""
     });
-
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
     const [loading, setLoading] = useState(false);
-
     const navigate = useNavigate();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,6 +29,7 @@ const Login =({
             [e.target.name]: e.target.value
         });
     };
+
     const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setError("");
@@ -74,9 +75,9 @@ const Login =({
             setLoading(false);
         }
     };
+
     useEffect(() => { setFormData({ email: "", password: "" }) }, []);
-    console.log("formData.password:", formData.password);
-    console.log("formData.email:", formData.email);
+  
     return (
       <div className={`login ${isInWelcome ? "login--welcome" : ""}`}>
             <div className={`login__card ${isInWelcome ? "login__card--welcome" : ""}`}>
