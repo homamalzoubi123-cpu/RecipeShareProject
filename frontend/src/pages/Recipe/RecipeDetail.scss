@@ -1,52 +1,52 @@
 .recipe-detail__container {
-    display: flex;
-    justify-content: center;
-    padding: 20px;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
 }
 
 .recipe-detail__card {
-    max-width: 600px;
-    width: 100%;
+  max-width: 600px;
+  width: 100%;
 }
 
 .recipe-detail__image {
-    width: 100%;
-    border-radius: 8px;
-    margin-bottom: 16px;
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 16px;
 }
 
 .recipe-detail__meta {
-    display: flex;
-    gap: 16px;
-    margin: 12px 0;
+  display: flex;
+  gap: 16px;
+  margin: 12px 0;
 }
 
 .recipe-detail__status {
-    text-align: center;
-    padding: 40px;
+  text-align: center;
+  padding: 40px;
 }
 .recipe-detail__back {
-    display: flex;
-    position: absolute;
-    top: 10px;
-    left: 20px; /* oder left: 20px, je nachdem wo du ihn haben willst */
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    color: antiquewhite;
-    font-size: 20px;
-    width: max-content; /* max-intrinsic gibt's nicht, das war ein Tippfehler */
-    height: 40px;
-    border-radius: 20px;
-    padding: 0 28px;
-    background-color: #D98F5C;
-    border: none;
+  display: flex;
+  position: absolute;
+  top: 10px;
+  left: 20px; /* oder left: 20px, je nachdem wo du ihn haben willst */
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  color: antiquewhite;
+  font-size: 20px;
+  width: max-content; /* max-intrinsic gibt's nicht, das war ein Tippfehler */
+  height: 40px;
+  border-radius: 20px;
+  padding: 0 28px;
+  background-color: #d98f5c;
+  border: none;
 
-    &:hover {
-        color: wheat;
-        background-color: #E7986A;
-    }
+  &:hover {
+    color: wheat;
+    background-color: #e7986a;
+  }
 }
 .recipe-detail__instructions {
-    white-space: pre-line;
+  white-space: pre-line;
 }

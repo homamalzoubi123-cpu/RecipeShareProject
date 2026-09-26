@@ -1,88 +1,87 @@
 ﻿.create__recipe__container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: linear-gradient(135deg, #E8F3E8 0%, #FDF0E3 65%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e8f3e8 0%, #fdf0e3 65%);
 
-    .create__recipe__card__time {
-        position: relative;
-        width: 100%;
-        /* Nutzt das native InputField ohne extra Wrapper-Ränder */
-        .register__card__field__input {
-            width: 100%;
-            box-sizing: border-box;
-            padding-right: 20px; /* Damit der Text nicht das min überlagert, falls man sehr lang tippt */
-            background-color: white;
-      
-        }
-
-        .input-suffix {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #666;
-            font-size: 14px;
-            pointer-events: none; /* Macht das Suffix klickdurchlässig */
-            white-space: nowrap;
-            user-select: none;
-            transition: left 0.05s ease-out; /* Lässt das min flüssig mitwandern */
-        }
+  .create__recipe__card__time {
+    position: relative;
+    width: 100%;
+    /* Nutzt das native InputField ohne extra Wrapper-Ränder */
+    .register__card__field__input {
+      width: 100%;
+      box-sizing: border-box;
+      padding-right: 20px; /* Damit der Text nicht das min überlagert, falls man sehr lang tippt */
+      background-color: white;
     }
 
-    .create__recipe__card {
-        background-color: #ffffff;
-        padding: 35px 40px;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        width: 100%;
-        max-width: 600px;
-        box-sizing: border-box;
-        background-color: white;
-        color: black;
-        color-scheme: light;
-
-        .login__card__back {
-            background-color: #e5e5e5;
-            border: none;
-            padding: 6px 14px;
-            border-radius: 12px;
-            font-size: 13px;
-            color: #333;
-            cursor: pointer;
-            margin-bottom: 20px;
-        }
-        // العنوان الرئيسي
-        .login__title {
-            text-align: center;
-            font-size: 26px;
-            font-weight: 800;
-            margin-bottom: 35px;
-            color: #111;
-        }
-
-        .create__recipe__card__instructions {
-            width: 100%;
-            height: 150px;
-            resize: none;
-        }
-
-        .create__recipe__card__button {
-            width: 100%;
-            padding: 12px;
-            background-color: #D98F5C;
-            border: none;
-            border-radius: 25px;
-            color: antiquewhite;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 15px;
-            transition: background-color 0.2s ease;
-
-            &:hover {
-                background-color: #e7986a;
-            }
-        }
+    .input-suffix {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #666;
+      font-size: 14px;
+      pointer-events: none; /* Macht das Suffix klickdurchlässig */
+      white-space: nowrap;
+      user-select: none;
+      transition: left 0.05s ease-out; /* Lässt das min flüssig mitwandern */
     }
+  }
+
+  .create__recipe__card {
+    background-color: #ffffff;
+    padding: 35px 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 600px;
+    box-sizing: border-box;
+    background-color: white;
+    color: black;
+    color-scheme: light;
+
+    .login__card__back {
+      background-color: #e5e5e5;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 12px;
+      font-size: 13px;
+      color: #333;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+    // العنوان الرئيسي
+    .login__title {
+      text-align: center;
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 35px;
+      color: #111;
+    }
+
+    .create__recipe__card__instructions {
+      width: 100%;
+      height: 150px;
+      resize: none;
+    }
+
+    .create__recipe__card__button {
+      width: 100%;
+      padding: 12px;
+      background-color: #d98f5c;
+      border: none;
+      border-radius: 25px;
+      color: antiquewhite;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: #e7986a;
+      }
+    }
+  }
 }

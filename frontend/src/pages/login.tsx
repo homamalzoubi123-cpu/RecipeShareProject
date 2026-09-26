@@ -4,154 +4,150 @@ import { useEffect, useState } from "react";
 import InputField from "../Components/InputField/InputField";
 import { useContext } from "react";
 import { AuthContext, AuthContextType } from "../context/AuthContext";
-import {API_BASE_URL} from "../config";
+import { API_BASE_URL } from "../config";
 
 interface LoginProps {
-    isInWelcome?: boolean;
+  isInWelcome?: boolean;
 }
 
-const Login =({
-    isInWelcome
-}: LoginProps) => {
-    const { login } = useContext(AuthContext) as AuthContextType;
-    const [formData, setFormData] = useState({
-        email: "",
-        password: ""
+const Login = ({ isInWelcome }: LoginProps) => {
+  const { login } = useContext(AuthContext) as AuthContextType;
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
     });
-    const [error, setError] = useState("");
-    const [success, setSuccess] = useState("");
-    const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
+  };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
-    };
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setError("");
+    setSuccess("");
 
-    const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-        setError("");
-        setSuccess("");
+    setLoading(true);
 
-        setLoading(true);
-       
-        try {
-       
-            const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                 
-                    email: formData.email,
-                    password: formData.password
-                })
-            });
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
 
-            const data = await response.json();
-            localStorage.setItem("token", data.token);
-           
-            if (!response.ok) {
-                
-                throw new Error(data.message || data || "Registrierung fehlerhaft");
-            }
-            login(data.user, data.token);
-            setSuccess("Erfolgreich angemeldet! Sie werden weitergeleitet...");
-            setFormData({ email: "", password: "" });
-            setTimeout(() => {
-                navigate("/Home");
-            }, 2000);
+      const data = await response.json();
+      localStorage.setItem("token", data.token);
 
-        } catch (err) {
-            if (err instanceof Error) {
-                setError(err.message);
-            } else {
-                setError("حدث خطأ غير متوقع");
-            }
-        } finally {
-            setLoading(false);
-        }
-    };
+      if (!response.ok) {
+        throw new Error(data.message || data || "Registrierung fehlerhaft");
+      }
+      login(data.user, data.token);
+      setSuccess("Erfolgreich angemeldet! Sie werden weitergeleitet...");
+      setFormData({ email: "", password: "" });
+      setTimeout(() => {
+        navigate("/Home");
+      }, 2000);
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("حدث خطأ غير متوقع");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    useEffect(() => { setFormData({ email: "", password: "" }) }, []);
-  
-    return (
-      <div className={`login ${isInWelcome ? "login--welcome" : ""}`}>
-            <div className={`login__card ${isInWelcome ? "login__card--welcome" : ""}`}>
-                {!isInWelcome && (
-                    <Link to="/">
-                        <button className="login__card__back">Zurück</button>
-                    </Link>
-                )}
-                <h2 className="login__title">
-                    Willkommen
-                </h2>
-                {error &&
-                    <div
-                        style={{
-                            color: "#e74c3c",
-                            marginBottom: "1rem"
-                        }}>
-                        {error}
-                    </div>
-                }
-                {success &&
-                    <div
-                        style={{
-                            color: "#2ecc71",
-                            marginBottom: "1rem"
-                        }}>
-                        {success}
-                    </div>}
+  useEffect(() => {
+    setFormData({ email: "", password: "" });
+  }, []);
 
-                <InputField
-                    label="E-Mail-Adresse"
-                    type="email"
-                    name="email"
-                    placeholder="E-Mail-Adresse"
-                    value={formData.email}
-                    onChange={handleChange}
-                    autoComplete="email"
-                />
-                <InputField
-                    label="Passwort"
-                    type="password"
-                    name="password"
-                    placeholder="Passwort"
-                    value={formData.password}
-                    onChange={handleChange}
-                    autoComplete="new-password"
-                />
-                <div
-                    className="login__card__label__row">
-                    <a
-                        className="login__link__passwort"
-                        href="#">
-                        Passwort vergessen?
-                    </a>
-                </div>
-               
-                <button
-                    type="submit"
-                    disabled={loading}
-                    className="login__card__button"
-                    onClick={handleSubmit}>
-                    {loading ? "Anmelden..." : "Anmelden"}
-                </button>
+  return (
+    <div className={`login ${isInWelcome ? "login--welcome" : ""}`}>
+      <div
+        className={`login__card ${isInWelcome ? "login__card--welcome" : ""}`}
+      >
+        {!isInWelcome && (
+          <Link to="/">
+            <button className="login__card__back">Zurück</button>
+          </Link>
+        )}
+        <h2 className="login__title">Willkommen</h2>
+        {error && (
+          <div
+            style={{
+              color: "#e74c3c",
+              marginBottom: "1rem",
+            }}
+          >
+            {error}
+          </div>
+        )}
+        {success && (
+          <div
+            style={{
+              color: "#2ecc71",
+              marginBottom: "1rem",
+            }}
+          >
+            {success}
+          </div>
+        )}
 
-                <p className="login__card__footer">
-                    Noch kein Konto?
-                    <a
-                        className="login__card__link"
-                        href="/register">Registrieren
-                    </a>
-                </p>
-            </div>
+        <InputField
+          label="E-Mail-Adresse"
+          type="email"
+          name="email"
+          placeholder="E-Mail-Adresse"
+          value={formData.email}
+          onChange={handleChange}
+          autoComplete="email"
+        />
+        <InputField
+          label="Passwort"
+          type="password"
+          name="password"
+          placeholder="Passwort"
+          value={formData.password}
+          onChange={handleChange}
+          autoComplete="new-password"
+        />
+        <div className="login__card__label__row">
+          <a className="login__link__passwort" href="#">
+            Passwort vergessen?
+          </a>
         </div>
-    );
+
+        <button
+          type="submit"
+          disabled={loading}
+          className="login__card__button"
+          onClick={handleSubmit}
+        >
+          {loading ? "Anmelden..." : "Anmelden"}
+        </button>
+
+        <p className="login__card__footer">
+          Noch kein Konto?
+          <a className="login__card__link" href="/register">
+            Registrieren
+          </a>
+        </p>
+      </div>
+    </div>
+  );
 };
 
 export default Login;

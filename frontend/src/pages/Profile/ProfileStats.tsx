@@ -15,10 +15,10 @@ const ProfileStats = ({
   followingCount,
   onRecipesClick,
   onFollowersClick,
-  onFollowingClick
+  onFollowingClick,
 }: ProfileStatsProps) => {
   return (
-    <div className="profile-stats"> 
+    <div className="profile-stats">
       <div className="profile-stats__item">
         <button className="following-button" onClick={onRecipesClick}>
           <span>{recipesCount}</span>
@@ -41,6 +41,6 @@ const ProfileStats = ({
       </div>
     </div>
   );
-}
+};
 
 export default ProfileStats;
