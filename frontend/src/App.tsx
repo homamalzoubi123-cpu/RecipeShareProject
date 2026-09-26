@@ -4,15 +4,15 @@ import { Routes, Route } from "react-router-dom";
 import Login from "./pages/login";
 import Register from "./pages/register";
 import Layout from "./pages/Layoutlet";
-import Home from "./pages/Home";
+import Home from "./pages/Home/Home";
 import CreateRecipe from "./pages/Recipe/CreateRecipe";
-import FollowingList from "./Components/Follow/FollowingList";
-import FollowersList from "./Components/Follow/FollowersList";
+import FollowingList from "./components/follow/FollowingList";
+import FollowersList from "./components/follow/FollowersList";
 import Profile from "./pages/Profile/Profile";
 import { useContext } from "react";
 import { AuthContext, AuthContextType } from "./context/AuthContext";
 import RecipeDetail from "./pages/Recipe/RecipeDetail";
-import { AiChat } from './Components/AiChats/AiChat';
+import { AiChat } from './components/ai-chat/AiChat';
 
 interface AppProps { }  
 

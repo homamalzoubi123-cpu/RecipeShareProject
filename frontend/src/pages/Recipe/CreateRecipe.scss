@@ -5,70 +5,76 @@
   min-height: 100vh;
   background: linear-gradient(135deg, #e8f3e8 0%, #fdf0e3 65%);
 
-  .create__recipe__card__time {
-    position: relative;
-    width: 100%;
-    /* Nutzt das native InputField ohne extra Wrapper-Ränder */
-    .register__card__field__input {
-      width: 100%;
-      box-sizing: border-box;
-      padding-right: 20px; /* Damit der Text nicht das min überlagert, falls man sehr lang tippt */
-      background-color: white;
-    }
-
-    .input-suffix {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #666;
-      font-size: 14px;
-      pointer-events: none; /* Macht das Suffix klickdurchlässig */
-      white-space: nowrap;
-      user-select: none;
-      transition: left 0.05s ease-out; /* Lässt das min flüssig mitwandern */
-    }
-  }
-
   .create__recipe__card {
-    background-color: #ffffff;
-    padding: 35px 40px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
     width: 100%;
     max-width: 600px;
-    box-sizing: border-box;
-    background-color: white;
+    padding: 35px 40px;
+    background-color: #ffffff;
     color: black;
     color-scheme: light;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 
+    // Zurück-Button
     .login__card__back {
+      padding: 6px 14px;
+      margin-bottom: 20px;
       background-color: #e5e5e5;
       border: none;
-      padding: 6px 14px;
       border-radius: 12px;
-      font-size: 13px;
       color: #333;
+      font-size: 13px;
       cursor: pointer;
-      margin-bottom: 20px;
-    }
-    // العنوان الرئيسي
-    .login__title {
-      text-align: center;
-      font-size: 26px;
-      font-weight: 800;
-      margin-bottom: 35px;
-      color: #111;
     }
 
+    // Haupttitel
+    .login__title {
+      margin-bottom: 35px;
+      color: #111;
+      font-size: 26px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    // Textarea für die Zubereitung
     .create__recipe__card__instructions {
       width: 100%;
       height: 150px;
       resize: none;
     }
 
+    // Zeiteingabe mit "min"-Suffix
+    .create__recipe__card__time {
+      position: relative;
+      width: 100%;
+
+      // Nutzt das native InputField ohne extra Wrapper-Ränder
+      .register__card__field__input {
+        box-sizing: border-box;
+        width: 100%;
+        padding-right: 20px; // Damit der Text nicht das min überlagert, falls man sehr lang tippt
+        background-color: white;
+      }
+
+      .input-suffix {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #666;
+        font-size: 14px;
+        white-space: nowrap;
+        pointer-events: none; // Macht das Suffix klickdurchlässig
+        user-select: none;
+        transition: left 0.05s ease-out; // Lässt das min flüssig mitwandern
+      }
+    }
+
+    // Submit-Button
     .create__recipe__card__button {
       width: 100%;
       padding: 12px;
+      margin-top: 15px;
       background-color: #d98f5c;
       border: none;
       border-radius: 25px;
@@ -76,7 +82,6 @@
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
-      margin-top: 15px;
       transition: background-color 0.2s ease;
 
       &:hover {

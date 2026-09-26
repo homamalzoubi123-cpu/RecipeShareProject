@@ -1,11 +1,11 @@
 import { useState, useRef, useEffect } from "react";
 import "./RecipeGrid.scss";
-import { Recipe } from "./Profile";
+import type { GetImageUrl, Recipe } from "./Profile.types";
 
 interface RecipeGridProps {
   recipes: Recipe[];
   onDelete?: (id: number) => void;
-  getImageUrl: (imagePath: string | null) => string;
+  getImageUrl: GetImageUrl;
   onEdit?: (recipe: Recipe) => void;
 }
 

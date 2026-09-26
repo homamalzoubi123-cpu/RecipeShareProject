@@ -1,11 +1,11 @@
 import { useEffect, useState, useContext } from "react";
 import "./Home.scss";
-import Follow from "../Components/Follow/Following";
-import { AuthContext, AuthContextType } from "../context/AuthContext";
-import { API_BASE_URL } from "../config";
+import Follow from "../../components/follow/Following";
+import { AuthContext, AuthContextType } from "../../context/AuthContext";
+import { API_BASE_URL } from "../../config";
 import { useNavigate } from "react-router-dom";
-import optionenIcon from "../assets/optionenHoma.svg";
-import homeImg from "../assets/Homeimg.jpg";
+import optionenIcon from "../../assets/optionen-home.svg";
+import homeImg from "../../assets/home-img.jpg";
 
 interface Recipe {
   userId: number;
@@ -26,7 +26,7 @@ function Home({}: HomeProps) {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const navigate = useNavigate();
-  const [recipeactive, setRrecipeactive] = useState(false);
+  const [activeRecipeId, setActiveRecipeId] = useState<number | null>(null);
   const [followedUserIds, setFollowedUserIds] = useState<number[]>([]);
 
   useEffect(() => {
@@ -104,7 +104,6 @@ function Home({}: HomeProps) {
                 </div>
                 <button
                   className="recipe-author-box__schowuser"
-                  key={recipe.id}
                   onClick={(e) => {
                     e.stopPropagation();
                     navigate(`/profile/${recipe.userId}`);
@@ -135,12 +134,12 @@ function Home({}: HomeProps) {
                 )}
                 <button
                   className="recipe-content_recipe"
-                  onClick={(e) => setRrecipeactive(!recipeactive)}
+                  onClick={() => setActiveRecipeId(activeRecipeId === recipe.id ? null : recipe.id)}
                 >
                   {" "}
                   rezepte anzeigen{" "}
                 </button>
-                {recipeactive && (
+                {activeRecipeId === recipe.id && (
                   <>
                     <p className="instructions">{recipe.instructions}</p>
                     <div className="recipe-info">

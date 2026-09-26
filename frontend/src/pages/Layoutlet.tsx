@@ -1,5 +1,5 @@
 import { Outlet, useLocation, matchPath } from "react-router-dom";
-import HeaderComponents from "../Components/Header/HeaderComponents";
+import HeaderComponents from "../components/header/HeaderComponents";
 import { useContext } from "react";
 import { AuthContext, AuthContextType } from "../context/AuthContext";
 

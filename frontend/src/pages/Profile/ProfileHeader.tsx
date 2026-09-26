@@ -1,7 +1,7 @@
 import acaunt from "../../assets/account.svg";
 import "./ProfileHeader.scss";
 import ProfileStats from "./ProfileStats";
-import { UserProfile } from "./Profile";
+import { UserProfile } from "./Profile.types";
 
 interface ProfileHeaderProps {
   userProfile: UserProfile;

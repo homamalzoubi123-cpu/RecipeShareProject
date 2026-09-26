@@ -1,7 +1,7 @@
 import "./login.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import InputField from "../Components/InputField/InputField";
+import InputField from "../components/input-field/InputField";
 import { useContext } from "react";
 import { AuthContext, AuthContextType } from "../context/AuthContext";
 import { API_BASE_URL } from "../config";

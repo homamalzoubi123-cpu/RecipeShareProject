@@ -9,13 +9,13 @@
     margin-right: auto;
 
     .following-button {
-      border: none;
-      background: transparent;
       display: flex;
       flex-direction: column;
-      margin-right: auto;
       gap: 5px;
       margin-top: 4px;
+      margin-right: auto;
+      background: transparent;
+      border: none;
       cursor: pointer;
 
       span {

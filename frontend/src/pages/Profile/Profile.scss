@@ -1,9 +1,9 @@
 .profile-container {
   max-width: 800px;
-  margin: 0 auto;
   min-height: calc(100vh - 70px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
   background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   color: black;
   color-scheme: light;
 
@@ -13,25 +13,25 @@
 }
 
 .back-button_profile {
-  display: flex;
   position: absolute;
   top: 10px;
   left: 20px;
+  display: flex;
   align-items: center;
   gap: 10px;
-  cursor: pointer;
-  color: antiquewhite;
-  font-size: 20px;
   width: max-content;
   height: 40px;
-  border-radius: 20px;
   padding: 0 28px;
   background-color: #d98f5c;
   border: none;
+  border-radius: 20px;
+  color: antiquewhite;
+  font-size: 20px;
+  cursor: pointer;
 
   &:hover {
-    color: wheat;
     background-color: #e7986a;
+    color: wheat;
   }
 }
 
@@ -39,49 +39,49 @@
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
 
   /* 1. Modal für Löschen-Bestätigung */
   .modal-box {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    padding: 20px;
     width: 40%;
-    background-color: white;
-    border-radius: 17px;
     min-width: 300px;
     max-width: calc(100% - 40px);
-    position: relative;
+    padding: 20px;
+    background-color: white;
+    border-radius: 17px;
 
     .close-button {
       position: absolute;
       top: 12px;
       right: 12px;
-      cursor: pointer;
-      background-color: transparent;
-      border: none;
-      color: #333;
-      font-size: 24px;
-      width: 30px;
-      height: 30px;
       display: flex;
       align-items: center;
       justify-content: center;
+      width: 30px;
+      height: 30px;
+      background-color: transparent;
+      border: none;
       border-radius: 50%;
+      color: #333;
+      font-size: 24px;
+      cursor: pointer;
     }
 
     p {
-      font-size: 18px;
-      color: #333;
       padding: 0 20px;
+      color: #333;
+      font-size: 18px;
     }
 
     .modal-actions {
@@ -94,14 +94,14 @@
       }
 
       button {
-        background-color: #d98f5c;
         display: flex;
-        color: white;
-        border: none;
         padding: 10px 20px;
+        background-color: #d98f5c;
+        border: none;
         border-radius: 4px;
-        cursor: pointer;
+        color: white;
         font-size: 16px;
+        cursor: pointer;
 
         &:hover {
           background-color: #c87a4f;
@@ -111,17 +111,17 @@
   }
 
   /* 2. Modal für Rezept bearbeiten */
-  .ubdate__Rezept {
+  .profile__edit-modal {
     position: relative;
-    background-color: #ffffff;
-    padding: 35px 40px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
     width: 100%;
     max-width: 600px;
     max-height: 100%;
+    padding: 35px 40px;
     overflow-y: auto;
-    box-sizing: border-box;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     color: #000000;
     color-scheme: light;
 
@@ -131,9 +131,9 @@
       right: 20px;
       background: transparent;
       border: none;
+      color: #666;
       font-size: 24px;
       cursor: pointer;
-      color: #666;
 
       &:hover {
         color: #000;
@@ -141,29 +141,29 @@
     }
 
     h3 {
-      text-align: center;
-      font-size: 26px;
-      font-weight: 800;
       margin-bottom: 25px;
       color: #111111;
+      font-size: 26px;
+      font-weight: 800;
+      text-align: center;
     }
 
     /* Klickbarer Bild-Container mit Hover-Effekt */
-    .edit__recipe__image__container {
+    .profile__edit-image-container {
       position: relative;
       width: 100%;
       height: 180px;
       margin-bottom: 20px;
-      border-radius: 8px;
       overflow: hidden;
-      cursor: pointer;
       border: 1px dashed #ccc;
+      border-radius: 8px;
+      cursor: pointer;
 
       img {
+        display: block;
         width: 100%;
         height: 100%;
         object-fit: cover;
-        display: block;
         transition: transform 0.3s ease;
       }
 
@@ -171,22 +171,22 @@
         position: absolute;
         top: 0;
         left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         width: 100%;
         height: 100%;
         background-color: rgba(0, 0, 0, 0.4);
-        display: flex;
-        justify-content: center;
-        align-items: center;
         opacity: 0;
         transition: opacity 0.2s ease;
 
         span {
-          color: #ffffff;
-          font-weight: bold;
-          font-size: 15px;
-          background-color: rgba(0, 0, 0, 0.6);
           padding: 8px 16px;
+          background-color: rgba(0, 0, 0, 0.6);
           border-radius: 20px;
+          color: #ffffff;
+          font-size: 15px;
+          font-weight: bold;
         }
       }
 
@@ -202,32 +202,32 @@
     }
 
     /* Anleitungen (Textarea) */
-    .create__recipe__card__instructions {
+    .profile__edit-instructions {
+      box-sizing: border-box;
       width: 100%;
       height: 120px;
-      resize: none;
-      box-sizing: border-box;
       margin-bottom: 15px;
       padding: 10px;
+      resize: none;
       border: 1px solid #ccc;
       border-radius: 6px;
       font-family: inherit;
 
       &:focus {
-        outline: none;
         border-color: #d98f5c;
+        outline: none;
       }
     }
 
     /* Zeit-Container mit "min" */
-    .create__recipe__card__time {
+    .profile__edit-time {
       position: relative;
       width: 100%;
       margin-bottom: 15px;
 
       .register__card__field__input {
-        width: 100%;
         box-sizing: border-box;
+        width: 100%;
         padding-right: 20px;
         background-color: #ffffff;
       }
@@ -235,29 +235,29 @@
       .input-suffix {
         position: absolute;
         top: 50%;
-        transform: translateY(-50%);
         color: #666666;
         font-size: 14px;
-        pointer-events: none;
         white-space: nowrap;
-        user-select: none;
+        transform: translateY(-50%);
         transition: left 0.05s ease-out;
+        pointer-events: none;
+        user-select: none;
       }
     }
 
     /* Difficulty Select Dropdown */
-    .create__recipe__select {
+    .profile__edit-select {
       width: 100%;
-      padding: 10px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
       margin-bottom: 15px;
+      padding: 10px;
       background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
       font-size: 14px;
 
       &:focus {
-        outline: none;
         border-color: #d98f5c;
+        outline: none;
       }
     }
 
@@ -274,8 +274,8 @@
         border-radius: 25px;
         font-size: 16px;
         font-weight: bold;
-        cursor: pointer;
         transition: background-color 0.2s ease;
+        cursor: pointer;
 
         &[type="submit"] {
           background-color: #d98f5c;

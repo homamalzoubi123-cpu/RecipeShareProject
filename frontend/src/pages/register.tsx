@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./register.scss";
-import InputField from "../Components/InputField/InputField";
+import InputField from "../components/input-field/InputField";
 import { API_BASE_URL } from "../config";
 interface RegisterProps {}
 const Register = ({}: RegisterProps) => {
