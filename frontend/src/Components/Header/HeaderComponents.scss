@@ -4,8 +4,8 @@
     top: 0;
     z-index: 1000;
     height: 80px;
-    background-color: white;
-    border-bottom: 2px solid #D98F5C;
+    background-color: #242526;
+    border-bottom: 2px solid #3E4042;
     gap: 12px;
     align-items: center;
     padding: 0 15px;
@@ -19,61 +19,86 @@
         flex-shrink: 0; /* Verhindert das Quetschen des Logos */
     }
 
-    &__title {
-        font-size: 1.40rem;
-        font-weight: bold;
-        color: #D98F5C;
-        white-space: nowrap; /* Verhindert Zeilenumbruch im Titel */
-        flex-shrink: 0;
-    }
-    /* Dynamische Suchleiste */
-  
-    /* 1. HOME-ICON SCHIEBT ALLES RECHTE NACH RECHTS */
-    .header__container__link__home {
-        margin-left: auto; /* Schiebt Icons nach rechts */
+    /* 1. MITTE: ACCOUNT / PLUS / HOME */
+    .header__container__center {
         display: flex;
         align-items: center;
-        flex-shrink: 0;
-
-        .header__container__home {
-            width: 38px;
-            height: 38px;
-            fill: #D98F5C;
-        }
+        justify-content: center;
+        align-self: stretch;
+        flex: 1;
+        min-width: 0;
+        /* Bei >=1442px exakt 70px / 310px, darunter proportional kleiner */
+        gap: clamp(16px, 4.9vw, 70px);
+        margin-left: clamp(0px, 21.5vw, 310px);
     }
-    /* 2. PLUS-BUTTON */
-    .add-recipe-btn {
-        background: url("../../assets/plus.svg") no-repeat center/contain;
+    /* 2. WRAPPER FÜR PLUS / HOME */
+    .header__container__btn {
+        flex-shrink: 0;
+        padding: 0 4px;
+    }
+
+    /* Gemeinsamer Rahmen für alle Header-Buttons: 4px Linie am Header-Boden */
+    .border-button {
+        align-self: stretch;
+        height: 100%;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        background: none;
+        border: none;
+        border-bottom: 4px solid transparent;
+        transition: border-bottom-color 0.2s ease;
+        cursor: pointer;
+    }
+
+    /* 3. HOME-ICON */
+    .header__container__home {
+        display: block;
         width: 38px;
         height: 38px;
-        display: block;
         flex-shrink: 0;
+        background-color: #575a5c;
+        -webkit-mask: url("../../assets/home.svg") no-repeat center/contain;
+        mask: url("../../assets/home.svg") no-repeat center/contain;
     }
-    /* 3. DROPDOWN (ACCOUNT) */
+    /* 4. PLUS-BUTTON */
+    .add-recipe-btn {
+        display: block;
+        width: 38px;
+        height: 38px;
+        flex-shrink: 0;
+        background-color: #575a5c;
+        -webkit-mask: url("../../assets/plus.svg") no-repeat center/contain;
+        mask: url("../../assets/plus.svg") no-repeat center/contain;
+    }
+    /* 5. DROPDOWN (ACCOUNT) */
     .header__container__dropdowns {
         position: relative;
         display: flex;
         align-items: center;
+        align-self: stretch;
         flex-shrink: 0;
 
         .header__container__button {
             background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            display: flex;
-            align-items: center;
+            padding: 0 4px;
         }
 
         .header__container__account {
+            display: block;
             width: 38px;
             height: 38px;
+            background-color: #575a5c;
+            -webkit-mask: url("../../assets/account.svg") no-repeat center/contain;
+            mask: url("../../assets/account.svg") no-repeat center/contain;
         }
 
         .header__container__dropdown {
             position: absolute;
-            top: 40px;
-            right: -24px;
+            top: 100%;
+            right: 0;
             z-index: 1000;
             background-color: antiquewhite;
             border-radius: 6px;
@@ -105,22 +130,54 @@
     }
 
     .header__container__pourder-button {
-        border: none;
         background: none;
         cursor: pointer;
+        padding: 0 2px;
+        flex-shrink: 0;
 
 
         .header__container__pourder {
+            display: block;
             width: 30px;
-            height: auto;
+            height: 20px;
             flex-shrink: 0;
+            background-color: #575a5c;
+            -webkit-mask: url("../../assets/pourder.svg") no-repeat center/contain;
+            mask: url("../../assets/pourder.svg") no-repeat center/contain;
+        }
+    }
+
+    /* 6. HOVER */
+    .header__container__pourder,
+    .header__container__btn > span,
+    .header__container__button > span {
+        transition: background-color 0.2s ease;
+    }
+
+    .header__container__pourder-button:hover .header__container__pourder,
+    .header__container__button:hover .header__container__account,
+    .header__container__btn:hover .header__container__home,
+    .header__container__btn:hover .add-recipe-btn {
+        background-color: #d98f5c;
+    }
+
+    /* 7. AKTIV (geklickt) */
+    .header__container__icon--active {
+        border-bottom-color: #d98f5c;
+
+        .header__container__pourder,
+        .header__container__account,
+        .add-recipe-btn,
+        .header__container__home {
+            background-color: #d98f5c;
         }
     }
 }
 
-/* Optional: Blendet den Titel auf sehr kleinen Bildschirmen aus */
-@media (max-width: 650px) {
-    .header__container__title {
-        display: none;
+/* Telefon: Mitte rückt an den Logo-Bereich, Suche nutzt den Rest */
+@media (max-width: 640px) {
+    .header__container__center {
+        margin-left: 0;
+        gap: 12px;
     }
 }

@@ -10,6 +10,7 @@ import homeImg from "../../assets/home-img.jpg";
 interface Recipe {
   userId: number;
   userName?: string;
+  userImageUrl: string | null;
   id: number;
   title: string;
   description: string;
@@ -71,6 +72,9 @@ function Home({}: HomeProps) {
     return `${API_BASE_URL}${imagePath}`;
   };
 
+  const getUserInitial = (userName?: string) =>
+    (userName?.trim().charAt(0) || "?").toUpperCase();
+
   if (loading) return <p>Loading...</p>;
 
   return (
@@ -109,6 +113,21 @@ function Home({}: HomeProps) {
                     navigate(`/profile/${recipe.userId}`);
                   }}
                 >
+                  <span
+                    className={
+                      recipe.userImageUrl
+                        ? "recipe-author-box__avatar"
+                        : "recipe-author-box__avatar recipe-author-box__avatar--initial"
+                    }
+                    style={
+                      recipe.userImageUrl
+                        ? { backgroundImage: `url(${getImageUrl(recipe.userImageUrl)})` }
+                        : undefined
+                    }
+                    aria-hidden="true"
+                  >
+                    {!recipe.userImageUrl && getUserInitial(recipe.userName)}
+                  </span>
                   <strong>{recipe.userName || "Unbekannt"}</strong>
                 </button>
               </div>
@@ -118,7 +137,8 @@ function Home({}: HomeProps) {
                   <p>{recipe.title}</p>
                   <p className="description">{recipe.description}</p>
                 </div>
-
+               <div>
+                <span className="recipe-content_prepTimeMinutes">⏱️ {recipe.prepTimeMinutes} min</span>
                 {recipe.imageUrl ? (
                   <img
                     src={getImageUrl(recipe.imageUrl)}
@@ -132,22 +152,38 @@ function Home({}: HomeProps) {
                     className="recipe-image"
                   />
                 )}
+               </div>
                 <button
                   className="recipe-content_recipe"
                   onClick={() => setActiveRecipeId(activeRecipeId === recipe.id ? null : recipe.id)}
                 >
-                  {" "}
-                  rezepte anzeigen{" "}
+                  rezepte anzeigen
                 </button>
                 {activeRecipeId === recipe.id && (
                   <>
                     <p className="instructions">{recipe.instructions}</p>
-                    <div className="recipe-info">
-                      <span>⏱️ {recipe.prepTimeMinutes} min</span>
-                      <span>📊 {recipe.difficulty}</span>
-                    </div>
                   </>
                 )}
+                <div className="recipe-content_viows">
+                      <span> 4 coments </span>
+                    <span> 4 schare </span>
+                   <span className="content_viows-number"> 150 </span>
+                  <span className="content_viows-licke_icon" />      
+                </div>
+                <div className="recipe-content_actions">
+                  <button type="button" className="viows-btn">
+                    <span className="viows-btn__icon viows-btn__icon--share" />
+                    <span className="content_viows-number">4</span>
+                  </button>
+                   <button type="button" className="viows-btn">
+                    <span className="viows-btn__icon viows-btn__icon--comment" />
+                    <span className="content_viows-number">4</span>
+                  </button>
+                     <button type="button" className="viows-btn ">
+                    <span className="viows-btn__icon" />
+                    <span className="content_viows-number">150</span>
+                  </button>
+                </div>
               </div>
             </div>
           ))

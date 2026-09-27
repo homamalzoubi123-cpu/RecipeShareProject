@@ -2,7 +2,6 @@
   padding: 20px;
   max-width: 600px;
   margin: 0 auto;
-  height: 700px;
 
   h2 {
     color: #d98f5c;
@@ -18,8 +17,8 @@
   width: 100%;
 }
 .follow-button {
-  margin-left: auto;
-  margin-right: 10px;
+  
+  margin-right: auto;
 }
 .recipe-card {
   background-color: rosybrown;
@@ -28,7 +27,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease-in-out;
   width: 600px;
-  height: 700px;
+  min-height: 700px;
 
   &:hover {
     transform: translateY(-3px);
@@ -69,14 +68,59 @@
   }
 
   .recipe-author-box__schowuser {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    padding: 0;
     border: none;
     background: none;
     cursor: pointer;
+
+    strong {
+      order: 1;
+      margin: 0;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+    }
+  }
+
+  .recipe-author-box__avatar {
+    order: 2;
+    flex: 0 0 36px;
+    margin-right: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  .recipe-author-box__avatar--initial {
+    background: #d98f5c;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
   }
 
   .recipe-content {
     padding: 15px;
-
+   .recipe-content_prepTimeMinutes {
+     display: flex;
+     width: max-content;
+     margin: 10px 0 10px auto;
+     padding: 5px 8px;
+     border-radius: 20px;
+     background: rgba(0, 0, 0, 0.55);
+     position: absolute;
+     right: 15px;
+   }
     .instructions {
       white-space: pre-line;
     }
@@ -121,6 +165,76 @@
       color: #888;
       border-top: 1px solid #eee;
       padding-top: 10px;
+    }
+    .recipe-content_viows {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      width: 100%;
+      margin-top: 20px;
+      color: #fff;
+      font-size: 13px;
+    }
+
+    .content_viows-licke_icon {
+      display: block;
+      width: 22px;
+      height: 22px;
+      margin-left: auto;
+      border-radius: 50%;
+      cursor: pointer;
+      background: #1877f2 url("../../assets/like.svg") no-repeat center / 16px 16px;
+    }
+
+    .recipe-content_actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      margin-top: 12px;
+    }
+
+    .viows-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 75px;
+      border: none;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.12);
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.15s ease;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.25);
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+    }
+
+
+
+    .viows-btn__icon {
+      display: block;
+      width: 16px;
+      height: 16px;
+      background: url("../../assets/like.svg") no-repeat center / contain;
+    }
+
+    .viows-btn__icon--comment {
+      background-image: url("../../assets/comment.svg");
+    }
+
+    .viows-btn__icon--share {
+      background-image: url("../../assets/share.svg");
+    }
+
+    .content_viows-number {
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
     }
   }
 }

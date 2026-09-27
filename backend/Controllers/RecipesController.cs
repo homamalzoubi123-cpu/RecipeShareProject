@@ -28,6 +28,7 @@ public class RecipesController : ControllerBase
                 r.Id,
                 r.UserId,
                 UserName = r.User != null ? r.User.Username : "Unbekannt", // جلب اسم المستخدم
+                UserImageUrl = r.User != null ? r.User.ProfileImageUrl : null, // صورة المستخدم
                 r.Title,
                 r.Description,
                 r.Instructions,

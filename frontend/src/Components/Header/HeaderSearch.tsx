@@ -15,6 +15,11 @@ interface SearchRecipe {
     title: string;
     imageUrl?: string;
 }
+interface CurrentUser {
+    id: number;
+    username?: string;
+    imageUrl?: string | null;
+}
 
 interface HeaderSearchProps { }
 
@@ -28,6 +33,40 @@ const HeaderSearch: React.FC<HeaderSearchProps> = ({ }: HeaderSearchProps) => {
     const navigate = useNavigate();
     const [alleRecipes, setAlleRecipes] = useState<string>("");
     const [searchFilter, setSearchFilter] = useState<boolean>(true);
+    const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
+
+    const getUserInitial = (userName?: string) =>
+        (userName?.trim().charAt(0) || "?").toUpperCase();
+
+    const getImageUrl = (imagePath?: string | null) => {
+        if (!imagePath) return "";
+        if (imagePath.startsWith("http")) return imagePath;
+        return `${API_BASE_URL}${imagePath}`;
+    };
+
+    useEffect(() => {
+        if (!token) {
+            setCurrentUser(null);
+            return;
+        }
+        const fetchCurrentUser = async () => {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/users/me`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                if (!response.ok) {
+                    throw new Error("Fehler beim Laden des Profils");
+                }
+                const data = await response.json();
+                setCurrentUser(data);
+            } catch (error) {
+                console.error("Profile error:", error);
+            }
+        };
+        fetchCurrentUser();
+    }, [token]);
 
     const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
@@ -110,84 +149,99 @@ const HeaderSearch: React.FC<HeaderSearchProps> = ({ }: HeaderSearchProps) => {
 
     return (
         <div className="header__container__search__container" ref={menuRef}>
-            <span className="header__container__search__icon" />
+            <div className="header__container__search__wrapper">
+                <input
+                    className={`header__container__search ${isinputactive ? " header__container__search--active" : ""}`}
+                    type="text"
+                    placeholder="Search for recipes..."
+                    value={allUser}
+                    onChange={(e) => {
+                        handlealluser(e);
+                        handleSearch(e);
+                    }}
+                    onClick={handleClick}
+                />
+                <span className="header__container__search__icon" />
 
-            <input
-                className={`header__container__search ${isinputactive ? " header__container__search--active" : ""}`}
-                type="text"
-                placeholder="Search for recipes..."
-                value={allUser}
-                onChange={(e) => {
-                    handlealluser(e);
-                    handleSearch(e);
-                }}
-                onClick={handleClick}
-            />
-            
-            <div>
-                {isinputactive && (searchResults.length > 0 || searchResipes.length > 0) && (
-                    <div className="search-results">
-                        <button
-                            className={`search-results_filter_button${!searchFilter ? " search-results_filter_button--active" : ""}`}
-                            onClick={() => setSearchFilter(false)}
-                        >
-                            Recipe
-                        </button>
-                        <button
-                            className={`search-results_filterUser_button${searchFilter ? " search-results_filterUser_button--active" : ""}`}
-                            onClick={() => setSearchFilter(true)}
-                        >
-                            Person
-                        </button>
+                <div>
+                    {isinputactive && (searchResults.length > 0 || searchResipes.length > 0) && (
+                        <div className="search-results">
+                            <button
+                                className={`search-results_filter_button${!searchFilter ? " search-results_filter_button--active" : ""}`}
+                                onClick={() => setSearchFilter(false)}
+                            >
+                                Recipe
+                            </button>
+                            <button
+                                className={`search-results_filterUser_button${searchFilter ? " search-results_filterUser_button--active" : ""}`}
+                                onClick={() => setSearchFilter(true)}
+                            >
+                                Person
+                            </button>
 
-                        {searchFilter ? (
-                            searchResults.length > 0 ? (
-                                searchResults.map((searchUser) => (
+                            {searchFilter ? (
+                                searchResults.length > 0 ? (
+                                    searchResults.map((searchUser) => (
+                                        <div
+                                            key={searchUser.id}
+                                            className="search-result-user"
+                                            onClick={() => {
+                                                navigate(`/profile/${searchUser.id}`);
+                                                setAllUser("");
+                                                setSearchResults([]);
+                                            }}
+                                        >
+                                            {searchUser.imageUrl ? (
+                                                <img
+                                                    src={`${API_BASE_URL}${searchUser.imageUrl}`}
+                                                    alt={searchUser.username}
+                                                    className="search-result-image"
+                                                />
+                                            ) : (
+                                                <div className="search-result-placeholder">🙍</div>
+                                            )}
+                                            <span>{searchUser.username ? searchUser.username : "Keiner gefunden"}</span>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <div className="search-result-empty">Keiner gefunden</div>
+                                )
+                            ) : searchResipes.length > 0 ? (
+                                searchResipes.map((searchRecipe) => (
                                     <div
-                                        key={searchUser.id}
+                                        key={searchRecipe.id}
                                         className="search-result-user"
                                         onClick={() => {
-                                            navigate(`/profile/${searchUser.id}`);
-                                            setAllUser("");
-                                            setSearchResults([]);
+                                            navigate(`/recipe/${searchRecipe.id}`);
+                                            setAlleRecipes("");
+                                            setSearchResipes([]);
                                         }}
                                     >
-                                        {searchUser.imageUrl ? (
-                                            <img
-                                                src={`${API_BASE_URL}${searchUser.imageUrl}`}
-                                                alt={searchUser.username}
-                                                className="search-result-image"
-                                            />
-                                        ) : (
-                                            <div className="search-result-placeholder">🙍</div>
-                                        )}
-                                        <span>{searchUser.username ? searchUser.username : "Keiner gefunden"}</span>
+                                        <div className="search-result-placeholder">🍽️</div>
+                                        <span>{searchRecipe.title}</span>
                                     </div>
                                 ))
                             ) : (
-                                <div className="search-result-empty">Keiner gefunden</div>
-                            )
-                        ) : searchResipes.length > 0 ? (
-                            searchResipes.map((searchRecipe) => (
-                                <div
-                                    key={searchRecipe.id}
-                                    className="search-result-user"
-                                    onClick={() => {
-                                        navigate(`/recipe/${searchRecipe.id}`);
-                                        setAlleRecipes("");
-                                        setSearchResipes([]);
-                                    }}
-                                >
-                                    <div className="search-result-placeholder">🍽️</div>
-                                    <span>{searchRecipe.title}</span>
-                                </div>
-                            ))
-                        ) : (
-                            <div className="search-result-empty">Keine Rezepte gefunden</div>
-                        )}
-                    </div>
-                )}
+                                <div className="search-result-empty">Keine Rezepte gefunden</div>
+                            )}
+                        </div>
+                    )}
+                </div>
             </div>
+
+            {currentUser && (
+                <span
+                    className={`header__container__search__avatar${currentUser.imageUrl ? "" : " header__container__search__avatar--initial"}`}
+                    style={
+                        currentUser.imageUrl
+                            ? { backgroundImage: `url(${getImageUrl(currentUser.imageUrl)})` }
+                            : undefined
+                    }
+                    title={currentUser.username || "Benutzer"}
+                >
+                    {!currentUser.imageUrl && getUserInitial(currentUser.username)}
+                </span>
+            )}
         </div>
     );
 };
