@@ -1,152 +1,225 @@
+// VORSCHLAG 1 – "CTA statt Login"
+// Keine Login-Karte im Hero, nur ein Button. Der Hero wird dadurch niedriger,
+// dadurch steht die Feature-Liste früher im Viewport.
 .welcome {
-  position: relative;
   width: 100%;
-  min-height: 100vh;
-  background: #f5f0de;
-  box-sizing: border-box;
-  display: flex;
-  align-items: flex-start;
-  z-index: 2;
-  height: 100%;
   max-width: 100%;
   margin: 0 auto;
+  color-scheme: light;
+  background:
+    radial-gradient(820px 480px at 20% 6%, rgba(217, 143, 92, 0.2), transparent 62%),
+    radial-gradient(680px 420px at 88% 100%, rgba(87, 90, 92, 0.14), transparent 64%),
+    #f5f0de;
+  overflow: hidden;
 
-  @media (max-width: 768px) {
-    flex-direction: column;
+  // ---------- Hero ----------
+  // bewusst nicht 100vh: sonst schiebt sich die Liste komplett aus dem Viewport
+  &__hero {
+    display: flex;
     align-items: center;
     justify-content: center;
+    padding: clamp(72px, 14vh, 150px) clamp(24px, 5vw, 80px) clamp(56px, 8vh, 90px);
+    text-align: center;
   }
 
   &__container {
-    max-width: 360px;
-    flex: 0 0 auto;
-    margin-left: 80px;
-    margin-top: 50px;
-
-    @media (max-width: 768px) {
-      margin-left: 0;
-      margin-top: 20px;
-      text-align: center;
-    }
+    width: 100%;
+    max-width: 620px;
   }
 
   &__logo {
     width: 140px;
     height: auto;
-    margin-bottom: 40px;
-    margin-top: 30px;
-
-    @media (max-width: 768px) {
-      margin: 30px auto 40px auto;
-      display: block;
-    }
+    margin: 0 auto 32px;
+    display: block;
   }
 
   &__title {
-    font-size: 54px;
+    font-size: clamp(40px, 5.4vw, 68px);
     font-weight: 800;
-    line-height: 1.05;
+    line-height: 1;
+    letter-spacing: -2px;
     color: #0d0d0d;
-    margin: 0 0 24px 0;
+    margin: 0 0 20px 0;
 
     .line1,
     .line2 {
       display: block;
     }
 
-    @media (max-width: 768px) {
-      display: none;
+    .line2 {
+      color: #d98f5c;
     }
   }
 
   &__tagline {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 600;
     color: #1a1a1a;
-    margin: 0 0 16px 0;
-
-    @media (max-width: 768px) {
-      display: none;
-    }
+    margin: 0 0 12px 0;
   }
 
   &__text {
     font-size: 18px;
-    color: #4a4a4a;
-    line-height: 1.4;
-    margin: 0;
+    color: #5c574c;
+    line-height: 1.55;
+    margin: 0 auto;
+    max-width: 460px;
+  }
 
-    @media (max-width: 768px) {
-      display: none; // بيخفي العنصر كامل عالشاشة الصغيرة
+  // ---------- Aktionen ----------
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 34px;
+  }
+
+  &__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    padding: 0 28px;
+    background-color: #d98f5c;
+    color: #1b1c1d;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    border: 1px solid #d98f5c;
+    border-radius: 999px;
+    box-shadow: 0 10px 24px rgba(217, 143, 92, 0.28);
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease,
+      box-shadow 0.2s ease, transform 0.1s ease;
+
+    &:hover {
+      background-color: #e7986a;
+      border-color: #e7986a;
+      box-shadow: 0 14px 30px rgba(217, 143, 92, 0.36);
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
+
+    &:focus-visible {
+      outline: 2px solid #1b1c1d;
+      outline-offset: 3px;
+    }
+
+    // sekundär: Outline
+    &--ghost {
+      background-color: transparent;
+      color: #1a1a1a;
+      border-color: rgba(13, 13, 13, 0.18);
+      box-shadow: none;
+
+      &:hover {
+        background-color: rgba(13, 13, 13, 0.05);
+        border-color: rgba(13, 13, 13, 0.34);
+        box-shadow: none;
+      }
     }
   }
 
-  &__images {
-    position: relative;
-    width: 500px;
-    height: 500px;
-    left: 0%;
-    margin-top: 35px;
-    margin-left: 80px;
+  // ---------- Feature-Grid ----------
+  &__features {
+    padding: clamp(60px, 8vw, 110px) clamp(24px, 5vw, 80px) clamp(72px, 10vw, 130px);
+    background: #ffffff;
+    text-align: center;
 
-    @media (max-width: 1200px) {
-      width: 400px;
-      height: 400px;
-      left: 0%;
+    &__title {
+      margin: 0 0 12px;
+      color: #0d0d0d;
+      font-size: clamp(28px, 3.2vw, 40px);
+      font-weight: 800;
+      letter-spacing: -1px;
     }
 
-    @media (max-width: 1022px) {
-      display: none;
+    &__lead {
+      max-width: 520px;
+      margin: 0 auto 46px;
+      color: #5c574c;
+      font-size: 18px;
+      line-height: 1.55;
     }
 
-    .card {
-      position: absolute;
-      background: #ffffff;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+    &__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 20px;
+      max-width: 1240px;
+      margin: 0 auto;
+      text-align: left;
+    }
+  }
 
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
+  &__feature {
+    padding: 28px 24px 30px;
+    background: #fbfaf7;
+    border: 1px solid rgba(13, 13, 13, 0.07);
+    border-radius: 20px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+
+    &:hover {
+      transform: translateY(-4px);
+      border-color: rgba(217, 143, 92, 0.45);
+      box-shadow: 0 20px 44px rgba(13, 13, 13, 0.1);
+    }
+
+    &__icon {
+      display: block;
+      width: 46px;
+      height: 46px;
+      margin-bottom: 18px;
+      background-color: #d98f5c;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      mask-position: center;
+      -webkit-mask-size: contain;
+      mask-size: contain;
+
+      &--search {
+        -webkit-mask-image: url("../assets/welcome/icon-search.svg");
+        mask-image: url("../assets/welcome/icon-search.svg");
       }
 
-      &--lasagna {
-        top: 80px;
-        left: 0;
-        width: 150px;
-        height: 110px;
-        z-index: 1;
+      &--share {
+        -webkit-mask-image: url("../assets/welcome/icon-share.svg");
+        mask-image: url("../assets/welcome/icon-share.svg");
       }
 
-      &--crepe {
-        top: 0;
-        right: 0;
-        width: 190px;
-        height: 270px;
-        z-index: 2;
-      }
-
-      &--ramen {
-        bottom: 40px;
-        left: 30px;
-        width: 140px;
-        height: 180px;
-        z-index: 3;
+      &--cook {
+        -webkit-mask-image: url("../assets/welcome/icon-cook.svg");
+        mask-image: url("../assets/welcome/icon-cook.svg");
       }
 
       &--chef {
-        bottom: 0;
-        left: 100px;
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        border: 4px solid #1877f2;
-        z-index: 4;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+        -webkit-mask-image: url("../assets/welcome/icon-chef.svg");
+        mask-image: url("../assets/welcome/icon-chef.svg");
       }
+
+      &--people {
+        -webkit-mask-image: url("../assets/welcome/icon-people.svg");
+        mask-image: url("../assets/welcome/icon-people.svg");
+      }
+    }
+
+    &__name {
+      margin: 0 0 8px;
+      color: #0d0d0d;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    &__text {
+      margin: 0;
+      color: #5c574c;
+      font-size: 15px;
+      line-height: 1.5;
     }
   }
 }

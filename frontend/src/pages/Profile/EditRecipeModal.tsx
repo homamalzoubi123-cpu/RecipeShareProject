@@ -177,7 +177,6 @@ const EditRecipeModal = ({
             <button
               type="submit"
               disabled={isUnchanged}
-              className={`profile__edit-submit-btn ${isUnchanged ? "disabled" : ""}`}
             >
               Speichern
             </button>

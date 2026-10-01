@@ -1,5 +1,5 @@
 import React, { useState, useContext, useRef, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { AuthContext, AuthContextType } from "../../context/AuthContext";
 import "./HeaderComponents.scss";
 import HeaderSearch from "./HeaderSearch"
@@ -14,8 +14,9 @@ const active = [
 
 const Header = ({ }) => {
 
-    const { user, logout } = useContext(AuthContext) as AuthContextType;
+    const { user } = useContext(AuthContext) as AuthContextType;
     const navigate = useNavigate();
+    const location = useLocation();
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [isSettingOpen, setIsSettingOpen] = useState<boolean>(false);
     const [activeKey, setActiveKey] = useState<string | null>(null);
@@ -35,11 +36,20 @@ const Header = ({ }) => {
         setIsOpen(!isOpen);
     };
 
-    const handleLogout = () => {
-        logout();
-        setIsOpen(false);
-        navigate("/");
-    };
+    useEffect(() => {
+        // Aktivzustand aus der Route ableiten, damit er auch ohne Klick stimmt:
+        // Direktaufruf, Zurück-Button, oder Login (dann landet man auf "/").
+        const path = location.pathname;
+        if (path === "/" || path === "/Home") {
+            setActiveKey("Home");
+        } else if (path === "/CreateRecipe") {
+            setActiveKey("add");
+        } else if (path.startsWith("/profile")) {
+            setActiveKey("account");
+        } else {
+            setActiveKey(null);
+        }
+    }, [location.pathname]);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -62,57 +72,43 @@ const Header = ({ }) => {
             <span className="header__container__logo" />
 
             <div className="header__container__center">
-                <div className="header__container__dropdowns" ref={menuRef}>
-                    <button
-                        className={`header__container__button border-button${isOpen ? " header__container__icon--active" : ""}`}
-                        onClick={() => {
-                            handleIconClick("account");
-                            toggleDropdown();
-                        }}
+                {!user ? (
+                    <div className="header__container__dropdowns" ref={menuRef}>
+                        <button
+                            className={`header__container__button border-button${isOpen ? " header__container__icon--active" : ""}`}
+                            onClick={toggleDropdown}
+                        >
+                            <span className="header__container__account" />
+                        </button>
+
+                        {isOpen && (
+                            <div className="header__container__dropdown">
+                                <Link
+                                    className="header__container__link"
+                                    to="/login"
+                                    onClick={toggleDropdown}
+                                >
+                                    Login
+                                </Link>
+                                <Link
+                                    className="header__container__link"
+                                    to="/register"
+                                    onClick={toggleDropdown}
+                                >
+                                    Register
+                                </Link>
+                            </div>
+                        )}
+                    </div>
+                ) : (
+                    <Link
+                        to="/profile"
+                        onClick={() => handleIconClick("account")}
+                        className={`header__container__btn border-button${isActive("account") ? " header__container__icon--active" : ""}`}
                     >
                         <span className="header__container__account" />
-                    </button>
-
-                    {isOpen && (
-                        <div className="header__container__dropdown">
-                            {!user ? (
-                                <>
-                                    <Link
-                                        className="header__container__link"
-                                        to="/login"
-                                        onClick={toggleDropdown}
-                                    >
-                                        Login
-                                    </Link>
-                                    <Link
-                                        className="header__container__link"
-                                        to="/register"
-                                        onClick={toggleDropdown}
-                                    >
-                                        Register
-                                    </Link>
-                                </>
-                            ) : (
-                                <>
-                                    <Link
-                                        className="header__container__link"
-                                        to="/profile"
-                                        onClick={toggleDropdown}
-                                    >
-                                        Profile
-                                    </Link>
-
-                                    <button
-                                        className="button__header__container__link"
-                                        onClick={handleLogout}
-                                    >
-                                        Logout
-                                    </button>
-                                </>
-                            )}
-                        </div>
-                    )}
-                </div>
+                    </Link>
+                )}
 
                 {user && (
                     <Link
@@ -154,7 +150,7 @@ const Header = ({ }) => {
                 <span className="header__container__pourder" />
             </button>
             {isSettingOpen && (
-                <div className="header__container__overlay" onClick={toggleSetting} />
+                <div className="set__overlay" onClick={toggleSetting} />
             )}
             <HeaderSetting handleLsetting={toggleSetting} isSettingOpen={isSettingOpen} />
 

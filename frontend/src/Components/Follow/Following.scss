@@ -1,12 +1,23 @@
 .follow-container {
     .follow__btn {
-        background: none;
+        background-color: transparent;
+        border: 1px solid #D98F5C;
+        color: #D98F5C;
+        border-radius: 999px;
+        padding: 6px 18px;
+        font-size: 14px;
+        font-family: inherit;
         cursor: pointer;
-        border-radius: 10px;
-        padding: 5px 20px;
-        font-size: 15px;
-        box-sizing: border-box;
-        color: azure;
-        border: 1px solid #eee;
+        transition: background-color 0.2s ease, color 0.2s ease;
+
+        &:hover:not(:disabled) {
+            background-color: #D98F5C;
+            color: #242526;
+        }
+
+        &:disabled {
+            opacity: 0.6;
+            cursor: default;
+        }
     }
 }

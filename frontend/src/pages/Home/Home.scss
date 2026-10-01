@@ -21,7 +21,7 @@
   margin-right: auto;
 }
 .recipe-card {
-  background-color: rosybrown;
+  background: linear-gradient(180deg, rgba(50, 52, 54, 0.94), rgba(36, 37, 38, 0.94));
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -183,7 +183,7 @@
       margin-left: auto;
       border-radius: 50%;
       cursor: pointer;
-      background: #1877f2 url("../../assets/like.svg") no-repeat center / 16px 16px;
+      background: #1877f2 url("../../assets/home/icon-like.svg") no-repeat center / 16px 16px;
     }
 
     .recipe-content_actions {
@@ -220,15 +220,15 @@
       display: block;
       width: 16px;
       height: 16px;
-      background: url("../../assets/like.svg") no-repeat center / contain;
+      background: url("../../assets/home/icon-like.svg") no-repeat center / contain;
     }
 
     .viows-btn__icon--comment {
-      background-image: url("../../assets/comment.svg");
+      background-image: url("../../assets/home/icon-comment.svg");
     }
 
     .viows-btn__icon--share {
-      background-image: url("../../assets/share.svg");
+      background-image: url("../../assets/home/icon-share.svg");
     }
 
     .content_viows-number {

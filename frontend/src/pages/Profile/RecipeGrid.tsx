@@ -16,6 +16,7 @@ const RecipeGrid = ({
   onEdit,
 }: RecipeGridProps) => {
   const [openMenuId, setOpenMenuId] = useState<number | null>(null);
+  const [expandedId, setExpandedId] = useState<number | null>(null);
   const menuRefs = useRef<Record<number, HTMLDivElement | null>>({});
   const isOwnProfile = !!onDelete;
 
@@ -44,90 +45,116 @@ const RecipeGrid = ({
       ) : (
         recipes.map((recipe) => (
           <div key={recipe.id} className="recipe-card">
+            <div className="recipe-card__header">
+              <h3 className="recipe-card__title">{recipe.title}</h3>
+
+              {isOwnProfile && (
+                <div
+                  className="recipe-options-wrapper"
+                  ref={(el) => {
+                    menuRefs.current[recipe.id] = el;
+                  }}
+                >
+                  <button
+                    type="button"
+                    className="delete-btn"
+                    onClick={() =>
+                      setOpenMenuId(
+                        openMenuId === recipe.id ? null : recipe.id,
+                      )
+                    }
+                  >
+                    <span
+                      className="recipe-card__options-icon"
+                      title="Optionen anzeigen"
+                    />
+                  </button>
+
+                  {openMenuId === recipe.id && (
+                    <div className="recipe-options">
+                      <button
+                        type="button"
+                        className="recipe-options__item"
+                        onClick={() => {
+                          onEdit?.(recipe);
+                          setOpenMenuId(null);
+                        }}
+                      >
+                        <span className="recipe-options__icon recipe-options__icon--edit" />
+                        Bearbeiten
+                      </button>
+
+                      <button
+                        type="button"
+                        className="recipe-options__item recipe-options__item--delete"
+                        onClick={() => {
+                          onDelete?.(recipe.id);
+                          setOpenMenuId(null);
+                        }}
+                      >
+                        <span className="recipe-options__icon recipe-options__icon--delete" />
+                        Löschen
+                      </button>
+
+                      <button
+                        type="button"
+                        className="recipe-options__item"
+                        onClick={() => {
+                          console.log("Teilen");
+                          setOpenMenuId(null);
+                        }}
+                      >
+                        <span className="recipe-options__icon recipe-options__icon--share" />
+                        Teilen
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+            <div className="recipe-card__body">
+              <p className="recipe-card__description">{recipe.description}</p>
+            </div>
+
             {recipe.imageUrl && (
-              <img
-                src={getImageUrl(recipe.imageUrl)}
-                alt={recipe.title}
-                className="recipe-image"
-              />
+              <div className="recipe-media">
+                <p className="recipe-card__badge">
+                  ⏱️ {recipe.prepTimeMinutes} Min
+                </p>
+                <img
+                  src={getImageUrl(recipe.imageUrl)}
+                  alt={recipe.title}
+                  className="recipe-card__image"
+                />
+              </div>
             )}
 
-            <div className="recipe-content">
-              <h3>{recipe.title}</h3>
-
-              <p>{recipe.description}</p>
-
-              <div className="recipe-info">
-                <div className="recipe-details">
+            <div className="recipe-info">
+              <div className="recipe-details">
+                {!recipe.imageUrl && (
                   <span>⏱️ {recipe.prepTimeMinutes} Min</span>
-
-                  <span>📊 {recipe.difficulty}</span>
-                </div>
-
-                {isOwnProfile && (
-                  <div
-                    className="recipe-options-wrapper"
-                    ref={(el) => {
-                      menuRefs.current[recipe.id] = el;
-                    }}
-                  >
-                    {/* زر القائمة */}
-                    <button
-                      type="button"
-                      className="delete-btn"
-                      onClick={() =>
-                        setOpenMenuId(
-                          openMenuId === recipe.id ? null : recipe.id,
-                        )
-                      }
-                    >
-                      <span
-                        className="Optionen__icon"
-                        title="Optionen anzeigen"
-                      />
-                    </button>
-
-                    {/* القائمة المنسدلة */}
-                    {openMenuId === recipe.id && (
-                      <div className="recipe-options">
-                        {/* زر التعديل */}
-                        <button
-                          type="button"
-                          onClick={() => {
-                            onEdit?.(recipe);
-                            setOpenMenuId(null);
-                          }}
-                        >
-                          Bearbeiten
-                        </button>
-
-                        {/* زر الحذف */}
-                        <button
-                          type="button"
-                          onClick={() => {
-                            onDelete?.(recipe.id);
-                            setOpenMenuId(null);
-                          }}
-                        >
-                          Löschen
-                        </button>
-
-                        {/* زر المشاركة */}
-                        <button
-                          type="button"
-                          onClick={() => {
-                            console.log("Teilen");
-                            setOpenMenuId(null);
-                          }}
-                        >
-                          Teilen
-                        </button>
-                      </div>
-                    )}
-                  </div>
                 )}
+
+                <span>📊 {recipe.difficulty}</span>
               </div>
+
+              <button
+                type="button"
+                className="recipe-card__toggle"
+                onClick={() =>
+                  setExpandedId(expandedId === recipe.id ? null : recipe.id)
+                }
+              >
+                {expandedId === recipe.id
+                  ? "Zubereitung ausblenden"
+                  : "Zubereitung anzeigen"}
+              </button>
             </div>
+
+            {expandedId === recipe.id && (
+              <p className="recipe-card__instructions">{recipe.instructions}</p>
+            )}
           </div>
         ))
       )}

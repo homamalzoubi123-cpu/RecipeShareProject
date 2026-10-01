@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './AiChat.scss'; 
+import { AuthContext, AuthContextType } from "../../context/AuthContext";
+import { API_BASE_URL } from "../../config";
 
 interface Message {
   sender: 'user' | 'ai';
@@ -11,9 +13,10 @@ export const AiChat: React.FC = () => {
   const [prompt, setPrompt] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
+ const { user } = useContext(AuthContext) as AuthContextType;
 
   const handleSend = async () => {
-    if (!prompt.trim()) return;
+    if (!prompt.trim() || loading) return;
 
     const userText = prompt;
     setPrompt('');
@@ -22,54 +25,94 @@ export const AiChat: React.FC = () => {
     setLoading(true);
 
     try {
-      const res = await fetch('http://localhost:8080/api/AiAgent/chat', {
+      const token = localStorage.getItem("token");
+
+      const res = await fetch(`${API_BASE_URL}/api/AiAgent/chat`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
         body: JSON.stringify({ prompt: userText }),
       });
 
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
+      const reply =
+        data.response ?? data.reply ?? data.answer ?? data.message ?? '';
 
       if (!res.ok) {
         setMessages((prev) => [
           ...prev,
-          { sender: 'ai', text: data.response || `خطأ في السيرفر: ${res.status}` }
+          { sender: 'ai', text: reply || `Serverfehler: ${res.status}` },
         ]);
       } else {
         setMessages((prev) => [
           ...prev,
-          { sender: 'ai', text: data.response || 'لم يتم استلام رد' }
+          { sender: 'ai', text: reply || 'Keine Antwort erhalten.' },
         ]);
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       setMessages((prev) => [
         ...prev,
-        { sender: 'ai', text: `خطأ في الاتصال: ${err.message}` }
+        {
+          sender: 'ai',
+          text: `Verbindungsfehler: ${
+            err instanceof Error ? err.message : 'Unbekannter Fehler'
+          }`,
+        },
       ]);
     } finally {
       setLoading(false);
     }
   };
 
+  // return muss ein einzelnes JSX-Element liefern – daher frueh raus,
+  // statt {user && ...} direkt nach return zu schreiben (wird als
+  // Objektliteral geparst und bricht den Build).
+  if (!user) return null;
+
   return (
     <div className="ai-chat-container">
-      {!isOpen ? (
+      {!isOpen  ? (
         <button className="chat-open-btn" onClick={() => setIsOpen(true)}>
           💬 Ki
         </button>
       ) : (
         <div className="chat-box">
           <div className="chat-header">
-            <strong>🤖 KI Assisten</strong>
-            <button className="chat-close-btn" onClick={() => setIsOpen(false)}>
-              X
+            <strong>🤖 KI-Assistent</strong>
+            <button
+              className="chat-close-btn"
+              onClick={() => setIsOpen(false)}
+              aria-label="Chat schließen"
+            >
+              ✕
             </button>
+          </div>
+
+          <div className="messages-container">
+            {messages.length === 0 ? (
+              <p className="messages-container__empty">
+                Stell mir eine Frage zu deinen Rezepten.
+              </p>
+            ) : (
+              messages.map((msg, index) => (
+                <div
+                  key={index}
+                  className={`message-item message-item--${msg.sender}`}
+                >
+                  <span>{msg.text}</span>
+                </div>
+              ))
+            )}
+
+            {loading && <p className="messages-container__empty">…</p>}
           </div>
 
           <input
             type="text"
             className="chat-input"
-            placeholder="frage mich "
+            placeholder="Frage eingeben …"
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
@@ -80,17 +123,8 @@ export const AiChat: React.FC = () => {
             onClick={handleSend}
             disabled={loading}
           >
-            {loading ? 'warte ich such mal' :'Senden'}
+            {loading ? 'Warte …' : 'Senden'}
           </button>
-
-          <div className="messages-container">
-            {messages.map((msg, index) => (
-              <div key={index} className='message-item'>
-               
-                <span>{msg.text}</span>
-              </div>
-            ))}
-          </div>
         </div>
       )}
     </div>

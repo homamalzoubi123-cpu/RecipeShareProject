@@ -1,66 +1,95 @@
-import React from "react";
+import React, { useContext, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext, AuthContextType } from "../../context/AuthContext";
 import "./HeaderSetting.scss";
-interface HeaderSettingProps { 
+
+interface HeaderSettingProps {
 	handleLsetting: () => void;
 	isSettingOpen: boolean;
 }
+
 const HeaderSetting: React.FC<HeaderSettingProps> = ({
 	handleLsetting,
 	isSettingOpen
-}: HeaderSettingProps) => { 
+}: HeaderSettingProps) => {
+	const { user, logout } = useContext(AuthContext) as AuthContextType;
+	const navigate = useNavigate();
+	const closeRef = useRef<HTMLButtonElement>(null);
+
+	const handleLogout = () => {
+		logout();
+		handleLsetting();
+		navigate("/");
+	};
+
+	useEffect(() => {
+		if (!isSettingOpen) {
+			return;
+		}
+		closeRef.current?.focus();
+
+		const onKeyDown = (event: KeyboardEvent) => {
+			if (event.key === "Escape") {
+				handleLsetting();
+			}
+		};
+		window.addEventListener("keydown", onKeyDown);
+
+		return () => window.removeEventListener("keydown", onKeyDown);
+	}, [isSettingOpen, handleLsetting]);
+
 	return (
-		<div className={`header__container__setting${isSettingOpen ? ' header__container__setting--open' : ''}`}
-			onClick={handleLsetting}
+		<div
+			className={`set${isSettingOpen ? " set--open" : ""}`}
+			role="dialog"
+			aria-modal="true"
+			aria-label="Settings"
+			aria-hidden={!isSettingOpen}
+			inert={!isSettingOpen}
 		>
-
-			<div className="header__container__setting__Liste" >
-
+			<div className="set__head">
+				<h2 className="set__title">Settings</h2>
 				<button
-					className="header__container__setting__Close"
+					ref={closeRef}
+					type="button"
+					className="set__close"
 					onClick={handleLsetting}
+					aria-label="Close settings"
 				>
-					X
+					<span className="ic-close" />
 				</button>
+			</div>
 
-				<button
-					className="header__container__setting__button"
-				>
+			<div className="set__list">
+				<button type="button" className="set__item">
+					<span className="ic-setting" />
 					Settings
 				</button>
 
-				<button
-					className="header__container__setting__button"
-				>
-					Settings
+				<button type="button" className="set__item">
+					<span className="ic-profile" />
+					Profile
 				</button>
 
-				<button
-					className="header__container__setting__button"
-				>
-					Profile Settings
-				</button>
-
-				<button
-					className="header__container__setting__button"
-				>
+				<button type="button" className="set__item">
+					<span className="ic-help" />
 					Help
 				</button>
 
-				<button
-					className="header__container__setting__button"
-				>
+				<button type="button" className="set__item">
+					<span className="ic-about" />
 					About
 				</button>
 
-				<button
-					className="header__container__setting__button"
-				>
-					Logout
-				</button>
-
+				{user && (
+					<button type="button" className="set__item set__item--logout" onClick={handleLogout}>
+						<span className="ic-logout" />
+						Logout
+					</button>
+				)}
 			</div>
-
 		</div>
-	)
-}
+	);
+};
+
 export default HeaderSetting;

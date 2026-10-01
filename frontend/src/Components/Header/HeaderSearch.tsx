@@ -166,18 +166,26 @@ const HeaderSearch: React.FC<HeaderSearchProps> = ({ }: HeaderSearchProps) => {
                 <div>
                     {isinputactive && (searchResults.length > 0 || searchResipes.length > 0) && (
                         <div className="search-results">
-                            <button
-                                className={`search-results_filter_button${!searchFilter ? " search-results_filter_button--active" : ""}`}
-                                onClick={() => setSearchFilter(false)}
-                            >
-                                Recipe
-                            </button>
-                            <button
-                                className={`search-results_filterUser_button${searchFilter ? " search-results_filterUser_button--active" : ""}`}
-                                onClick={() => setSearchFilter(true)}
-                            >
-                                Person
-                            </button>
+                            <div className="search-results__tabs" role="tablist">
+                                <button
+                                    type="button"
+                                    role="tab"
+                                    aria-selected={!searchFilter}
+                                    className={`search-results_filter_button${!searchFilter ? " search-results_filter_button--active" : ""}`}
+                                    onClick={() => setSearchFilter(false)}
+                                >
+                                    Recipe
+                                </button>
+                                <button
+                                    type="button"
+                                    role="tab"
+                                    aria-selected={searchFilter}
+                                    className={`search-results_filterUser_button${searchFilter ? " search-results_filterUser_button--active" : ""}`}
+                                    onClick={() => setSearchFilter(true)}
+                                >
+                                    Person
+                                </button>
+                            </div>
 
                             {searchFilter ? (
                                 searchResults.length > 0 ? (

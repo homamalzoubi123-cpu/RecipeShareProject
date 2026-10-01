@@ -1,111 +1,328 @@
+// ============================================
+// Option 2 – Karten-Aufbau wie Home.tsx / Home.scss
+// (Header-Zeile, Full-Bleed-Bild, Prep-Time-Pill oben rechts,
+// Detail-Pills unten) – Farben kommen aus styles/_variables
+// ============================================
+@use "../../styles/variables" as v;
+
 .my-recipes-grid {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  margin: 20px;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 20px;
+
+  > p {
+    color: v.$color-text-muted;
+    text-align: center;
+  }
 }
 
+// Klassennamen sind bewusst mit __suffix gewaehlt: Home.scss nutzt global
+// .recipe-card / .recipe-content / .recipe-image. Ohne Praefix kollidieren
+// beide Stylesheets (gleiche Spezifitaet -> letzte Regel im Bundle gewinnt).
 .recipe-card {
   position: relative;
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  background-color: #242526;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease-in-out;
+  // KEIN overflow:hidden hier – es wuerde das Options-Dropdown abschneiden.
+  // Die runden Ecken kommen stattdessen von border-radius am .recipe-media
+  // und an .recipe-card__header.
+  color-scheme: dark;
+  background: linear-gradient(180deg, v.$surface-panel-top, v.$surface-panel-bottom);
+  border: 1px solid v.$border-subtle;
+  border-radius: v.$radius-md;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.28);
+  transition:
+    transform v.$ease-emphasized,
+    box-shadow v.$ease-emphasized,
+    border-color v.$ease-standard;
 
   &:hover {
-    transform: translateY(-3px);
+    transform: translateY(-2px);
+    border-color: v.$color-accent-medium;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
   }
 
   &:has(.recipe-options) {
     z-index: 50;
   }
 
-  .recipe-image {
+  // Kopfzeile wie .recipe-author-box in Home
+  .recipe-card__header {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    box-sizing: border-box;
     width: 100%;
-    height: 250px;
-    object-fit: cover;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
+    min-height: 56px;
+    padding: 10px 16px;
+    border-bottom: 1px solid v.$border-subtle;
+    border-radius: v.$radius-md v.$radius-md 0 0;
   }
 
-  .recipe-content {
-    gap: 10px;
+  .recipe-card__title {
+    margin: 0;
+    overflow: hidden;
+    color: v.$color-text;
+    font-size: 17px;
+    font-weight: 700;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+.recipe-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
     padding: 15px;
 
-    h3 {
-      margin: 0 0 10px;
-      color: #333;
+    .recipe-card__description {
+      display: -webkit-box;
+      margin: 0;
+      overflow: hidden;
+      color: v.$color-text;
+      font-size: 14px;
+      line-height: 1.5;
+      white-space: pre-line;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+    }
+  }
+
+  // Bild: Seitenverhaeltnis statt fixer Hoehe – kein Verzerren, und die
+  // max-height deckelt die Hoehe auch bei breiten Karten.
+  .recipe-media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    max-height: 320px;
+    overflow: hidden;
+    background: v.$surface-header;
+
+    .recipe-card__image {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.45s v.$ease-emphasized;
     }
 
-    .recipe-info {
+    &:hover .recipe-card__image {
+      transform: scale(1.03);
+    }
+  }
+
+  .recipe-card__badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 2;
+    box-sizing: border-box;
+    display: flex;
+    width: max-content;
+    margin: 0;
+    padding: 5px 10px;
+    background: rgba(0, 0, 0, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: v.$radius-pill;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    backdrop-filter: blur(6px);
+  }
+
+  // Fusszeile: Detail-Pills + Options-Button
+  .recipe-info {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 15px;
+  }
+
+  .recipe-details {
+    display: flex;
+    gap: 8px;
+
+    span {
+      padding: 5px 12px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+  }
+
+  // "Zubereitung anzeigen" wie in Home
+  .recipe-card__toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
+    padding: 0;
+    background: none;
+    border: none;
+    color: v.$color-accent-light;
+    font-size: 13.5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: color v.$ease-standard;
+
+    &:hover {
+      color: v.$color-text;
+    }
+  }
+
+  .recipe-card__instructions {
+    margin: 0;
+    padding: 0 15px 15px;
+    color: v.$color-text;
+    font-size: 14px;
+    line-height: 1.6;
+    white-space: pre-line;
+  }
+
+  .recipe-card__options-icon {
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-color: currentColor;
+    -webkit-mask: url("../../assets/profile/icon-more.svg") no-repeat center / contain;
+    mask: url("../../assets/profile/icon-more.svg") no-repeat center / contain;
+    flex-shrink: 0;
+  }
+
+  // Drei-Punkte-Trigger im Facebook-Stil: kein grauer Kreis, das Icon
+  // erbt die Textfarbe und faerbt sich erst beim Hover ein.
+  .delete-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    margin-left: auto;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+    color: v.$color-text-dim;
+    pointer-events: auto;
+    cursor: pointer;
+    transition: background v.$ease-standard, color v.$ease-standard;
+
+    &:hover {
+      background: v.$surface-hover;
+      color: v.$color-accent-light;
+    }
+
+    &:focus-visible {
+      outline: 2px solid v.$color-accent;
+      outline-offset: 2px;
+    }
+  }
+
+// Dropdown haengt am Trigger in der Kopfzeile und oeffnet nach unten
+  // (top statt bottom – sonst laege es ausserhalb der Karte).
+  .recipe-options-wrapper {
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .recipe-options {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    z-index: 100;
+    min-width: 180px;
+    padding: 6px;
+    background: v.$surface-header;
+    border: 1px solid v.$border-strong;
+    border-radius: v.$radius-md;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: -5px;
+      right: 14px;
+      width: 10px;
+      height: 10px;
+      background: v.$surface-header;
+      border-top: 1px solid v.$border-strong;
+      border-left: 1px solid v.$border-strong;
+      transform: rotate(45deg);
+    }
+
+    button {
       position: relative;
+      z-index: 1;
       display: flex;
       align-items: center;
       gap: 10px;
+      box-sizing: border-box;
       width: 100%;
-      margin-top: 10px;
-      padding-top: 10px;
-      border-top: 1px solid #eee;
-      color: #888;
-      font-size: 13px;
-    }
-
-    .recipe-details {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .Optionen__icon {
-      display: block;
-      width: 20px;
-      height: 20px;
-      background: url("../../assets/Optionen.svg") no-repeat center;
-      background-size: contain;
-      flex-shrink: 0;
-    }
-
-    .delete-btn {
-      position: relative;
-      display: flex;
-      margin-left: auto;
-      background: none;
+      padding: 10px 12px;
+      background-color: transparent;
       border: none;
-      pointer-events: auto;
+      border-radius: v.$radius-sm;
+      color: v.$color-text-strong;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      text-align: left;
+      white-space: nowrap;
       cursor: pointer;
+      transition: background v.$ease-standard, color v.$ease-standard;
+
+      &:hover {
+        background: v.$surface-hover;
+        color: v.$color-text;
+      }
+
+      &:focus-visible {
+        outline: 2px solid v.$color-accent;
+        outline-offset: -2px;
+      }
+
+      &--delete:hover {
+        background: rgba(217, 72, 72, 0.18);
+        color: #ff9a9a;
+      }
+    }
+  }
+
+  // Icons als Maske, damit sie die Textfarbe erben (currentColor)
+  .recipe-options__icon {
+    width: 17px;
+    height: 17px;
+    background-color: currentColor;
+    opacity: 0.7;
+    flex-shrink: 0;
+    transition: opacity v.$ease-standard;
+
+    &--edit {
+      -webkit-mask: url("../../assets/profile/icon-edit.svg") no-repeat center / contain;
+      mask: url("../../assets/profile/icon-edit.svg") no-repeat center / contain;
     }
 
-    .recipe-options {
-      position: absolute;
-      right: 0;
-      bottom: 65%;
-      z-index: 100;
-      margin-bottom: 8px;
-      background-color: antiquewhite;
-      border-radius: 6px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+    &--delete {
+      -webkit-mask: url("../../assets/profile/icon-trash.svg") no-repeat center / contain;
+      mask: url("../../assets/profile/icon-trash.svg") no-repeat center / contain;
+    }
 
-      button {
-        display: block;
-        box-sizing: border-box;
-        width: 100%;
-        padding: 10px 20px;
-        background-color: transparent;
-        border: none;
-        color: #d98f5c;
-        font-family: inherit;
-        font-size: 15px;
-        text-align: center;
-        text-decoration: none;
-        white-space: nowrap;
-        cursor: pointer;
-
-        &:hover {
-          background-color: #d98f5c;
-          color: antiquewhite;
-        }
-      }
+    &--share {
+      -webkit-mask: url("../../assets/profile/icon-share.svg") no-repeat center / contain;
+      mask: url("../../assets/profile/icon-share.svg") no-repeat center / contain;
     }
   }
 }

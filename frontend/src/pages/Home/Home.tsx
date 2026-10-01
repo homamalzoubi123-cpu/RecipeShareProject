@@ -4,8 +4,8 @@ import Follow from "../../components/follow/Following";
 import { AuthContext, AuthContextType } from "../../context/AuthContext";
 import { API_BASE_URL } from "../../config";
 import { useNavigate } from "react-router-dom";
-import optionenIcon from "../../assets/optionen-home.svg";
-import homeImg from "../../assets/home-img.jpg";
+import optionenIcon from "../../assets/profile/icon-more.svg";
+import homeImg from "../../assets/home/home-img.jpg";
 
 interface Recipe {
   userId: number;

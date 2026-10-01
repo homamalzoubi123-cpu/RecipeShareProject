@@ -1,31 +1,48 @@
+@use "../../styles/variables" as v;
+
 .profile-stats {
   display: flex;
-  justify-content: center;
-  gap: 20px;
+  justify-content: flex-start;
+  gap: 12px;
 
   .profile-stats__item {
     display: flex;
     flex-direction: column;
-    margin-right: auto;
 
     .following-button {
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 4px;
       margin-top: 4px;
-      margin-right: auto;
-      background: transparent;
-      border: none;
+      padding: 6px 14px;
+      background: v.$color-accent-soft;
+      border: 1px solid v.$color-accent-medium;
+      border-radius: v.$radius-pill;
+      font: inherit;
       cursor: pointer;
+      transition: background-color v.$ease-standard, border-color v.$ease-standard,
+        transform v.$ease-standard;
+
+      &:hover {
+        background: v.$color-accent-medium;
+        border-color: v.$color-accent-strong;
+        transform: translateY(-1px);
+      }
+
+      &:focus-visible {
+        outline: 2px solid v.$color-accent;
+        outline-offset: 2px;
+      }
 
       span {
-        color: #6b6375;
+        color: v.$color-text-muted;
         font-size: 16px;
       }
 
       strong {
-        color: #6b6375;
-        font-size: 16px;
+        color: v.$color-accent-light;
+        font-size: 18px;
+        font-weight: 700;
       }
     }
   }

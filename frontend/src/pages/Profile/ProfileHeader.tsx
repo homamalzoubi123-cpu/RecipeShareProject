@@ -1,4 +1,4 @@
-import acaunt from "../../assets/account.svg";
+import acaunt from "../../assets/header/icon-account.svg";
 import "./ProfileHeader.scss";
 import ProfileStats from "./ProfileStats";
 import { UserProfile } from "./Profile.types";
@@ -64,7 +64,7 @@ const ProfileHeader = ({
               className="change-image-btn"
               title="Klicken zum Ändern des Profilbilds"
             >
-              <span className="change-image-text"></span>
+              <span className="change-image-icon" />
             </button>
           )}
         </div>

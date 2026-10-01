@@ -18,22 +18,24 @@ namespace RecipeShare.Api.Controllers
         public async Task<IActionResult> Chat([FromBody] ChatRequest request)
         {
             if (string.IsNullOrWhiteSpace(request.Prompt))
-                return BadRequest(new { response = "الطلب فارغ" });
+                return BadRequest(new { response = "Die Frage darf nicht leer sein." });
 
             var apiKey = _configuration["Gemini:ApiKey"];
 
             if (string.IsNullOrEmpty(apiKey))
             {
-                return StatusCode(500, new { response = "Gemini API Key غير موجود في appsettings.json" });
+                return StatusCode(500, new { response = "Gemini API Key fehlt. Bitte Gemini:ApiKey in appsettings.json oder User-Secrets hinterlegen." });
             }
 
             try
             {
                 var client = new Client(apiKey: apiKey);
 
-                // التحديث لاسم الموديل الجديد الموصى به
+                // Modellname aus der Konfiguration, mit sinnvollem Standardwert
+                var model = _configuration["Gemini:Model"] ?? "gemini-3.6-flash";
+
                 var response = await client.Models.GenerateContentAsync(
-                    model: "gemini-3.6-flash",
+                    model: model,
                     contents: request.Prompt
                 );
 
@@ -41,7 +43,7 @@ namespace RecipeShare.Api.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { response = $"خطأ Gemini: {ex.Message}" });
+                return StatusCode(500, new { response = $"Gemini-Fehler: {ex.Message}" });
             }
         }
     }

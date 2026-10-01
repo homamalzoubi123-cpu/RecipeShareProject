@@ -13,7 +13,7 @@
     width: 100%;
 
     &__logo {
-        background: url("../../assets/nurlogo.png") no-repeat center/contain;
+        background: url("../../assets/brand/nurlogo.png") no-repeat center/contain;
         width: 70px;
         height: 50px;
         flex-shrink: 0; /* Verhindert das Quetschen des Logos */
@@ -60,8 +60,8 @@
         height: 38px;
         flex-shrink: 0;
         background-color: #575a5c;
-        -webkit-mask: url("../../assets/home.svg") no-repeat center/contain;
-        mask: url("../../assets/home.svg") no-repeat center/contain;
+        -webkit-mask: url("../../assets/header/icon-home.svg") no-repeat center/contain;
+        mask: url("../../assets/header/icon-home.svg") no-repeat center/contain;
     }
     /* 4. PLUS-BUTTON */
     .add-recipe-btn {
@@ -70,10 +70,23 @@
         height: 38px;
         flex-shrink: 0;
         background-color: #575a5c;
-        -webkit-mask: url("../../assets/plus.svg") no-repeat center/contain;
-        mask: url("../../assets/plus.svg") no-repeat center/contain;
+        -webkit-mask: url("../../assets/header/icon-plus.svg") no-repeat center/contain;
+        mask: url("../../assets/header/icon-plus.svg") no-repeat center/contain;
     }
-    /* 5. DROPDOWN (ACCOUNT) */
+    /* 5. ACCOUNT-ICON
+       Muss ausserhalb von .header__container__dropdowns liegen, sonst greift die
+       Maske nur im Dropdown-Fall und nicht wenn der Icon ein Link auf /profile ist. */
+    .header__container__account {
+        display: block;
+        width: 38px;
+        height: 38px;
+        flex-shrink: 0;
+        background-color: #575a5c;
+        -webkit-mask: url("../../assets/header/icon-account.svg") no-repeat center/contain;
+        mask: url("../../assets/header/icon-account.svg") no-repeat center/contain;
+    }
+
+    /* 5b. DROPDOWN-WRAPPER (nur im ausgelogten Zustand) */
     .header__container__dropdowns {
         position: relative;
         display: flex;
@@ -84,15 +97,6 @@
         .header__container__button {
             background: none;
             padding: 0 4px;
-        }
-
-        .header__container__account {
-            display: block;
-            width: 38px;
-            height: 38px;
-            background-color: #575a5c;
-            -webkit-mask: url("../../assets/account.svg") no-repeat center/contain;
-            mask: url("../../assets/account.svg") no-repeat center/contain;
         }
 
         .header__container__dropdown {
@@ -142,13 +146,14 @@
             height: 20px;
             flex-shrink: 0;
             background-color: #575a5c;
-            -webkit-mask: url("../../assets/pourder.svg") no-repeat center/contain;
-            mask: url("../../assets/pourder.svg") no-repeat center/contain;
+            -webkit-mask: url("../../assets/header/icon-powder.svg") no-repeat center/contain;
+            mask: url("../../assets/header/icon-powder.svg") no-repeat center/contain;
         }
     }
 
     /* 6. HOVER */
     .header__container__pourder,
+    .header__container__account,
     .header__container__btn > span,
     .header__container__button > span {
         transition: background-color 0.2s ease;
@@ -157,7 +162,8 @@
     .header__container__pourder-button:hover .header__container__pourder,
     .header__container__button:hover .header__container__account,
     .header__container__btn:hover .header__container__home,
-    .header__container__btn:hover .add-recipe-btn {
+    .header__container__btn:hover .add-recipe-btn,
+    .header__container__btn:hover .header__container__account {
         background-color: #d98f5c;
     }
 

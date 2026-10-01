@@ -1,0 +1,55 @@
+// ============================================
+// Design-Tokens der App (Dark Theme)
+// Werte entsprechen welcome.scss / login.scss / HeaderComponents.scss
+// Verwendung: @use "../../styles/variables" as v;
+// ============================================
+
+// Flaechen
+$surface-page: #1b1c1d;
+$surface-panel-top: rgba(50, 52, 54, 0.9);
+$surface-panel-bottom: rgba(27, 28, 29, 0.96);
+$surface-header: #242526;
+$surface-elevated: #3e4042;
+$surface-input: rgba(23, 24, 25, 0.75);
+
+// Akzent
+$color-accent: #d98f5c;
+$color-accent-light: #e7986a;
+$color-accent-deep: #c87a4f;
+$color-accent-soft: rgba(217, 143, 92, 0.16);
+$color-accent-medium: rgba(217, 143, 92, 0.28);
+$color-accent-strong: rgba(217, 143, 92, 0.45);
+$color-accent-glow: rgba(217, 143, 92, 0.18);
+$gradient-accent: linear-gradient(135deg, #d98f5c, #e7986a);
+$gradient-accent-band: linear-gradient(180deg, rgba(217, 143, 92, 0.22), rgba(217, 143, 92, 0));
+
+// Text
+$color-text: #ffffff;
+$color-text-strong: #e7e8ea;
+$color-text-muted: #c8cacc;
+$color-text-dim: #8d9194;
+$color-text-faint: #6b6f72;
+
+// Linien
+$border-subtle: rgba(255, 255, 255, 0.07);
+$border-soft: rgba(255, 255, 255, 0.08);
+$border-strong: rgba(255, 255, 255, 0.12);
+$border-hover: rgba(255, 255, 255, 0.28);
+$surface-hover: rgba(255, 255, 255, 0.06);
+
+// Overlay
+$color-overlay: rgba(0, 0, 0, 0.55);
+
+// Layout
+$z-overlay: 999;
+$z-panel: 1000;
+$radius-sm: 10px;
+$radius-md: 14px;
+$radius-lg: 22px;
+$radius-pill: 999px;
+
+// Bewegung
+$ease-standard: 0.2s ease;
+$ease-emphasized: cubic-bezier(0.22, 1, 0.36, 1);
+$dur-drawer: 0.35s;
+$dur-pop: 0.2s;

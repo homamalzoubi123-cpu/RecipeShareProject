@@ -1,10 +1,14 @@
-// خلفية الصفحة بالكامل لتنسيط الكرت
 .login {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: #f5f0de;
+  padding: 48px 20px;
+  box-sizing: border-box;
+  background:
+    radial-gradient(1100px 600px at 15% -10%, rgba(217, 143, 92, 0.12), transparent 60%),
+    radial-gradient(900px 500px at 100% 0%, rgba(87, 90, 92, 0.28), transparent 55%),
+    #1b1c1d;
 
   &.login--welcome {
     position: absolute;
@@ -29,136 +33,210 @@
   }
 }
 
-// تصميم الكرت الأبيض
 .login__card {
-  background-color: #ffffff;
-  padding: 35px 40px;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  width: 100%;
-  max-width: 420px;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 500px;
+  padding: 38px 40px 42px;
+  color: #e7e8ea;
+  color-scheme: dark;
+  background: linear-gradient(180deg, rgba(50, 52, 54, 0.94), rgba(36, 37, 38, 0.94));
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 22px;
+  box-shadow:
+    0 30px 70px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
 
-  &.card--welcome {
-    width: 50%;
-    position: relative;
+  &.login__card--welcome {
+    max-width: 460px;
+    padding: 42px 44px 46px;
+    gap: 18px;
+
+    .login__title {
+      font-size: 34px;
+    }
 
     @media (max-width: 768px) {
       width: 90%;
-      max-width: 400px;
     }
   }
 
-  .login--welcome & {
-    padding: 2rem;
-    box-shadow: none;
-    width: 100%;
-    max-width: none;
-    background: #f5f0de;
-
-    @media (max-width: 768px) {
-      width: 90%;
-      max-width: 400px;
-      background: #ffffff;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      padding: 35px 40px;
-    }
-  }
-
+  // Zurück-Button: runder Ghost
   .login__card__back {
-    background-color: #e5e5e5;
-    border: none;
-    padding: 6px 14px;
-    border-radius: 12px;
-    font-size: 13px;
-    color: #333;
-    cursor: pointer;
-    margin-bottom: 20px;
-  }
+       padding: 9px 18px;
+      margin-bottom: 26px;
+      background-color: #2a2b2d;
+      border: none;
+      border-radius: 999px;
+      color: #a3a6a8;
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+      box-shadow:
+        4px 4px 10px rgba(0, 0, 0, 0.45),
+        -3px -3px 8px rgba(255, 255, 255, 0.04);
+      transition: color 0.2s ease, box-shadow 0.2s ease;
+
+      &:hover {
+        color: #e4e5e7;
+        box-shadow:
+          2px 2px 6px rgba(0, 0, 0, 0.45),
+          -2px -2px 6px rgba(255, 255, 255, 0.05);
+      }
+
+      &:active {
+        box-shadow: inset 3px 3px 7px rgba(0, 0, 0, 0.5);
+      }
+    }
 
   .login__title {
+    margin: 0 0 8px;
+    color: #fff;
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: -0.4px;
     text-align: center;
-    font-size: 26px;
-    font-weight: 800;
-    margin-bottom: 35px;
-    color: #111;
   }
 
-  .login__card__field {
-    margin-bottom: 22px;
+  // Labels (kommen aus InputField)
+  .register__card__field {
+    margin-bottom: 0;
   }
 
-  .login__card__label {
+  .register__card__field__label {
     display: block;
-    font-size: 14px;
-    font-weight: 700;
-    color: #111;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
+    color: #8d9194;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+  }
+
+  // Inputs als Pill
+  .register__card__field__input {
+    box-sizing: border-box;
+    width: 100%;
+    height: 46px;
+    padding: 0 18px;
+    background-color: rgba(23, 24, 25, 0.75);
+    color: #e7e8ea;
+    color-scheme: dark;
+    font-family: inherit;
+    font-size: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 999px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+
+    &::placeholder {
+      color: #6b6f72;
+    }
+
+    &:hover {
+      background-color: rgba(23, 24, 25, 0.95);
+      border-color: rgba(255, 255, 255, 0.16);
+    }
+
+    &:focus {
+      background-color: rgba(23, 24, 25, 1);
+      border-color: #d98f5c;
+      box-shadow: 0 0 0 4px rgba(217, 143, 92, 0.16);
+    }
+
+    // Chromes Autofill-Overlay auf dunklen Feldern
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus {
+      -webkit-text-fill-color: #e7e8ea;
+      caret-color: #e7e8ea;
+      -webkit-box-shadow: 0 0 0 1000px #232425 inset;
+      transition: background-color 9999s ease-in-out 0s;
+    }
   }
 
   .login__card__label__row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 6px;
+    margin: -4px 0 0;
   }
 
   .login__link__passwort {
     font-size: 12px;
-    color: #555;
+    color: #8d9194;
     text-decoration: none;
+    transition: color 0.2s ease;
 
     &:hover {
+      color: #d98f5c;
       text-decoration: underline;
     }
   }
 
-  .login__card__input {
-    width: 100%;
-    padding: 12px 18px;
-    border: 1px solid #444;
-    border-radius: 25px;
-    font-size: 14px;
-    outline: none;
-    box-sizing: border-box;
-
-    &::placeholder {
-      color: #aaa;
-    }
-  }
-
+  // Submit-Button
   .login__card__button {
     width: 100%;
-    padding: 12px;
-    background-color: #d98f5c;
+    height: 50px;
+    padding: 0;
+    margin-top: 0;
+    background: linear-gradient(135deg, #d98f5c, #e7986a);
     border: none;
-    border-radius: 25px;
-    color: antiquewhite;
-    font-size: 16px;
-    font-weight: bold;
+    border-radius: 999px;
+    color: #1b1c1d;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: inherit;
     cursor: pointer;
-    margin-top: 15px;
-    transition: background-color 0.2s ease;
+    box-shadow: 0 10px 24px rgba(217, 143, 92, 0.28);
+    transition: box-shadow 0.2s ease, transform 0.1s ease, filter 0.2s ease;
 
-    &:hover {
-      background-color: #e7986a;
+    &:hover:not(:disabled) {
+      filter: brightness(1.06);
+      box-shadow: 0 14px 30px rgba(217, 143, 92, 0.36);
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(1px);
+    }
+
+    &:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      box-shadow: none;
     }
   }
 
   .login__card__footer {
-    text-align: center;
+    margin: 0;
+    color: #8d9194;
     font-size: 13px;
-    color: #333;
-    margin-top: 25px;
+    text-align: center;
 
-    a {
-      color: #000;
-      font-weight: bold;
+    a,
+    .login__card__link {
+      color: #d98f5c;
+      font-weight: 600;
       text-decoration: none;
+      transition: color 0.2s ease;
 
       &:hover {
+        color: #e7986a;
         text-decoration: underline;
       }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .login__card {
+    padding: 28px 22px 32px;
+
+    .login__title {
+      font-size: 25px;
     }
   }
 }
