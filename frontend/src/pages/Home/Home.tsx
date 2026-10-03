@@ -6,6 +6,7 @@ import { API_BASE_URL } from "../../config";
 import { useNavigate } from "react-router-dom";
 import optionenIcon from "../../assets/profile/icon-more.svg";
 import homeImg from "../../assets/home/home-img.jpg";
+import HomeTrending from "./HomeTrending.tsx";
 
 interface Recipe {
   userId: number;
@@ -79,7 +80,7 @@ function Home({}: HomeProps) {
 
   return (
     <div className="home-container">
-      <h2>All Recipes</h2>
+     <HomeTrending  />
       <div className="recipes-grid">
         {recipes.length === 0 ? (
           <p>No recipes available.</p>

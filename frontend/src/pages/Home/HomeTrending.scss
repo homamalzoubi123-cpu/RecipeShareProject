@@ -1,0 +1,53 @@
+@use "../../styles/variables" as v;
+
+.home-trending-container {
+  position: fixed;
+  top: 100px;
+  left: max(20px, calc(47vw - 620px));
+  z-index: v.$z-overlay;
+
+  .trending-recipes-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 300px;
+    padding: 16px;
+    border-radius: v.$radius-sm;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 1px 6px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(
+      180deg,
+      v.$surface-panel-top,
+      v.$surface-panel-bottom
+    );
+
+    h3 {
+      margin: 0 0 8px;
+      color: v.$color-text-muted;
+      text-align: center;
+    }
+  }
+
+  .trending-recipe {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .trending-recipe__name,
+  .trending-recipe__key {
+    color: v.$color-accent;
+  }
+
+
+}
+
+@media (max-width: 1240px) {
+  .home-trending-container {
+    position: static;
+    margin-bottom: 20px;
+
+    .trending-recipes-grid {
+      width: 100%;
+    }
+  }
+}

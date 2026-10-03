@@ -12,34 +12,39 @@ import Profile from "./pages/Profile/Profile";
 import { useContext } from "react";
 import { AuthContext, AuthContextType } from "./context/AuthContext";
 import RecipeDetail from "./pages/Recipe/RecipeDetail";
-import { AiChat } from './components/ai-chat/AiChat';
+import { AiChat } from "./components/ai-chat/AiChat";
 
-interface AppProps { }  
+interface AppProps {}
 
-function App({ }: AppProps) {
-    const { user } = useContext(AuthContext) as AuthContextType;
+function App({}: AppProps) {
+  const { user } = useContext(AuthContext) as AuthContextType;
 
-    return (
-        <>
-            <Routes>
-                <Route path="/" element={<Layout />}>
-                    <Route index element={user ? <Home /> : <Welcome />} />
-                    <Route path="/profile" element={<Profile />} />
-                    <Route path="/profile/:userId" element={<Profile />} />
-                    <Route path="/profile/:userId/following" element={<FollowingList />} />
-                    <Route path="/profile/:userId/followers" element={<FollowersList />} />
-                    <Route path="/CreateRecipe" element={<CreateRecipe />} />
-                    <Route path="/recipe/:id" element={<RecipeDetail />} />
-                    <Route path="/Home" element={<Home />} />
-                    <Route path="/register" element={<Register />} />
-                    <Route path="/login" element={<Login />} />
-                </Route>
-            </Routes>
+  return (
+    <>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={user ? <Home /> : <Welcome />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/:userId" element={<Profile />} />
+          <Route
+            path="/profile/:userId/following"
+            element={<FollowingList />}
+          />
+          <Route
+            path="/profile/:userId/followers"
+            element={<FollowersList />}
+          />
+          <Route path="/CreateRecipe" element={<CreateRecipe />} />
+          <Route path="/recipe/:id" element={<RecipeDetail />} />
+          <Route path="/Home" element={<Home />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+        </Route>
+      </Routes>
 
-            {/* تم إضافة زر الشات هنا ليكون ظاهراً في كل الصفحات */}
-            <AiChat />
-        </>
-    );
+      <AiChat />
+    </>
+  );
 }
 
 export default App;

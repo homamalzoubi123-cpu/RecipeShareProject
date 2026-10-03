@@ -4,6 +4,8 @@ import { API_BASE_URL } from "../../config";
 import { AuthContext, AuthContextType } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import "./HeaderSearch.scss";
+import userPlaceholderIcon from "../../assets/header/icon-user-placeholder.svg";
+import recipeIcon from "../../assets/header/icon-recipe.svg";
 
 interface SearchUser {
     id: number;
@@ -206,7 +208,13 @@ const HeaderSearch: React.FC<HeaderSearchProps> = ({ }: HeaderSearchProps) => {
                                                     className="search-result-image"
                                                 />
                                             ) : (
-                                                <div className="search-result-placeholder">🙍</div>
+                                                <div className="search-result-placeholder">
+                                                    <img
+                                                        src={userPlaceholderIcon}
+                                                        alt=""
+                                                        className="search-result-placeholder__icon"
+                                                    />
+                                                </div>
                                             )}
                                             <span>{searchUser.username ? searchUser.username : "Keiner gefunden"}</span>
                                         </div>
@@ -225,7 +233,13 @@ const HeaderSearch: React.FC<HeaderSearchProps> = ({ }: HeaderSearchProps) => {
                                             setSearchResipes([]);
                                         }}
                                     >
-                                        <div className="search-result-placeholder">🍽️</div>
+                                        <div className="search-result-placeholder">
+                                            <img
+                                                src={recipeIcon}
+                                                alt=""
+                                                className="search-result-placeholder__icon"
+                                            />
+                                        </div>
                                         <span>{searchRecipe.title}</span>
                                     </div>
                                 ))
